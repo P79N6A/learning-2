@@ -20,20 +20,20 @@ package wang.xiaoluobo.sort;
 public class ShellSort<T extends Comparable<T>> extends AbstractSort<Integer> {
 
     @Override
-    public void sort(Integer[] t, String className) {
-        printStart(t, className);
+    public void sort(Integer[] data, String className) {
+        printStart(data, className);
 
         int h = 1;
 
-        while (h < t.length / 3) {
+        while (h < data.length / 3) {
             h = h * 3 + 1;
         }
 
         while (h >= 1) {
-            for (int i = h; i < t.length; i++) {
+            for (int i = h; i < data.length; i++) {
                 for (int j = i; j >= h; j -= h) {   // 循环
-                    if (less(t[j], t[j - h])) {
-                        swap(t, j, j - h);
+                    if (less(data[j], data[j - h])) {
+                        swap(data, j, j - h);
                     }
                 }
             }
@@ -48,6 +48,6 @@ public class ShellSort<T extends Comparable<T>> extends AbstractSort<Integer> {
     public static void main(String[] args) {
         AbstractSort<Integer> abstractSort = new ShellSort<>();
         Class clazz = abstractSort.getClass();
-        abstractSort.sort(n, clazz.getSimpleName());
+        abstractSort.sort(nums, clazz.getSimpleName());
     }
 }

@@ -11,17 +11,17 @@ package wang.xiaoluobo.sort;
 public class SelectionSort<T extends Comparable<T>> extends AbstractSort<Integer> {
 
     @Override
-    public void sort(Integer[] t, String className) {
-        printStart(t, className);
+    public void sort(Integer[] data, String className) {
+        printStart(data, className);
 
-        for (int i = 0; i < t.length; i++) {
+        for (int i = 0; i < data.length; i++) {
             int min = i;
-            for (int j = i + 1; j < t.length; j++) {
-                if (less(t[j], t[min])) {
+            for (int j = i + 1; j < data.length; j++) {
+                if (less(data[j], data[min])) {
                     min = j;
                 }
             }
-            swap(t, i, min);
+            swap(data, i, min);
 
             System.out.println("----------------------" + i + "----------------------");
             System.out.println();
@@ -31,6 +31,6 @@ public class SelectionSort<T extends Comparable<T>> extends AbstractSort<Integer
     public static void main(String[] args) {
         AbstractSort<Integer> abstractSort = new SelectionSort<>();
         Class clazz = abstractSort.getClass();
-        abstractSort.sort(n, clazz.getSimpleName());
+        abstractSort.sort(nums, clazz.getSimpleName());
     }
 }

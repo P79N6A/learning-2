@@ -9,13 +9,13 @@ package wang.xiaoluobo.sort;
 public class InsertionSort<T extends Comparable<T>> extends AbstractSort<Integer> {
 
     @Override
-    public void sort(Integer[] t, String className) {
-        printStart(t, className);
+    public void sort(Integer[] data, String className) {
+        printStart(data, className);
 
-        for (int i = 1; i < t.length; i++) {
+        for (int i = 1; i < data.length; i++) {
             for (int j = i; j > 0; j--) {
-                if(less(t[j], t[j - 1])) {
-                    swap(t, j, j - 1);
+                if(less(data[j], data[j - 1])) {
+                    swap(data, j, j - 1);
                 }
             }
 
@@ -26,6 +26,6 @@ public class InsertionSort<T extends Comparable<T>> extends AbstractSort<Integer
     public static void main(String[] args) {
         AbstractSort<Integer> abstractSort = new InsertionSort<>();
         Class clazz = abstractSort.getClass();
-        abstractSort.sort(n, clazz.getSimpleName());
+        abstractSort.sort(nums, clazz.getSimpleName());
     }
 }

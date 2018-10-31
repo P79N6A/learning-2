@@ -12,32 +12,32 @@ package wang.xiaoluobo.sort;
 public class MergeSort<T extends Comparable<T>> extends AbstractSort<Integer> {
 
     @Override
-    public void sort(Integer[] t, String className) {
-        printStart(t, className);
+    public void sort(Integer[] data, String className) {
+        printStart(data, className);
 
-        sort(t, 0, t.length - 1);
+        sort(data, 0, data.length - 1);
 
-        print(t);
+        print(data);
     }
 
-    private void sort(Integer[] t, int left, int right) {
+    private void sort(Integer[] data, int left, int right) {
         if (left >= right) {
             return;
         }
 
         int center = (left + right) / 2;
-        sort(t, 0, center);
-        sort(t, center + 1, right);
+        sort(data, 0, center);
+        sort(data, center + 1, right);
 
-        mergeSort(t, left, center, right);
+        mergeSort(data, left, center, right);
 
         System.out.println("center-->" + center);
-        print(t);
+        print(data);
     }
 
-    private void mergeSort(Integer[] t, int left, int center, int right) {
+    private void mergeSort(Integer[] data, int left, int center, int right) {
         // 存放数据的数组
-        Integer[] tmp = new Integer[t.length];
+        Integer[] tmp = new Integer[data.length];
         // 记录临时数组的索引
         int k = left;
         // 记录合并数据的起始位置
@@ -46,31 +46,31 @@ public class MergeSort<T extends Comparable<T>> extends AbstractSort<Integer> {
         int mid = center + 1;
         while (left <= center && mid <= right) {
             // 从左右两个数组找出最小的数存入tmp数组
-            if (than(t[left], t[mid])) {
-                tmp[k++] = t[mid++];
+            if (than(data[left], data[mid])) {
+                tmp[k++] = data[mid++];
             } else {
-                tmp[k++] = t[left++];
+                tmp[k++] = data[left++];
             }
         }
 
         // 剩余部分依次放入临时数组（实际上两个while只会执行其中一个）
         while (left <= center) {
-            tmp[k++] = t[left++];
+            tmp[k++] = data[left++];
         }
 
         while (mid <= right) {
-            tmp[k++] = t[mid++];
+            tmp[k++] = data[mid++];
         }
 
         // 将临时数组中的数据复制回原数组
         while (temp <= right) {
-            t[temp] = tmp[temp++];
+            data[temp] = tmp[temp++];
         }
     }
 
     public static void main(String[] args) {
         AbstractSort<Integer> abstractSort = new MergeSort<>();
         Class clazz = abstractSort.getClass();
-        abstractSort.sort(n, clazz.getSimpleName());
+        abstractSort.sort(nums, clazz.getSimpleName());
     }
 }

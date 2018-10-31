@@ -10,14 +10,14 @@ package wang.xiaoluobo.sort;
 public class BubbleSort<T extends Comparable<T>> extends AbstractSort<Integer> {
 
     @Override
-    public void sort(Integer[] t, String className) {
-        printStart(t, className);
+    public void sort(Integer[] data, String className) {
+        printStart(data, className);
 
-        for (int i = 0; i < t.length; i++) {    // 需要排序n次
+        for (int i = 0; i < data.length; i++) {    // 需要排序n次
             boolean flag = true;
-            for (int j = 0; j < t.length - i - 1; j++) {    // 每趟排序比较j和j+1的值，将大值沉底
-                if (than(t[j], t[j + 1])) {
-                    swap(t, j, j + 1);
+            for (int j = 0; j < data.length - i - 1; j++) {    // 每趟排序比较j和j+1的值，将大值沉底
+                if (than(data[j], data[j + 1])) {
+                    swap(data, j, j + 1);
                     flag = false;
                 }
             }
@@ -34,6 +34,6 @@ public class BubbleSort<T extends Comparable<T>> extends AbstractSort<Integer> {
     public static void main(String[] args) {
         AbstractSort<Integer> abstractSort = new BubbleSort<>();
         Class clazz = abstractSort.getClass();
-        abstractSort.sort(n, clazz.getSimpleName());
+        abstractSort.sort(nums, clazz.getSimpleName());
     }
 }

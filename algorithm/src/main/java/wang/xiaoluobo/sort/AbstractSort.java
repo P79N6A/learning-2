@@ -7,9 +7,9 @@ package wang.xiaoluobo.sort;
  */
 public abstract class AbstractSort<T extends Comparable<T>> {
 
-    protected static final Integer[] n = new Integer[]{9, 3, 5, 2, 4, 1, 6, 7, 10, 8, 12, 11};
+    protected static final Integer[] nums = new Integer[]{9, 3, 5, 2, 4, 1, 6, 7, 10, 8, 12, 11};
 
-    public abstract void sort(T[] t, String className);
+    public abstract void sort(T[] data, String className);
 
     /**
      * t1 < t2
@@ -31,24 +31,24 @@ public abstract class AbstractSort<T extends Comparable<T>> {
         return t1.compareTo(t2) > 0;
     }
 
-    protected void swap(T[] t, int i, int j){
-        T tmp = t[i];
-        t[i] = t[j];
-        t[j] = tmp;
+    protected void swap(T[] data, int i, int j){
+        T tmp = data[i];
+        data[i] = data[j];
+        data[j] = tmp;
 
-        print(t);
+        print(data);
     }
 
-    protected void printStart(T[] t, String className){
+    protected void printStart(T[] data, String className){
         System.out.println("-----------" + className + " sort start------------------");
-        print(t);
+        print(data);
         System.out.println("*********************************************");
         System.out.println();
     }
 
-    protected void print(T[] t){
-        for (T t1: t){
-            System.out.print(t1 + "\t");
+    protected void print(T[] data){
+        for (T t: data){
+            System.out.print(t + "\t");
         }
         System.out.println();
     }
