@@ -17,7 +17,7 @@ package wang.xiaoluobo.sort;
  * @author wangyd
  * @date 2018/10/30
  */
-public class Shell<T extends Comparable<T>> extends AbstractSort<Integer> {
+public class ShellSort<T extends Comparable<T>> extends AbstractSort<Integer> {
 
     @Override
     public void sort(Integer[] t, String className) {
@@ -46,7 +46,7 @@ public class Shell<T extends Comparable<T>> extends AbstractSort<Integer> {
     }
 
     public static void main(String[] args) {
-        AbstractSort<Integer> abstractSort = new Shell<>();
+        AbstractSort<Integer> abstractSort = new ShellSort<>();
         Class clazz = abstractSort.getClass();
         abstractSort.sort(n, clazz.getSimpleName());
     }

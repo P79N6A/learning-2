@@ -7,7 +7,7 @@ package wang.xiaoluobo.sort;
  * @author wangyd
  * @date 2018/10/30
  */
-public class Bubble<T extends Comparable<T>> extends AbstractSort<Integer> {
+public class BubbleSort<T extends Comparable<T>> extends AbstractSort<Integer> {
 
     @Override
     public void sort(Integer[] t, String className) {
@@ -32,7 +32,7 @@ public class Bubble<T extends Comparable<T>> extends AbstractSort<Integer> {
     }
 
     public static void main(String[] args) {
-        AbstractSort<Integer> abstractSort = new Bubble<>();
+        AbstractSort<Integer> abstractSort = new BubbleSort<>();
         Class clazz = abstractSort.getClass();
         abstractSort.sort(n, clazz.getSimpleName());
     }

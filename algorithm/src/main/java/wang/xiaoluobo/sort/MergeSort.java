@@ -9,7 +9,7 @@ package wang.xiaoluobo.sort;
  * @author wangyd
  * @date 2018/10/31
  */
-public class Merge<T extends Comparable<T>> extends AbstractSort<Integer> {
+public class MergeSort<T extends Comparable<T>> extends AbstractSort<Integer> {
 
     @Override
     public void sort(Integer[] t, String className) {
@@ -69,7 +69,7 @@ public class Merge<T extends Comparable<T>> extends AbstractSort<Integer> {
     }
 
     public static void main(String[] args) {
-        AbstractSort<Integer> abstractSort = new Merge<>();
+        AbstractSort<Integer> abstractSort = new MergeSort<>();
         Class clazz = abstractSort.getClass();
         abstractSort.sort(n, clazz.getSimpleName());
     }
