@@ -6,10 +6,10 @@ package wang.xiaoluobo.sort;
  * @author wangyd
  * @date 2018/10/30
  */
-public class InsertionSort<T extends Comparable<T>> extends AbstractSort<Integer> {
+public class InsertionSort<T extends Comparable<T>> extends AbstractSort<T> {
 
     @Override
-    public void sort(Integer[] data, String className) {
+    public void sort(T[] data, String className) {
         printStart(data, className);
 
         for (int i = 1; i < data.length; i++) {

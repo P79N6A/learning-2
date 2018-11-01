@@ -8,10 +8,10 @@ package wang.xiaoluobo.sort;
  * @author wangyd
  * @date 2018/10/23
  */
-public class SelectionSort<T extends Comparable<T>> extends AbstractSort<Integer> {
+public class SelectionSort<T extends Comparable<T>> extends AbstractSort<T> {
 
     @Override
-    public void sort(Integer[] data, String className) {
+    public void sort(T[] data, String className) {
         printStart(data, className);
 
         for (int i = 0; i < data.length; i++) {
