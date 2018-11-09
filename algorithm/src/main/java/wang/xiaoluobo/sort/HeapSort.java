@@ -21,13 +21,14 @@ public class HeapSort<T extends Comparable<T>> extends AbstractSort<Integer> {
         // 构建一个大顶堆
         for (int i = data.length / 2 - 1; i >= 0; i--) {
             adjustHeap(data, i, data.length - 1);
+            print(data);
         }
 
-        print(data);
+        System.out.println("**********************************");
 
         // 堆排序
-        // 由于是大顶堆，data[0]一定是当前序列的最大值
         for (int i = data.length - 1; i >= 0; i--) {
+            // 由于是大顶堆，data[0]一定是当前序列的最大值，并将其排除下一次堆排序
             swap(data, 0, i);
             // 每次排序序列不断减少，每次堆顶皆为最大值，故非排序序列为有序数列
             adjustHeap(data, 0, i - 1);
@@ -46,20 +47,24 @@ public class HeapSort<T extends Comparable<T>> extends AbstractSort<Integer> {
 
         // j为序号为i的左子节点
         for (int j = 2 * i; j < len; j *= 2) {
-            // 当前节点i的子节点为data[2i]和data[2i+1]，即data[j]和data[j+1]
+            // 当前节点i的子节点为data[2i]和data[2i+1]，即data[j]和data[j+1]，记录当前节点中子节点较大的子节点下标
             if (j < len && data[j] < data[j + 1]) {
                 ++j;
             }
 
-            // 如果根节点大等于子节点最大值，则跳出循环
+            // 如果根节点大等于子节点最大值，说明当前节点比下面的子节点大，则跳出循环
             if (tmp >= data[j]) {
                 break;
             }
 
+            // 如果父节点值比子节点值小，则与较大子节点进行交换
             data[i] = data[j];
+
+            // 继续查找子节点
             i = j;
         }
 
+        // 赋值
         data[i] = tmp;
     }
 
