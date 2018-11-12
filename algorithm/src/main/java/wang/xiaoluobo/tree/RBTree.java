@@ -24,6 +24,6 @@ package wang.xiaoluobo.tree;
  * @author wangyd
  * @date 2018/11/2
  */
-public class RedBlackTree {
+public class RBTree {
 
 }
