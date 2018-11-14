@@ -161,7 +161,7 @@ public class BSTTree<T extends Comparable<T>> {
     }
 
     /**
-     * 查找二叉树中最小节点
+     * 查找指定二叉树根节点中最小节点
      *
      * @param tree
      * @return
@@ -193,7 +193,7 @@ public class BSTTree<T extends Comparable<T>> {
     }
 
     /**
-     * 查找二叉树中最大节点
+     * 查找指定二叉树根节点中最大节点
      *
      * @param tree
      * @return
@@ -453,6 +453,9 @@ public class BSTTree<T extends Comparable<T>> {
         }
     }
 
+    /**
+     * 打印二叉查找树
+     */
     public void print() {
         if (root != null) {
             print(root, root.key, 0);
