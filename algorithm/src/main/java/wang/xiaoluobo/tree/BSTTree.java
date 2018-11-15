@@ -422,15 +422,6 @@ public class BSTTree<T extends Comparable<T>> {
         root = null;
     }
 
-    /*
-     * 打印"二叉查找树"
-     *
-     * key        -- 节点的键值
-     * direction  --  0，表示该节点是根节点;
-     *               -1，表示该节点是它的父结点的左孩子;
-     *                1，表示该节点是它的父结点的右孩子。
-     */
-
     /**
      * 打印二叉查找树
      *
@@ -463,13 +454,13 @@ public class BSTTree<T extends Comparable<T>> {
     }
 
     public static void main(String[] args) {
-        int arr[] = {10, 15, 13, 4, 7, 3, 18, 12, 11, 5, 9, 14, 8, 16, 1, 20, 2, 6, 19, 17};
+        int[] nums = {10, 15, 13, 4, 7, 3, 18, 12, 11, 5, 9, 14, 8, 16, 1, 20, 2, 6, 19, 17};
         BSTTree<Integer> tree = new BSTTree<>();
 
         System.out.print("原始序列: ");
-        for (int i = 0; i < arr.length; i++) {
-            System.out.print(arr[i] + " ");
-            tree.insert(arr[i]);
+        for (int i = 0; i < nums.length; i++) {
+            System.out.print(nums[i] + " ");
+            tree.insert(nums[i]);
         }
 
         System.out.println();

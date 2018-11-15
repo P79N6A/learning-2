@@ -41,7 +41,7 @@ public class RBTree<T extends Comparable<T>> {
     }
 
     private boolean isRed(RBTreeNode<T> node) {
-        return ((node != null) && (node.color == RBTreeNode.RED)) ? true : false;
+        return node != null && node.color == RBTreeNode.RED;
     }
 
     private boolean isBlack(RBTreeNode<T> node) {
@@ -368,8 +368,8 @@ public class RBTree<T extends Comparable<T>> {
      *     y                           x
      *    / \       --(右旋)--        /  \
      *   x  ry                      lx   y
-     *      / \                         / \
-     *    lx  rx     			       rx ry
+     *  / \                             / \
+     * lx rx     			           rx ry
      *
      * @param y
      */
@@ -426,7 +426,7 @@ public class RBTree<T extends Comparable<T>> {
             if (parent == gparent.left) {
                 // (1)叔叔节点是红色
                 RBTreeNode<T> uncle = gparent.right;
-                if ((uncle != null) && isRed(uncle)) {
+                if (isRed(uncle)) {
                     setBlack(uncle);
                     setBlack(parent);
                     setRed(gparent);
@@ -451,7 +451,7 @@ public class RBTree<T extends Comparable<T>> {
                 // 若node的父节点是node的祖父节点的右孩子
                 // (1)叔叔节点是红色
                 RBTreeNode<T> uncle = gparent.left;
-                if ((uncle != null) && isRed(uncle)) {
+                if (isRed(uncle)) {
                     setBlack(uncle);
                     setBlack(parent);
                     setRed(gparent);
@@ -548,7 +548,7 @@ public class RBTree<T extends Comparable<T>> {
     private void removeFixUp(RBTreeNode<T> node, RBTreeNode<T> parent) {
         RBTreeNode<T> other;
 
-        while ((node == null || isBlack(node)) && (node != this.root)) {
+        while ((node == null || isBlack(node)) && node != this.root) {
             if (parent.left == node) {
                 other = parent.right;
                 if (isRed(other)) {
@@ -573,6 +573,7 @@ public class RBTree<T extends Comparable<T>> {
                         rightRotate(other);
                         other = parent.right;
                     }
+
                     // (4)x的兄弟w是黑色的；并且w的右孩子是红色的，左孩子任意颜色。
                     setColor(other, colorOf(parent));
                     setBlack(parent);
@@ -623,7 +624,11 @@ public class RBTree<T extends Comparable<T>> {
     }
 
     /**
-     * 删除结点(node)，并返回被删除的结点
+     * 删除节点，并返回被删除的节点
+     *
+     * 删除节点步骤：
+     * (1)将红黑树当作一颗二叉查找树，将节点删除
+     * (2)通过旋转和重新着色来修正，使之重新成为一棵红黑树
      *
      * @param node
      */
@@ -632,22 +637,21 @@ public class RBTree<T extends Comparable<T>> {
         boolean color;
 
         // 被删除节点的左右孩子都不为空的情况
-        if ((node.left != null) && (node.right != null)) {
+        if (node.left != null && node.right != null) {
             // 被删节点的后继节点(称为取代节点)
             // 用它来取代被删节点的位置，然后再将被删节点去掉
             RBTreeNode<T> replace = node;
 
             // 获取后继节点
-            replace = replace.right;
-            while (replace.left != null)
-                replace = replace.left;
+            replace = successor(node);
 
             // node节点不是根节点(只有根节点不存在父节点)
             if (parentOf(node) != null) {
-                if (parentOf(node).left == node)
+                if (parentOf(node).left == node) {
                     parentOf(node).left = replace;
-                else
+                } else {
                     parentOf(node).right = replace;
+                }
             } else {
                 // node节点是根节点，更新根节点
                 this.root = replace;
@@ -660,15 +664,16 @@ public class RBTree<T extends Comparable<T>> {
             // 保存取代节点的颜色
             color = colorOf(replace);
 
-            // 被删除节点是它的后继节点的父节点
+            // 被删除节点是后继节点的父节点
             if (parent == node) {
                 parent = replace;
             } else {
                 // child不为空
-                if (child != null)
+                if (child != null) {
                     setParent(child, parent);
-                parent.left = child;
+                }
 
+                parent.left = child;
                 replace.right = node.right;
                 setParent(node.right, replace);
             }
@@ -678,8 +683,9 @@ public class RBTree<T extends Comparable<T>> {
             replace.left = node.left;
             node.left.parent = replace;
 
-            if (color == RBTreeNode.BLACK)
+            if (color == RBTreeNode.BLACK) {
                 removeFixUp(child, parent);
+            }
 
             node = null;
             return;
@@ -701,16 +707,18 @@ public class RBTree<T extends Comparable<T>> {
 
         // node节点不是根节点
         if (parent != null) {
-            if (parent.left == node)
+            if (parent.left == node) {
                 parent.left = child;
-            else
+            } else {
                 parent.right = child;
+            }
         } else {
             this.root = child;
         }
 
-        if (color == RBTreeNode.BLACK)
+        if (color == RBTreeNode.BLACK) {
             removeFixUp(child, parent);
+        }
         node = null;
     }
 
@@ -733,12 +741,14 @@ public class RBTree<T extends Comparable<T>> {
      * @param tree
      */
     private void destroy(RBTreeNode<T> tree) {
-        if (tree == null)
+        if (tree == null) {
             return;
+        }
 
         if (tree.left != null) {
             destroy(tree.left);
         }
+
         if (tree.right != null) {
             destroy(tree.right);
         }
@@ -782,7 +792,7 @@ public class RBTree<T extends Comparable<T>> {
 
 
     public static void main(String[] args) {
-        int[] nums = {10, 40, 30, 60, 90, 70, 20, 50, 80, 100, 110, 120, 130, 140, 150, 160, 170};
+        int[] nums = {10, 15, 13, 4, 7, 3, 18, 12, 11, 5, 9, 14, 8, 16, 1, 20, 2, 6, 19, 17};
         boolean debugInsert = false;    // 插入动作的检测开关(false，关闭；true，打开)
         boolean debugDelete = false;    // 删除动作的检测开关(false，关闭；true，打开)
 
@@ -833,6 +843,8 @@ public class RBTree<T extends Comparable<T>> {
                 System.out.printf("\n");
             }
         }
+
+        tree.remove(13);
 
         // 销毁二叉树
         tree.clear();
