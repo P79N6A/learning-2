@@ -20,17 +20,18 @@ public class QuickSort<T extends Comparable<T>> extends AbstractSort<Integer> {
             return;
         }
 
-        int j = partition(data, left, right);   // 找到
+        int j = partition(data, left, right);
         sort(nums, left, j - 1);
         sort(nums, j + 1, right);
     }
 
     /**
      * 数据分区
+     *
      * @param data
      * @param left
      * @param right
-     * @return  返回分区后的基准值的下标
+     * @return 返回分区后的基准值的下标
      */
     private int partition(Integer[] data, int left, int right) {
         int i = left;   // 从小到大下标变量
@@ -38,18 +39,22 @@ public class QuickSort<T extends Comparable<T>> extends AbstractSort<Integer> {
         int pivot = data[left]; // 基准值
 
         while (true) {
-            while (less(data[++i], pivot) && i != right) ;   // 从数组左至右，查找比基准值大的下标
+            // 从数组左至右，查找比基准值小的下标
+            while (less(data[++i], pivot) && i != right) ;
 
-            while (than(data[--j], pivot) && j != left) ;   // 从数组右至左，查找比基准值小的下标
+            // 从数组右至左，查找比基准值大的下标
+            while (than(data[--j], pivot) && j != left) ;
 
             if (i >= j) {
                 break;
             }
 
-            swap(data, i, j);   // 找出一个比基准值大的值(data[i])和一个比基准值小的值(data[j])，将位置交换
+            // 找出一个比基准值小的值(data[i])和一个比基准值大的值(data[j])，将位置交换
+            swap(data, i, j);
         }
 
-        swap(data, left, j);    // 将比基准值小的值(data[j])与基准值交换
+        // 将比基准值小的值(data[j])与基准值交换(由于前面i和j的位置做过交换，做j是比基准值小的值)
+        swap(data, left, j);
 
         return j;
     }
