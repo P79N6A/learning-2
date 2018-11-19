@@ -51,6 +51,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * 可以调整一些参数来改变其行为。 第一，finalizeWait确定等待决定领导者的时间。这是领导者选举算法的一部分。
  */
 public class FastLeaderElection implements Election {
+
     private static final Logger LOG = LoggerFactory.getLogger(FastLeaderElection.class);
 
     /**
@@ -92,7 +93,8 @@ public class FastLeaderElection implements Election {
      * joined leader election or because it learned of another
      * peer with higher zxid or same zxid and higher server id
      *
-     * 通知是允许其他同行知道的消息一个特定的同伴已经改变了投票，因为它已经改变了加入领导人选举或因为它了解了另一个具有更高zxid或相同zxid和更高服务器ID的对等体
+     * 通知是允许其他zk Server知道的消息一个特定的同伴已经改变了投票，
+     * 因为它已经改变了加入领导人选举或因为它了解了另一个具有更高zxid或相同zxid和更高服务器ID的对等体
      */
     static public class Notification {
         /*
@@ -104,11 +106,16 @@ public class FastLeaderElection implements Election {
 
         /*
          * Proposed leader
+         *
+         * 举荐的leader
          */
         long leader;
 
         /*
          * zxid of the proposed leader
+         *
+         * zk选举时使用的id，此id集群中每次选举唯一并且自增
+         * zk选举时，会比较此值，同票时，zxid较大者胜出
          */
         long zxid;
 
@@ -119,11 +126,15 @@ public class FastLeaderElection implements Election {
 
         /*
          * current state of sender
+         *
+         * zk Server当前状态
          */
         ServerState state;
 
         /*
          * Address of sender
+         *
+         * 发送者的地址
          */
         long sid;
 
@@ -154,7 +165,6 @@ public class FastLeaderElection implements Election {
         /*
          * Building notification packet to send
          */
-
         requestBuffer.clear();
         requestBuffer.putInt(state);
         requestBuffer.putLong(leader);
@@ -230,7 +240,6 @@ public class FastLeaderElection implements Election {
      * functionality of each is obvious from the name. Each of these
      * spawns a new thread.
      */
-
     protected class Messenger {
 
         /**
@@ -699,7 +708,7 @@ public class FastLeaderElection implements Election {
      * make a lot of sense without context (check lookForLeader) and it
      * has been separated for testing purposes.
      *
-     * @param recv  map of received votes 
+     * @param recv  map of received votes
      * @param ooe   map containing out of election votes (LEADING or FOLLOWING)
      * @param n     Notification
      * @return
