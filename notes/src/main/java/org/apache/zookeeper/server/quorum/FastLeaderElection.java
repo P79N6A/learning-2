@@ -41,13 +41,13 @@ import java.util.concurrent.atomic.AtomicLong;
  * Implementation of leader election using TCP. It uses an object of the class
  * QuorumCnxManager to manage connections. Otherwise, the algorithm is push-based
  * as with the other UDP implementations.
- *
+ * <p>
  * There are a few parameters that can be tuned to change its behavior. First,
  * finalizeWait determines the amount of time to wait until deciding upon a leader.
  * This is part of the leader election algorithm.
- *
+ * <p>
  * 使用TCP实现领导者选举。它使用类QuorumCnxManager来管理连接。 否则，该算法是基于推送的与其他UDP实现一样。
- *
+ * <p>
  * 可以调整一些参数来改变其行为。 第一，finalizeWait确定等待决定领导者的时间。这是领导者选举算法的一部分。
  */
 public class FastLeaderElection implements Election {
@@ -58,9 +58,9 @@ public class FastLeaderElection implements Election {
      * Determine how much time a process has to wait
      * once it believes that it has reached the end of
      * leader election.
-     *
+     * <p>
      * 确定进程必须等待的时间，一旦它认为已经到了就结束领导人选举。
-     *
+     * <p>
      * zk默认选举等待时间为200ms
      */
     final static int finalizeWait = 200;
@@ -70,9 +70,9 @@ public class FastLeaderElection implements Election {
      * Upper bound on the amount of time between two consecutive
      * notification checks. This impacts the amount of time to get
      * the system up again after long partitions. Currently 60 seconds.
-     *
+     * <p>
      * 两个连续之间的时间量的上限通知检查。 这会影响获得的时间长分区后系统再次启动。 目前60秒。
-     *
+     * <p>
      * zk默认60s
      */
     final static int maxNotificationInterval = 60000;
@@ -81,7 +81,7 @@ public class FastLeaderElection implements Election {
      * Connection manager. Fast leader election uses TCP for
      * communication between peers, and QuorumCnxManager manages
      * such connections.
-     *
+     * <p>
      * 连接管理者。快速领导者选举使用TCP对zk Server之间的通信，QuorumCnxManager管理这种连接。
      */
     QuorumCnxManager manager;
@@ -92,7 +92,7 @@ public class FastLeaderElection implements Election {
      * a given peer has changed its vote, either because it has
      * joined leader election or because it learned of another
      * peer with higher zxid or same zxid and higher server id
-     *
+     * <p>
      * 通知是允许其他zk Server知道的消息一个特定的同伴已经改变了投票，
      * 因为它已经改变了加入领导人选举或因为它了解了另一个具有更高zxid或相同zxid和更高服务器ID的对等体
      */
@@ -128,6 +128,14 @@ public class FastLeaderElection implements Election {
          * current state of sender
          *
          * zk Server当前状态
+         *
+         * zk Server一共有四种状态
+         * LOOKING, FOLLOWING, LEADING, OBSERVING
+         *
+         * LOOKING-
+         * FOLLOWING-
+         * LEADING-
+         * OBSERVING-
          */
         ServerState state;
 
@@ -154,6 +162,15 @@ public class FastLeaderElection implements Election {
         }
     }
 
+    /**
+     * zk Server之间通信消息构建
+     * @param state
+     * @param leader
+     * @param zxid
+     * @param electionEpoch
+     * @param epoch
+     * @return
+     */
     static ByteBuffer buildMsg(int state,
                                long leader,
                                long zxid,
@@ -164,6 +181,8 @@ public class FastLeaderElection implements Election {
 
         /*
          * Building notification packet to send
+         *
+         * 构建待发送通知包(消息包)
          */
         requestBuffer.clear();
         requestBuffer.putInt(state);
@@ -180,6 +199,8 @@ public class FastLeaderElection implements Election {
      * Messages that a peer wants to send to other peers.
      * These messages can be both Notifications and Acks
      * of reception of notification.
+     *
+     * zk Server想要发送给其他zk Server的消息。这些消息可以是通知和Acks接收通知。
      */
     static public class ToSend {
         static enum mType {crequest, challenge, notification, ack}
@@ -231,7 +252,14 @@ public class FastLeaderElection implements Election {
         long peerEpoch;
     }
 
+    /**
+     * 发送消息阻塞队列
+     */
     LinkedBlockingQueue<ToSend> sendqueue;
+
+    /**
+     * 接收消息阻塞队列
+     */
     LinkedBlockingQueue<Notification> recvqueue;
 
     /**
@@ -239,14 +267,18 @@ public class FastLeaderElection implements Election {
      * implements two sub-classes: WorkReceiver and  WorkSender. The
      * functionality of each is obvious from the name. Each of these
      * spawns a new thread.
+     *
+     * 消息处理程序的多线程实现。消息的两个子类实现：WorkReceiver和WorkSender。
+     * 从名称中就可以看出每个子类的功能。其中每一个子类都会产生一个新线程。
      */
     protected class Messenger {
 
         /**
          * Receives messages from instance of QuorumCnxManager on
          * method run(), and processes such messages.
+         *
+         * 从QuorumCnxManager实例接收消息方法run()，并处理此类消息。
          */
-
         class WorkerReceiver extends ZooKeeperThread {
             volatile boolean stop;
             QuorumCnxManager manager;
@@ -460,7 +492,7 @@ public class FastLeaderElection implements Election {
             /**
              * Called by run() once there is a new message to send.
              *
-             * @param m     message to send
+             * @param m message to send
              */
             void process(ToSend m) {
                 ByteBuffer requestBuffer = buildMsg(m.state.ordinal(),
@@ -479,7 +511,7 @@ public class FastLeaderElection implements Election {
         /**
          * Constructor of class Messenger.
          *
-         * @param manager   Connection manager
+         * @param manager Connection manager
          */
         Messenger(QuorumCnxManager manager) {
 
@@ -529,8 +561,8 @@ public class FastLeaderElection implements Election {
      * is the connection manager. Such an object should be created only once
      * by each peer during an instance of the ZooKeeper service.
      *
-     * @param self  QuorumPeer that created this object
-     * @param manager   Connection manager
+     * @param self    QuorumPeer that created this object
+     * @param manager Connection manager
      */
     public FastLeaderElection(QuorumPeer self, QuorumCnxManager manager) {
         this.stop = false;
@@ -545,8 +577,8 @@ public class FastLeaderElection implements Election {
      * a separate method. As we have a single constructor currently,
      * it is not strictly necessary to have it separate.
      *
-     * @param self      QuorumPeer that created this object
-     * @param manager   Connection manager
+     * @param self    QuorumPeer that created this object
+     * @param manager Connection manager
      */
     private void starter(QuorumPeer self, QuorumCnxManager manager) {
         this.self = self;
@@ -618,8 +650,8 @@ public class FastLeaderElection implements Election {
      * Check if a pair (server id, zxid) succeeds our
      * current vote.
      *
-     * @param id    Server identifier
-     * @param zxid  Last zxid observed by the issuer of this vote
+     * @param id   Server identifier
+     * @param zxid Last zxid observed by the issuer of this vote
      */
     protected boolean totalOrderPredicate(long newId, long newZxid, long newEpoch, long curId, long curZxid, long curEpoch) {
         LOG.debug("id: " + newId + ", proposed id: " + curId + ", zxid: 0x" +
@@ -645,9 +677,9 @@ public class FastLeaderElection implements Election {
      * Termination predicate. Given a set of votes, determines if
      * have sufficient to declare the end of the election round.
      *
-     *  @param votes    Set of votes
-     *  @param l        Identifier of the vote received last
-     *  @param zxid     zxid of the the vote received last
+     * @param votes Set of votes
+     * @param l     Identifier of the vote received last
+     * @param zxid  zxid of the the vote received last
      */
     protected boolean termPredicate(
             HashMap<Long, Vote> votes,
@@ -675,9 +707,9 @@ public class FastLeaderElection implements Election {
      * electing over and over a peer that has crashed and it is no
      * longer leading.
      *
-     * @param votes set of votes
-     * @param   leader  leader id
-     * @param   electionEpoch   epoch id
+     * @param votes         set of votes
+     * @param leader        leader id
+     * @param electionEpoch epoch id
      */
     protected boolean checkLeader(
             HashMap<Long, Vote> votes,
@@ -708,9 +740,9 @@ public class FastLeaderElection implements Election {
      * make a lot of sense without context (check lookForLeader) and it
      * has been separated for testing purposes.
      *
-     * @param recv  map of received votes
-     * @param ooe   map containing out of election votes (LEADING or FOLLOWING)
-     * @param n     Notification
+     * @param recv map of received votes
+     * @param ooe  map containing out of election votes (LEADING or FOLLOWING)
+     * @param n    Notification
      * @return
      */
     protected boolean ooePredicate(HashMap<Long, Vote> recv,
@@ -1022,7 +1054,7 @@ public class FastLeaderElection implements Election {
      * Check if a given sid is represented in either the current or
      * the next voting view
      *
-     * @param sid     Server identifier
+     * @param sid Server identifier
      * @return boolean
      */
     private boolean validVoter(long sid) {
