@@ -815,10 +815,8 @@ public class FastLeaderElection implements Election {
      * electing over and over a peer that has crashed and it is no
      * longer leading.
      *
-     * // TODO
-     * // TODO
-     * // TODO
-     * 如果选出leader，并且法定人数支持这位领导人，我们必须检查领导人是否已投票并确认其领先。 我们需要这个检查来避免对等体一直在选择已经崩溃并且不再领先的对等体。
+     * 如果选出一个leader，并且大多数zk server支持这个leader，我们必须检查leader是否已投票并确认其领先。
+     * 我们需要这个检查来避免对zk server一直在选择已经崩溃并且不再领先的zk server。
      *
      * @param votes         set of votes
      * @param leader        leader id
@@ -831,13 +829,16 @@ public class FastLeaderElection implements Election {
 
         boolean predicate = true;
 
-        /*
+        /**
          * If everyone else thinks I'm the leader, I must be the leader.
          * The other two checks are just for the case in which I'm not the
          * leader. If I'm not the leader and I haven't received a message
          * from leader stating that it is leading, then predicate is false.
+         *
+         * 如果其他人都认为我是leader，我必须是leader。
+         * 另外两个检查仅适用于我不是领导者的情况。
+         * 如果我不是leader并且我没有收到leader的消息，表明它正在领先，那么就返回我不是leader
          */
-
         if (leader != self.getId()) {
             if (votes.get(leader) == null) predicate = false;
             else if (votes.get(leader).getState() != ServerState.LEADING) predicate = false;
@@ -852,6 +853,8 @@ public class FastLeaderElection implements Election {
      * This predicate checks that a leader has been elected. It doesn't
      * make a lot of sense without context (check lookForLeader) and it
      * has been separated for testing purposes.
+     *
+     * 该谓词检查领导者是否已经当选。没有上下文(检查lookForLeader)并没有很多意义，它已被分开用于测试目的。
      *
      * @param recv map of received votes
      * @param ooe  map containing out of election votes (LEADING or FOLLOWING)
@@ -872,6 +875,12 @@ public class FastLeaderElection implements Election {
 
     }
 
+    /**
+     * 更新提议
+     * @param leader
+     * @param zxid
+     * @param epoch
+     */
     synchronized void updateProposal(long leader, long zxid, long epoch) {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Updating proposal: " + leader + " (newleader), 0x"
@@ -883,6 +892,10 @@ public class FastLeaderElection implements Election {
         proposedEpoch = epoch;
     }
 
+    /**
+     * 获取投票信息
+     * @return
+     */
     synchronized Vote getVote() {
         return new Vote(proposedLeader, proposedZxid, proposedEpoch);
     }
@@ -892,9 +905,16 @@ public class FastLeaderElection implements Election {
      * This method simply decides which one depending on the
      * role of the server.
      *
+     * learning状态可以是FOLLOWING或OBSERVING。这种方法只是根据zk server的角色决定哪一个
+     *
      * @return ServerState
      */
     private ServerState learningState() {
+        /**
+         * LearnerType枚举包括PARTICIPANT和OBSERVER
+         * PARTICIPANT: 投票参与者，包括leader和follower
+         * OBSERVER: observer
+         */
         if (self.getLearnerType() == LearnerType.PARTICIPANT) {
             LOG.debug("I'm a participant: " + self.getId());
             return ServerState.FOLLOWING;
@@ -907,9 +927,12 @@ public class FastLeaderElection implements Election {
     /**
      * Returns the initial vote value of server identifier.
      *
+     * 返回zk server标识符的初始投票值
+     *
      * @return long
      */
     private long getInitId() {
+        // 如果是投票参与者，则返回自身ID，否则返回long的最小值，即0
         if (self.getLearnerType() == LearnerType.PARTICIPANT)
             return self.getId();
         else return Long.MIN_VALUE;
@@ -918,9 +941,12 @@ public class FastLeaderElection implements Election {
     /**
      * Returns initial last logged zxid.
      *
+     * 返回上次记录的最初zxid
+     *
      * @return long
      */
     private long getInitLastLoggedZxid() {
+        // 如果是投票参与者，则返回zxid，否则返回long的最小值，即0
         if (self.getLearnerType() == LearnerType.PARTICIPANT)
             return self.getLastLoggedZxid();
         else return Long.MIN_VALUE;
@@ -928,6 +954,8 @@ public class FastLeaderElection implements Election {
 
     /**
      * Returns the initial vote value of the peer epoch.
+     *
+     * 返回zk server投票周期的初始投票值
      *
      * @return long
      */
@@ -947,9 +975,17 @@ public class FastLeaderElection implements Election {
      * Starts a new round of leader election. Whenever our QuorumPeer
      * changes its state to LOOKING, this method is invoked, and it
      * sends notifications to all other peers.
+     *
+     * 开始新一轮leader选举。每当我们的QuorumPeer将其状态更改为LOOKING时，都会调用此方法，并向所有其他zk server发送通知。
      */
     public Vote lookForLeader() throws InterruptedException {
         try {
+            /**
+             * MBeanRegistry类提供了一个统一的接口，用于使用平台MBean服务器注册/取消注册zookeeper MBean。
+             * 它构建了MBean的层次结构，其中每个MBean由类似文件系统的路径表示。
+             * 最终，此层次结构将作为虚拟数据树存储在zookeeper数据树实例中
+             */
+            // 创建LeaderElectionBean，并注册bean到MBeanRegistry
             self.jmxLeaderElectionBean = new LeaderElectionBean();
             MBeanRegistry.getInstance().register(
                     self.jmxLeaderElectionBean, self.jmxLocalPeerBean);
@@ -957,29 +993,33 @@ public class FastLeaderElection implements Election {
             LOG.warn("Failed to register with JMX", e);
             self.jmxLeaderElectionBean = null;
         }
+
+        // leader选举开始时间
         if (self.start_fle == 0) {
             self.start_fle = Time.currentElapsedTime();
         }
-        try {
-            HashMap<Long, Vote> recvset = new HashMap<Long, Vote>();
 
-            HashMap<Long, Vote> outofelection = new HashMap<Long, Vote>();
+        try {
+            HashMap<Long, Vote> recvset = new HashMap<>();
+
+            HashMap<Long, Vote> outofelection = new HashMap<>();
 
             int notTimeout = finalizeWait;
 
+            // 修改逻辑时钟并更新提议
             synchronized (this) {
                 logicalclock.incrementAndGet();
                 updateProposal(getInitId(), getInitLastLoggedZxid(), getPeerEpoch());
             }
 
-            LOG.info("New election. My id =  " + self.getId() +
-                    ", proposed zxid=0x" + Long.toHexString(proposedZxid));
+            LOG.info("New election. My id =  " + self.getId() + ", proposed zxid=0x" + Long.toHexString(proposedZxid));
+
+            // 发送通知
             sendNotifications();
 
             /*
              * Loop in which we exchange notifications until we find a leader
              */
-
             while ((self.getPeerState() == ServerState.LOOKING) &&
                     (!stop)) {
                 /*
@@ -1149,6 +1189,7 @@ public class FastLeaderElection implements Election {
             }
             return null;
         } finally {
+            // 选举完成后，销毁jmxLeaderElectionBean
             try {
                 if (self.jmxLeaderElectionBean != null) {
                     MBeanRegistry.getInstance().unregister(
@@ -1167,7 +1208,7 @@ public class FastLeaderElection implements Election {
      * Check if a given sid is represented in either the current or
      * the next voting view
      * <p>
-     * 检查给定的sid是否在当前或下一个投票视图中
+     * 检查给定的sid是否在当前或下一个投票周期中
      *
      * @param sid Server identifier
      * @return boolean
