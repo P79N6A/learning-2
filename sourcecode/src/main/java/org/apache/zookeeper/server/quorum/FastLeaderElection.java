@@ -776,6 +776,7 @@ public class FastLeaderElection implements Election {
     protected boolean totalOrderPredicate(long newId, long newZxid, long newEpoch, long curId, long curZxid, long curEpoch) {
         LOG.debug("id: " + newId + ", proposed id: " + curId + ", zxid: 0x" +
                 Long.toHexString(newZxid) + ", proposed zxid: 0x" + Long.toHexString(curZxid));
+        // 权重为0，则不参与投票
         if (self.getQuorumVerifier().getWeight(newId) == 0) {
             return false;
         }
