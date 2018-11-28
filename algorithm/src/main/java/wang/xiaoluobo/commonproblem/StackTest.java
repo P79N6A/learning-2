@@ -1,4 +1,4 @@
-package wang.xiaoluobo;
+package wang.xiaoluobo.commonproblem;
 
 import java.util.Stack;
 

@@ -11,7 +11,7 @@
     <modules>
         <module>algorithm</module>
         <module>algorithm-theory</module>
-        <module>notes</module>
+        <module>sourcecode</module>
         <module>bigdata</module>
     </modules>
 
