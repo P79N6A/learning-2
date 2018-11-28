@@ -2,7 +2,6 @@
     zk version 3.4.13
 
 #### zk启动流程
-zkServer.sh-->QuorumPeerConfig-->ZooKeeperMain-->
 1. zkServer.sh
 2. QuorumPeerConfig
     1. 读取zoo.cfg等配置
