@@ -1,0 +1,39 @@
+server:
+  port: 8100
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  application:
+    name: kafka-message-provider
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+    template:
+      default-topic: test_topic
+
+kafka:
+  bootstrap:
+    servers: localhost:9092
+  topic: test_topic
+  consumer:
+    groupId: test_topic_groupId
+    clientId: test_topic_clientId
+    session:
+      timeout-ms: 30000
+    enable:
+      autocommit: false
+    autocommit:
+      interval-ms: 500
+    key-serializer: org.apache.kafka.common.serialization.StringDeserializer
+    value-serializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+    concurrency-size: 3
+    isAutoCommit: false
+    request:
+      timeout-ms: 31000
+    max-poll-records: 100
+
+logging:
+  config: classpath:log4j2.xml
