@@ -559,6 +559,9 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
 
     Election electionAlg;
 
+    /**
+     * ServerCnxn工厂，负责ServerCnxn连接管理
+     */
     ServerCnxnFactory cnxnFactory;
     private FileTxnSnapLog logFactory = null;
 
@@ -640,6 +643,9 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
         super.start();
     }
 
+    /**
+     * 加载zkDatabase
+     */
     private void loadDataBase() {
         File updating = new File(getTxnFactory().getSnapDir(),
                 UPDATING_EPOCH_FILENAME);
@@ -808,6 +814,11 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
                 this, new ZooKeeperServer.BasicDataTreeBuilder(), this.zkDb));
     }
 
+    /**
+     * 创建选举算法
+     * @param electionAlgorithm
+     * @return
+     */
     protected Election createElectionAlgorithm(int electionAlgorithm) {
         Election le = null;
 

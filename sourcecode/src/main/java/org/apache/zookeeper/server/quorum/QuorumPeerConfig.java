@@ -51,8 +51,19 @@ public class QuorumPeerConfig {
     protected InetSocketAddress clientPortAddress;
     protected String dataDir;
     protected String dataLogDir;
+
+    /**
+     * zk server之前心跳时间
+     * zoo.cfg默认值是2000ms
+     * {@code ZooKeeperServer.DEFAULT_TICK_TIME = 3000}
+     */
     protected int tickTime = ZooKeeperServer.DEFAULT_TICK_TIME;
+
+    /**
+     * zk server接收单台客户端最大连接数(防止被攻击或被单个客户端耗费过多资源)
+     */
     protected int maxClientCnxns = 60;
+
     /** defaults to -1 if not set explicitly */
     protected int minSessionTimeout = -1;
     /** defaults to -1 if not set explicitly */
