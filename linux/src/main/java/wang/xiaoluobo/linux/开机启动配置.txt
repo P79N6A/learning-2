@@ -1,0 +1,24 @@
+vi /etc/rc.local
+
+#!/bin/sh
+#
+# This script will be executed *after* all the other init scripts.
+# You can put your own initialization stuff in here if you don't
+# want to do the full Sys V style init stuff.
+
+touch /var/lock/subsys/local
+
+echo 1 > /proc/sys/net/ipv4/icmp_echo_ignore_all
+
+/etc/init.d/iptables start
+
+mount /dev/xvdb /data1/
+
+/etc/init.d/nginx start
+
+/etc/init.d/mysql start
+
+/data1/redis/src/redis-server /data1/redis/redis.conf
+
+/data1/tomcat8888/bin/catalina.sh start
+

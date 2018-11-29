@@ -13,6 +13,7 @@
         <module>algorithm-theory</module>
         <module>sourcecode</module>
         <module>bigdata</module>
+        <module>linux</module>
     </modules>
 
     <properties>

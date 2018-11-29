@@ -1,0 +1,28 @@
+root用户删除文件提示：Operation not permitted的解决
+
+[root@linux236 root]# ls -l 1.txt
+
+-rw-r--r-- 1 root root 0 Aug   5 23:00 1.txt
+
+[root@linux236 root]# rm -rf 1.txt
+
+rm: cannot unlink `1.txt': Operation not permitted
+
+[root@linux236 root]# lsattr
+
+---i---------- ./1.txt
+
+-------------- ./weiqi.ldif
+
+-------------- ./qi.schema
+
+
+秘密终于暴露了，在lsattr命令下，这个1.txt文件带有一个"i"的属性，所以才不可以删除。您现在可以用下边的一系列命令:
+
+[root@linux236 root]# lsattr 1.txt
+
+---i---------- 1.txt
+
+[root@linux236 root]# chattr -i 1.txt
+
+[root@linux236 root]# rm -rf 1.txt

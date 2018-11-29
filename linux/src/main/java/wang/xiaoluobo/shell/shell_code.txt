@@ -1,0 +1,4 @@
+day=23
+for i in `seq 1 23`; do printf -v num "%02d" "${i}"; tar -zxvf "dayun-gateway-tcp-electrocar.2017-06-${day}-${num}.log.tar.gz"; cat dayun-gateway-tcp-electrocar.2017-06-${day}-${num}.log |grep -i "232301FE4C4239584C3434423947414C4736323938"; cat dayun-gateway-tcp-electrocar.2017-06-${day}-${num}.log |grep -i "232304004C4239584C3434423947414C4736323938"; cat dayun-gateway-tcp-electrocar.2017-06-${day}-${num}.log |grep -i "232304fe4C4239584C3434423947414C4736323938"; done;
+
+for i in `seq 1 23`; do printf -v num "%02d" "${i}"; rm -f "dayun-gateway-tcp-electrocar.2017-06-${day}-${num}.log"; done;

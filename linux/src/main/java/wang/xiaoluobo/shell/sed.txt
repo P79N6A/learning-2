@@ -1,0 +1,255 @@
+http://man.linuxde.net/sed
+
+http://www.cnblogs.com/ggjucheng/archive/2013/01/13/2856901.html
+
+
+
+
+linux中sed的用法
+sed命令行格式为：
+         sed [-nefri]  ‘command’  输入文本/文件        
+
+常用选项：
+        -n∶取消默认的输出 ,使用安静(silent)模式。在一般 sed 的用法中，所有来自 STDIN的资料一般都会被列出到屏幕上。
+			但如果加上 -n 参数后，则只有经过sed 特殊处理的那一行(或者动作)才会被列出来
+        -e∶进行多项编辑，即对输入行应用多条sed命令时使用 . 直接在指令列模式上进行 sed 的动作编辑
+        -f∶指定sed脚本的文件名 . 直接将 sed 的动作写在一个档案内， -f filename 则可以执行 filename 内的sed 动作
+        -r∶sed 的动作支援的是延伸型正则表达式的语法。(预设是基础正则表达式 语法)
+        -i∶直接修改读取的文件内容，而不是由屏幕输出       
+
+常用命令： 
+        a ∶ 新增， a 的后面可以接字串，而这些字串会在新的一行出现(目前的下一行)
+        c ∶ 取代， c 的后面可以接字串，这些字串可以取代 n1,n2 之间的行
+        d ∶ 删除，因为是删除，所以 d 后面通常不接任何内容
+        i ∶ 插入， i 的后面可以接字串，而这些字串会在新的一行出现(目前的上一行)
+        p ∶ 列印，亦即将某个选择的资料印出。通常 p 会与参数 sed -n 一起用
+        s ∶ 取代，可以直接进行替换的工作。通常这个 s 的动作可以搭配正则表达式。 例如 1,20s/old/new/g 
+
+定址
+定址用于决定对哪些行进行编辑。地址的形式可以是数字、正则表达式、或二者的结合。如果没有指定地址，sed将处理输入文件的所有行。
+地址是一个数字，则表示行号；是“$"符号，则表示最后一行。例如： 
+sed - n '3p' datafile
+只打印第三行
+  只显示指定行范围的文件内容，例如：
+
+# 只查看文件的第100行到第200行
+sed -n '100,200p' mysql_slow_query.log
+  地址是逗号分隔的，那么需要处理的地址是这两行之间的范围（包括这两行在内）。范围可以用数字、正则表达式、或二者的组合表示。例如：
+
+sed '2,5d' datafile
+#删除第二到第五行
+sed '/My/,/You/d' datafile
+#删除包含"My"的 行到包含"You"的 行之间的行
+sed '/My/,10d' datafile
+#删除包含"My"的 行到第十行的内容
+ 
+
+举例 ：（假设我们有一文件名为ab）
+删除某行
+[root@localhost ruby] # sed '1d' a              # 删除第一行 
+[root@localhost ruby] # sed '$d' a              # 删除最后一行
+[root@localhost ruby] # sed '1,2d' a            # 删除第一行到第二行
+[root@localhost ruby] # sed '2,$d' a            # 删除第二行到最后一行
+
+显示某行
+[root@localhost ruby] # sed -n '1p' a           # 显示第一行 
+[root@localhost ruby] # sed -n '$p' a           # 显示最后一行
+[root@localhost ruby] # sed -n '1,2p' a         # 显示第一行到第二行
+[root@localhost ruby] # sed -n '2,$p' a         # 显示第二行到最后一行
+
+使用模式进行查询
+[root@localhost ruby] # sed -n '/ruby/p' a      # 查询包括关键字ruby所在所有行
+[root@localhost ruby] # sed -n '/\$/p' a        # 查询包括关键字$所在所有行，使用反斜线\屏蔽特殊含义
+
+增加一行或多行字符串
+[root@localhost ruby] # cat a
+Hello!
+ruby is me,welcome to my blog.
+end
+[root@localhost ruby] # sed '1a drink tea' a  #第一行后增加字符串"drink tea"
+Hello!
+drink tea
+ruby is me,welcome to my blog. 
+end
+[root@localhost ruby] # sed '1,3a drink tea' a #第一行到第三行后增加字符串"drink tea"
+Hello!
+drink tea
+ruby is me,welcome to my blog.
+drink tea
+end
+drink tea
+[root@localhost ruby] # sed '1a drink tea\n or coffee' a   #第一行后增加多行，使用换行符\n
+Hello!
+drink tea
+or coffee
+ruby is me,welcome to my blog.
+end
+
+[root@bz39 test]$ sed -n '/[Th]is/p' b
+this is $4.00
+Tis is $4.00
+
+
+[root@bz39 test]$ sed -n '/[^0]3/p' b
+23;jack;71;87 
+13;alex;68;98
+
+
+[root@bz39 test]$ sed -n '/\(13[0-9]\{1\}\|15[0-8]\{1\}\)[0-9]\{8\}/p' b
+13412345678
+13112345678
+15812345678
+
+
+代替一行或多行
+[root@localhost ruby] # sed '1c Hi' a                #第一行代替为Hi
+Hi
+ruby is me,welcome to my blog.
+end
+[root@localhost ruby] # sed '1,2c Hi' a             #第一行到第二行代替为Hi
+Hi
+end
+
+
+替换一行中的某部分
+格式：sed 's/ 要替换的字符串/ 新的字符串/g '   （要替换的字符串可以用正则表达式）
+[root@localhost ruby] # sed -n '/ruby/p' a | sed 's/ruby/bird/g'     #替换ruby为bird
+[root@localhost ruby] # sed -n '/ruby/p' a | sed 's/ruby//g'         #删除ruby
+
+
+插入
+[root@localhost ruby] # sed -i '$a bye' a         #在文件a中最后一行直接输入"bye"
+[root@localhost ruby] # cat a
+Hello!
+ruby is me,welcome to my blog.
+end
+bye
+
+ 
+
+替换：
+-e是编辑命令，用于sed执行多个编辑任务的情况下。在下一行开始编辑前，所有的编辑动作将应用到模式缓冲区中的行上。
+
+sed -e '1,10d' - e 's/My/Your/g' datafile
+#选项-e用于进行多重编辑。第一重编辑删除第1-3行。第二重编辑将出现的所有My替换为Your。
+#因为是逐行进行这两项编辑（即这两个命令都在模式空间的当前行上执行），所以编辑命令的顺序会影响结果。
+ 
+# 替换两个或多个空格为一个空格
+sed 's/[ ][ ]*/ /g' file_name
+
+
+# 替换两个或多个空格为分隔符:
+sed 's/[ ][ ]*/:/g' file_name
+    
+
+# 如果空格与tab共存时用下面的命令进行替换
+
+# 替换成空格
+sed 's/[[:space:]][[:space:]]*/ /g' filename
+
+# 替换成分隔符:
+sed 's/[[:space:]][[:space:]]*/:/g' filename
+
+
+sed命令的调用:
+在命令行键入命令;将sed命令插入脚本文件,然后调用sed;将sed命令插入脚本文件,并使sed脚本可执行
+sed [option] sed命令 输入文件            在命令行使用sed命令,实际命令要加单引号
+sed [option] -f sed脚本文件 输入文件     使用sed脚本文件
+sed脚本文件 [option] 输入文件            第一行具有sed命令解释器的sed脚本文件
+option如下:
+  n 不打印; sed不写编辑行到标准输出,缺省为打印所有行(编辑和未编辑),p命令可以用来打印编辑行
+  c 下一命令是编辑命令,使用多项编辑时加入此选项
+  f 如果正在调用sed脚本文件,使用此选项,此选项通知sed一个脚本文件支持所用的sed命令,如
+	sed -f myscript.sed input_file  这里myscript.sed即为支持sed命令的文件，使用重定向文件即可保存sed的输出
+
+使用sed在文本中定位文本的方式 :
+    x       x为一行号,比如1
+    x,y     表示行号范围从x到y,如2,5表示从第2行到第5行
+    /pattern/    查询包含模式的行,如/disk/或/[a-z]/
+    /pattern/pattern/   查询包含两个模式的行,如/disk/disks/
+    /pattern/,x  在给定行号上查询包含模式的行,如/disk/,3
+    x,/pattern/  通过行号和模式查询匹配行,如 3,/disk/
+    x,y!    查询不包含指定行号x和y的行
+
+基本sed编辑命令:
+    p      打印匹配行                       			c/    用新文本替换定位文本
+    =      显示文件行号                     			s     使用替换模式替换相应模式
+    a/     在定位行号后附加新文本信息       			r     从另一个文本中读文本
+    i/     在定位行号后插入新文本信息       			w     写文本到一个文件
+    d      删除定位行                       			q     第一个模式匹配完成后退出或立即退出
+    l      显示与八进制ASCII代码等价的控制字符          y  传送字符
+    n      从另一个文本中读文本下一行,并附加在下一行{}在定位行执行的命令组
+    g      将模式2粘贴到/pattern n/
+
+	
+基本sed编程举例:
+使用p(rint)显示行 : sed -n '2p' temp.txt   只显示第2行,使用选项n
+打印范围 :  sed -n '1,3p' temp.txt         打印第1行到第3行
+打印模式 :  sed -n '/movie/'p temp.txt     打印含movie的行
+使用模式和行号查询 :  sed -n '3,/movie/'p temp.txt   只在第3行查找movie并打印
+显示整个文件 :  sed -n '1,$'p temp.txt      $为最后一行
+任意字符 :  sed -n '/.*ing/'p temp.txt     注意是.*ing ,而不是*ing 
+打印行号 :  sed -e '/music/=' temp.txt
+附加文本 :(创建sed脚本文件)chmod u+x script.sed ,运行时./script.sed temp.txt 
+1,3d
+/nfsnobody/p
+s/nfsnobody/aaaaaaaaaaaaaaaaaaaaaaaaaa/g
+
+
+删除文本 : sed '1d' temp.txt  或者 sed '1,4d' temp.txt
+替换文本 : sed 's/source/OKSTR/' temp.txt     将source替换成OKSTR
+sed 's//$//g' temp.txt             将文本中所有的$符号全部删除
+sed 's/source/OKSTR/w temp2.txt' temp.txt 将替换后的记录写入文件temp2.txt
+替换修改字符串 : sed 's/source/"ADD BEFORE" &/p' temp.txt
+结果将在source字符串前面加上"ADD BEFORE",这里的&表示找到的source字符并保存
+sed结果写入到文件 : sed '1,2 w temp2.txt' temp.txt
+sed '/name/ w temp2.txt' temp.txt
+从文件中读文本 : sed '/name/r temp2.txt' temp.txt
+在每列最后加文本 : sed 's/[0-9]*/& Pass/g' temp.txt
+从shell向sed传值 : echo $NAME | sed "s/go/$REP/g"   注意需要使用双引号
+
+
+删除行命令:
+'s//.$//g'         删除以句点结尾行
+'-e /abcd/d'       删除包含abcd的行
+'s/[][][]*/[]/g'   删除一个以上空格,用一个空格代替
+'s/^[][]*//g'      删除行首空格
+'s//.[][]*/[]/g'   删除句号后跟两个或更多的空格,用一个空格代替
+'/^$/d'            删除空行
+'s/^.//g'          删除第一个字符,区别  's//.//g'删除所有的句点
+'s/COL/(.../)//g'  删除紧跟COL的后三个字母
+'s/^////g'         删除路径中第一个/
+
+[root@bz39 data1]# sed -e '/^$/d' a
+[root@bz39 data1]# sed -i '/^$/d' a
+
+1、使用句点匹配单字符     句点“.”可以匹配任意单字符。“.”可以匹配字符串头，也可以是中间任意字符。假定正在过滤一个文本文件，
+   对于一个有1 0个字符的脚本集，要求前4个字符之后为X C，匹配操作如下：. . . .X C. . . .
+2、在行首以^匹配字符串或字符序列     ^只允许在一行的开始匹配字符或单词。在行首第4个字符为1，匹配操作表示为：^ . . . 1
+3、在行尾以$匹配字符串或字符     可以说$与^正相反，它在行尾匹配字符串或字符， $符号放在匹配单词后。
+	如果在行尾匹配单词j e t 0 1，操作如下：j e t 0 1 $    如果只返回包含一个字符的行，操作如下：^ . $
+4、使用*匹配字符串中的单字符或其重复序列     使用此特殊字符匹配任意字符或字符串的重复多次表达式。
+5、使用/屏蔽一个特殊字符的含义     有时需要查找一些字符或字符串，而它们包含了系统指定为特殊字符的一个字符。
+	如果要在正则表达式中匹配以* . p a s结尾的所有文件，可做如下操作：/ * / . p a s
+6、使用[]匹配一个范围或集合      使用[ ]匹配特定字符串或字符串集，可以用逗号将括弧内要匹配的不同字符串分开，但并不强制要求这样做
+	（一些系统提倡在复杂的表达式中使用逗号），这样做可以增 加模式的可读性。使用“ -”表示一个字符串范围，表明字符串范围从“ -”左边字符开始，
+	到“ -”右边字符结束。假定要匹配任意一个数字，可以使用：[ 0 1 2 3 4 5 6 7 8 9 ]    要匹配任意字母，则使用：[ A - Z a - z ]表明从A - Z、a - z的字母范围。
+7、使用/{/}匹配模式结果出现的次数     使用*可匹配所有匹配结果任意次，但如果只要指定次数，就应使用/ { / }，此模式有三种形式，即：
+    pattern/{n/} 匹配模式出现n次。
+    pattern/{n,/} 匹配模式出现最少n次。
+    pattern/{n,m} 匹配模式出现n到m次之间，n , m为0 - 2 5 5中任意整数。
+    匹配字母A出现两次，并以B结尾，操作如下：A / { 2 / } B匹配值为A A B    匹配A至少4次，使用：A / { 4 , / } B
+
+
+替换单引号为空：
+
+可以这样写：
+sed 's/'"'"'//g'
+sed 's/'\''//g'
+sed s/\'//g
+
+
+在文件的第一行前面插入一行abc
+sed -i '1i\abc' urfile
+
+

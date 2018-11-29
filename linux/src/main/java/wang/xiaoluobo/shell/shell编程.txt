@@ -1,0 +1,339 @@
+http://c.biancheng.net/cpp/view/2736.html
+http://www.cnblogs.com/chengmo/archive/2010/10/02/1841355.html
+https://my.oschina.net/xiangxw/blog/11407
+
+
+
+[root@bz39 ~]# date +"%Y-%m-%d %H:%M:%S"
+[root@bz39 ~]# date -d "1970-01-01 1234567890 seconds" +"%Y-%m-%d %H:%M:%S" 
+
+[root@bz39 ~]# for i in `seq 1 10`; do  echo $i; done;
+[root@bz39 ~]# for((i=1;i<10;i++)); do echo $i; done;
+[root@bz39 ~]# for i in {1..10}; do echo $i; done;
+
+[root@bz39 ~]# while((i<=10)); do let sum+=i; let ++i; done;
+[root@bz39 ~]# while((i<=10)); do sum+=$(($sum)); i=$(($i+1)); done;
+
+
+shell小括号、中括号和大括号
+[root@bz39 ~]# var=test
+[root@bz39 ~]# echo $var
+test
+[root@bz39 ~]# echo ${var}aaa
+testaaa
+
+
+
+[root@bz39 data1]# echo `ls`
+apache apr apr-util cmake-2.8.4 dump.rdb fastDFS flume hbase images jdk1.8.0_131 libfastcommon mysql nagios nagios-4.3.2 nagios-plugins-2.2.1 nginx pcre php-5.6.30.tar.gz php-7.1.6 php-7.1.6.tar.gz redis start_tomcat8888.sh tomcat8888 tomcat9999 tsar
+[root@bz39 data1]# echo $(ls)
+apache apr apr-util cmake-2.8.4 dump.rdb fastDFS flume hbase images jdk1.8.0_131 libfastcommon mysql nagios nagios-4.3.2 nagios-plugins-2.2.1 nginx pcre php-5.6.30.tar.gz php-7.1.6 php-7.1.6.tar.gz redis start_tomcat8888.sh tomcat8888 tomcat9999 tsar
+
+
+小括号只影响子shell中的变量
+[root@bz39 data1]# var=test
+[root@bz39 data1]# (var=notest; echo $var)
+notest
+[root@bz39 data1]# echo $var
+test
+
+
+[root@bz39 data1]# { var1=test1;var2=test2;echo $var1>a;echo $var2;}
+test2
+[root@bz39 data1]# cat a
+test1
+[root@bz39 data1]# { var1=test1;var2=test2;echo $var1;echo $var2;}>a
+[root@bz39 data1]# cat a
+test1
+test2
+
+
+[root@bz39 data1]# (
+>     echo "1"
+>     echo "2"
+> ) | awk '{print NR,$0}'
+1 1
+2 2
+
+
+
+shell特殊的替换结构：${var:-string},${var:+string},${var:=string},${var:?string}
+
+[root@bz39 data1]# echo ${newvar:-a} 
+a
+[root@bz39 data1]# echo $newvar
+
+[root@bz39 data1]# newvar=b
+[root@bz39 data1]# echo ${newvar:-a}
+b
+[root@bz39 data1]# echo ${newvar:=a}
+b
+[root@bz39 data1]# echo ${newvar:+a}
+a
+
+
+[root@bz39 data1]# unset newvar
+[root@bz39 data1]# echo ${newvar:?"not exists newvar."}
+-bash: newvar: not exists newvar.
+[root@bz39 data1]# newvar=a
+[root@bz39 data1]# echo ${newvar:?"not exists newvar."}
+a
+
+[root@bz39 data1]# unset var
+[root@bz39 data1]# echo ${var:-$(date)}
+2017年 06月 23日 星期五 16:28:59 CST
+[root@bz39 data1]# echo ${var:-`date`}
+2017年 06月 23日 星期五 16:29:10 CST
+
+
+计算:$((exp))
+[root@bz39 data1]# echo $((3+2))
+5
+[root@bz39 data1]# echo $((var=var3*2))
+6
+[root@bz39 data1]# echo $((var++))
+6
+[root@bz39 data1]# echo $var
+7
+
+
+
+单中括号用于条件测试："["是一个可执行程序,路径是"/usr/bin/[",
+if  [ $num1 -eq $num2 ] ; then 等价于 if  /usr/bin/[ $num1 -eq $num2 ] ; then 
+还等价于if  test $num1 -eq $num2 ; then
+单中括号用于数组：例如：输出数组全部元素echo ${array[@]}
+双中括号：单中括号加强版 [[是 bash 程序语言的关键字,并不是一个命令,在单括号中是不可以用 ||  &&等关系运算符号的,只能用-a -o等等,例如[[ $arch_com = i386 || $ARCH = i*86 ]]
+
+
+四种模式匹配替换结构：${var%pattern},${var%%pattern},${var#pattern},${var##pattern}
+这四种结构的意义是：
+${var%pattern}和${var%%pattern}从结尾匹配
+${var#pattern} 和${var##pattern}从开头匹配
+
+
+
+
+Linux 的字符串截取很有用。有八种方法。
+假设有变量 var=http://www.aaa.com/123.htm
+1. # 号截取，删除左边字符，保留右边字符。
+echo ${var#*//}
+其中 var 是变量名，# 号是运算符，*// 表示从左边开始删除第一个 // 号及左边的所有字符
+即删除 http://
+结果是 ：www.aaa.com/123.htm
+2. ## 号截取，删除左边字符，保留右边字符。
+echo ${var##*/}
+##*/ 表示从左边开始删除最后（最右边）一个 / 号及左边的所有字符
+即删除 http://www.aaa.com/
+结果是 123.htm
+3. %号截取，删除右边字符，保留左边字符
+echo ${var%/*}
+%/* 表示从右边开始，删除第一个 / 号及右边的字符
+结果是：http://www.aaa.com
+4. %% 号截取，删除右边字符，保留左边字符
+echo ${var%%/*}
+%%/* 表示从右边开始，删除最后（最左边）一个 / 号及右边的字符
+结果是：http:
+5. 从左边第几个字符开始，及字符的个数
+echo ${var:0:5}
+其中的 0 表示左边第一个字符开始，5 表示字符的总个数。
+结果是：http:
+6. 从左边第几个字符开始，一直到结束。
+echo ${var:7}
+其中的 7 表示左边第8个字符开始，一直到结束。
+结果是 ：www.aaa.com/123.htm
+7. 从右边第几个字符开始，及字符的个数
+echo ${var:0-7:3}
+其中的 0-7 表示右边算起第七个字符开始，3 表示字符的个数。
+结果是：123
+8. 从右边第几个字符开始，一直到结束。
+echo ${var:0-7}
+表示从右边第七个字符开始，一直到结束。
+结果是：123.htm
+注：（左边的第一个字符是用 0 表示，右边的第一个字符用 0-1 表示）
+
+
+
+一.判断读取字符串值：
+${var}	变量var的值, 与$var相同
+${var-DEFAULT}	如果var没有被声明, 那么就以$DEFAULT作为其值 *
+${var:-DEFAULT}	如果var没有被声明, 或者其值为空, 那么就以$DEFAULT作为其值 *
+${var=DEFAULT}	如果var没有被声明, 那么就以$DEFAULT作为其值 *
+${var:=DEFAULT}	如果var没有被声明, 或者其值为空, 那么就以$DEFAULT作为其值 *
+${var+OTHER}	如果var声明了, 那么其值就是$OTHER, 否则就为null字符串
+${var:+OTHER}	如果var被设置了, 那么其值就是$OTHER, 否则就为null字符串
+${var?ERR_MSG}	如果var没被声明, 那么就打印$ERR_MSG *
+${var:?ERR_MSG}	如果var没被设置, 那么就打印$ERR_MSG *
+${!varprefix*}	匹配之前所有以varprefix开头进行声明的变量
+${!varprefix@}	匹配之前所有以varprefix开头进行声明的变量
+
+
+
+[root@bz39 test]# echo ${abc-'ok'}
+ok
+[root@bz39 test]# echo $abc
+
+[root@bz39 test]# echo ${abc='ok'}
+ok
+[root@bz39 test]# echo $abc
+ok
+
+如果abc 没有声明“=" 还会给abc赋值。
+
+[root@bz39 test]# var1=11;var2=12;var3=
+[root@bz39 test]# echo ${!v@}            
+var1 var2 var3
+[root@bz39 test]# echo ${!v*}
+var1 var2 var3
+
+${!varprefix*}与${!varprefix@}相似，可以通过变量名前缀字符，搜索已经定义的变量,无论是否为空值。
+
+
+
+二.字符串操作（长度，读取，替换）
+
+${#string}							$string的长度
+${string:position}					在$string中, 从位置$position开始提取子串
+${string:position:length}			在$string中, 从位置$position开始提取长度为$length的子串
+${string#substring}					从变量$string的开头, 删除最短匹配$substring的子串
+${string##substring}				从变量$string的开头, 删除最长匹配$substring的子串
+${string%substring}					从变量$string的结尾, 删除最短匹配$substring的子串
+${string%%substring}				从变量$string的结尾, 删除最长匹配$substring的子串
+${string/substring/replacement}		使用$replacement, 来代替第一个匹配的$substring
+${string//substring/replacement}	使用$replacement, 代替所有匹配的$substring
+${string/#substring/replacement}	如果$string的前缀匹配$substring, 那么就用$replacement来代替匹配到的$substring
+${string/%substring/replacement}	如果$string的后缀匹配$substring, 那么就用$replacement来代替匹配到的$substring
+
+
+
+1.长度
+[root@bz39 test]# test='I love china'
+[root@bz39 test]# echo ${#test}
+12
+
+${#变量名}得到字符串长度
+ 
+
+2.截取字串
+[root@bz39 test]# test='I love china'
+[root@bz39 test]# echo ${test:5}
+e china
+[root@bz39 test]# echo ${test:5:10}
+e china
+${变量名:起始:长度}得到子字符串
+
+
+3.字符串删除
+[root@bz39 test]# test='c:/windows/boot.ini'
+[root@bz39 test]# echo ${test#/}
+c:/windows/boot.ini
+[root@bz39 test]# echo ${test#*/}
+windows/boot.ini
+[root@bz39 test]# echo ${test##*/}
+boot.ini
+
+[root@bz39 test]# echo ${test%/*} 
+c:/windows
+[root@bz39 test]# echo ${test%%/*}
+
+# ${test##*/},${test%/*} 分别是得到文件名，或者目录地址最简单方法。
+
+
+4.字符串替换
+[root@bz39 test]# test='c:/windows/boot.ini'
+[root@bz39 test]# echo ${test/\//\\}
+c:\windows/boot.ini
+[root@bz39 test]# echo ${test//\//\\}
+c:\windows\boot.ini
+
+${变量/查找/替换值} 一个“/”表示替换第一个，”//”表示替换所有,当查找中出现了：”/”请加转义符”\/”表示。
+
+
+
+三、expr
+[wyd@bz39 ~]$ expr 9 + 8 - 7 \* 6 / 5 + \( 4 - 3 \) \* 2
+11
+
+match 	字符串 表达式等于"字符串 :表达式"
+substr  字符串 偏移量 长度替换字符串的子串，偏移的数值从 1 起计
+index 	字符串 字符在字符串中发现字符的地方建立下标，或者标0
+length  字符串字符串的长度
+
+
+[wyd@bz39 ~]$ str="123 aaa456 789"
+[wyd@bz39 ~]$ expr match "$str" .*5
+9
+匹配几个字符
+
+
+[wyd@bz39 ~]$ echo ${str:5}
+aa456 789
+[wyd@bz39 ~]$ echo ${str:5:3}
+aa4
+[wyd@bz39 ~]$ expr substr "$str" 5 3
+aaa
+
+[wyd@bz39 ~]$ expr index "$str" b
+0
+[wyd@bz39 ~]$ expr index "$str" 9
+14
+
+
+[wyd@bz39 ~]$ echo ${#str}
+14
+[wyd@bz39 ~]$ expr length "$str"
+14
+
+
+
+#!/bin/bash
+echo "a is 5 ,b is 3. Please select your method: "
+a=5
+b=3
+select var in "a+b" "a-b" "a*b" "a/b"
+do
+        break
+done
+case $var in
+"a+b")
+        echo 'a+b= '`expr $a + $b`;;
+"a-b")
+        echo 'a-b= '`expr $a - $b`;;
+"a*b")
+        echo 'a*b= '`expr $a \* $b`;;
+"a/b")
+        echo 'a/b= '`expr $a / $b`;;
+*)
+        echo "input error"
+esac
+
+
+
+[wyd@bz39 ~]$ bc -l -q
+4/3
+1.33333333333333333333				# 未指定精度默认保留整数
+scale=5								# 指定精度为5
+4/3
+1.33333
+ibase=2								# 指定进制转换的输入机制为二进制，输出默认为是十进制
+1010
+10
+4^2									# 指数运算，注：指数不能为浮点数
+16
+4*a(1)								# 计算π值，a()是个函数 arctan()
+3.14156
+quit
+
+
+[wyd@bz39 ~]$ echo "4 3 * 2 + 1 - p" | dc
+13
+
+
+
+
+
+
+
+
+
+
+

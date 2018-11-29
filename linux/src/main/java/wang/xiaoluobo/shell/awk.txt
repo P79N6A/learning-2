@@ -1,0 +1,285 @@
+http://man.linuxde.net/awk
+
+awk [options] 'script' var=value file(s)
+awk [options] -f scriptfile var=value file(s)
+常用命令选项 
+-F fs fs指定输入分隔符，fs可以是字符串或正则表达式，如-F: 
+-v var=value   赋值一个用户定义变量，将外部变量传递给awk 
+-f scripfile  从脚本文件中读取awk命令 -m[fr] val   对val值设置内在限制，
+-mf选项限制分配给val的最大块数目；-mr选项限制记录的最大数目。这两个功能是Bell实验室版awk的扩展功能，在标准awk中不适用。
+
+
+awk内置变量
+说明：[A][N][P][G]表示第一个支持变量的工具，[A]=awk、[N]=nawk、[P]=POSIXawk、[G]=gawk 
+$n 当前记录的第n个字段，比如n为1表示第一个字段，n为2表示第二个字段。 
+$0 这个变量包含执行过程中当前行的文本内容。 
+[N] ARGC 命令行参数的数目。 
+[G] ARGIND 命令行中当前文件的位置（从0开始算）。 
+[N] ARGV 包含命令行参数的数组。 
+[G] CONVFMT 数字转换格式（默认值为%.6g）。 
+[P] ENVIRON 环境变量关联数组。 
+[N] ERRNO 最后一个系统错误的描述。 
+[G] FIELDWIDTHS 字段宽度列表（用空格键分隔）。 
+[A] FILENAME 当前输入文件的名。 
+[P] FNR 同NR，但相对于当前文件。 
+[A] FS 字段分隔符（默认是任何空格）。 
+[G] IGNORECASE 如果为真，则进行忽略大小写的匹配。 
+[A] NF 表示字段数，在执行过程中对应于当前的字段数。 
+[A] NR 表示记录数，在执行过程中对应于当前的行号。 
+[A] OFMT 数字的输出格式（默认值是%.6g）。 
+[A] OFS 输出字段分隔符（默认值是一个空格）。 
+[A] ORS 输出记录分隔符（默认值是一个换行符）。 
+[A] RS 记录分隔符（默认是一个换行符）。 
+[N] RSTART 由match函数所匹配的字符串的第一个位置。 
+[N] RLENGTH 由match函数所匹配的字符串的长度。 [N] SUBSEP 数组下标分隔符（默认值是34）。
+
+
+内置函数
+atan2( y, x )	返回 y/x 的反正切。
+cos( x )	返回 x 的余弦；x 是弧度。
+sin( x )	返回 x 的正弦；x 是弧度。
+exp( x )	返回 x 幂函数。
+log( x )	返回 x 的自然对数。
+sqrt( x )	返回 x 平方根。
+int( x )	返回 x 的截断至整数的值。
+rand( )	返回任意数字 n，其中 0 <= n < 1。
+srand( [expr] )	将 rand 函数的种子值设置为 Expr 参数的值，或如果省略 Expr 参数则使用某天的时间。返回先前的种子值。
+
+
+字符串函数
+gsub( Ere, Repl, [ In ] )	除了正则表达式所有具体值被替代这点，它和 sub 函数完全一样地执行。
+sub( Ere, Repl, [ In ] )	用 Repl 参数指定的字符串替换 In 参数指定的字符串中的由 Ere 参数指定的扩展正则表达式的第一个具体值。sub 函数返回替换的数量。出现在 Repl 参数指定的字符串中的 &（和符号）由 In 参数指定的与 Ere 参数的指定的扩展正则表达式匹配的字符串替换。如果未指定 In 参数，缺省值是整个记录（$0 记录变量）。 
+index( String1, String2 )	在由 String1 参数指定的字符串（其中有出现 String2 指定的参数）中，返回位置，从 1 开始编号。如果 String2 参数不在 String1 参数中出现，则返回 0（零）。 
+length [(String)]	返回 String 参数指定的字符串的长度（字符形式）。如果未给出 String 参数，则返回整个记录的长度（$0 记录变量）。 
+blength [(String)]	返回 String 参数指定的字符串的长度（以字节为单位）。如果未给出 String 参数，则返回整个记录的长度（$0 记录变量）。 
+substr( String, M, [ N ] )	返回具有 N 参数指定的字符数量子串。子串从 String 参数指定的字符串取得，其字符以 M 参数指定的位置开始。M 参数指定为将 String 参数中的第一个字符作为编号 1。如果未指定 N 参数，则子串的长度将是 M 参数指定的位置到 String 参数的末尾 的长度。 
+match( String, Ere )	在 String 参数指定的字符串（Ere 参数指定的扩展正则表达式出现在其中）中返回位置（字符形式），从 1 开始编号，或如果 Ere 参数不出现，则返回 0（零）。RSTART 特殊变量设置为返回值。RLENGTH 特殊变量设置为匹配的字符串的长度，或如果未找到任何匹配，则设置为 -1（负一）。 
+split( String, A, [Ere] )	将 String 参数指定的参数分割为数组元素 A[1], A[2], . . ., A[n]，并返回 n 变量的值。此分隔可以通过 Ere 参数指定的扩展正则表达式进行，或用当前字段分隔符（FS 特殊变量）来进行（如果没有给出 Ere 参数）。除非上下文指明特定的元素还应具有一个数字值，否则 A 数组中的元素用字符串值来创建。 
+tolower( String )	返回 String 参数指定的字符串，字符串中每个大写字符将更改为小写。大写和小写的映射由当前语言环境的 LC_CTYPE 范畴定义。 
+toupper( String )	返回 String 参数指定的字符串，字符串中每个小写字符将更改为大写。大写和小写的映射由当前语言环境的 LC_CTYPE 范畴定义。 
+sprintf(Format, Expr, Expr, . . . )	根据 Format 参数指定的 printf 子例程格式字符串来格式化 Expr 参数指定的表达式并返回最后生成的字符串。
+
+
+格式化字符串格式：格式化字符串输出（sprintf使用）
+%d	十进制有符号整数
+%u	十进制无符号整数
+%f	浮点数
+%s	字符串
+%c	单个字符
+%p	指针的值
+%e	指数形式的浮点数
+%x	%X无符号以十六进制表示的整数
+%o	无符号以八进制表示的整数
+%g	自动选择合适的表示法
+
+
+
+
+一般函数 
+close( Expression )	用同一个带字符串值的 Expression 参数来关闭由 print 或 printf 语句打开的或调用 getline 函数打开的文件或管道。如果文件或管道成功关闭，则返回 0；其它情况下返回非零值。如果打算写一个文件，并稍后在同一个程序中读取文件，则 close 语句是必需的。 
+system(command )	执行 Command 参数指定的命令，并返回退出状态。等同于 system 子例程。 
+Expression | getline [ Variable ]	从来自 Expression 参数指定的命令的输出中通过管道传送的流中读取一个输入记录，并将该记录的值指定给 Variable 参数指定的变量。如果当前未打开将 Expression 参数的值作为其命令名称的流，则创建流。创建的流等同于调用 popen 子例程，此时 Command 参数取 Expression 参数的值且 Mode 参数设置为一个是 r 的值。只要流保留打开且 Expression 参数求得同一个字符串，则对 getline 函数的每次后续调用读取另一个记录。如果未指定 Variable 参数，则 $0 记录变量和 NF 特殊变量设置为从流读取的记录。 
+getline [ Variable ] < Expression	从 Expression 参数指定的文件读取输入的下一个记录，并将 Variable 参数指定的变量设置为该记录的值。只要流保留打开且 Expression 参数对同一个字符串求值，则对 getline 函数的每次后续调用读取另一个记录。如果未指定 Variable 参数，则 $0 记录变量和 NF 特殊变量设置为从流读取的记录。 
+getline [ Variable ]	将 Variable 参数指定的变量设置为从当前输入文件读取的下一个输入记录。如果未指定 Variable 参数，则 $0 记录变量设置为该记录的值，还将设置 NF、NR 和 FNR 特殊变量。
+
+
+
+
+[root@bz39 test]# last -10|sed -e '/^$/d'|sed -e '$d' | awk '{print $3;}'
+
+[root@bz39 test]# last -10|sed -e '/^$/d'|sed -e '$d' | awk '{print $3;}'|wc -l
+
+[root@bz39 test]# last -10|sed -e '/^$/d'|sed -e '$d' | awk 'NR==4{next}{print NR,$3;}'
+
+[root@bz39 test]# seq 5| awk 'BEGIN{sum=0; print "total:";} {sum=sum + $1;} END{print sum;}'
+
+[root@bz39 test]$ awk 'BEGIN{a="100test";if(a ~ /^100*/){print "ok";}}'
+
+[root@bz39 test]$ awk 'BEGIN{"date"|getline out; split(out, mon); print mon[2];}'
+
+[root@bz39 test]$ awk 'BEGIN{while( "ls" | getline) print;}'
+
+[root@bz39 ~]# echo | awk '{printf("hello word!") > "a"}'
+
+[root@bz39 ~]# awk -F: '{ print $NF }' /etc/passwd
+
+[root@bz39 ~]# awk 'BEGIN{ FS=":" } { print $NF }' /etc/passwd
+
+[root@bz39 ~]# awk 'BEGIN{ test=100; if(test>90){ print "very good"; } else if(test>60){ print "good"; } else{ print "no pass"; } }'
+
+[root@bz39 ~]# awk 'BEGIN{ test=100; total=0; while(i<=test){ total+=i; i++; } print total; }'
+
+[root@bz39 ~]# awk 'BEGIN{ for(k in ENVIRON){ print k"="ENVIRON[k]; } }'
+
+[root@bz39 ~]# awk 'BEGIN{ total=0; i=0; do {total+=i;i++;} while(i<=100) print total; }'
+
+Array[1]="sun"
+Array[2]="kai"
+
+Array["first"]="www"
+Array["last"]="name"
+Array["birth"]="1987"
+
+
+[root@bz39 ~]# awk 'BEGIN{info="it is a test";lens=split(info,ta," ");print length(ta),lens;}'
+
+
+[root@bz39 ~]# awk 'BEGIN{info="it is a test";split(info,tA," ");print asort(tA);}'
+
+[root@bz39 ~]# awk 'BEGIN{info="it is a test";tlen=split(info,tA," ");for(k=1;k<=tlen;k++){print k,tA[k];}}'
+
+# awk数组是关联数组，只要通过数组引用它的key，就会自动创建改序列。
+[root@bz39 ~]# awk 'BEGIN{tB["a"]="a1";tB["b"]="b1";if( "c" in tB){print "ok";};for(k in tB){print k,tB[k];}}'
+
+[root@bz39 ~]# awk 'BEGIN{ for(i=1;i<=9;i++){ for(j=1;j<=9;j++){ tarr[i,j]=i*j; print i,"*",j,"=",tarr[i,j]; } } }'
+
+[root@bz39 ~]# awk 'BEGIN{ for(i=1;i<=9;i++){ for(j=1;j<=9;j++){ tarr[i,j]=i*j; } } for(m in tarr){ split(m,tarr2,SUBSEP); print tarr2[1],"*",tarr2[2],"=",tarr[m]; } }'
+
+
+[root@bz39 ~]$ awk --re-interval '/134[0-9]{8}/{print $0}' b
+13412345678
+
+[root@bz39 ~]$ echo "beet" | awk '/be+t/{print $0}'
+beet
+
+[root@bz39 ~]$ echo "cat" | awk '/(c|b)a(b|t)/{print $0;}'
+cat
+
+[root@bz39 ~]$ echo "bet" | awk '/b[ae]?t/{print $0}'
+bet
+
+[root@bz39 ~]# awk 'BEGIN{OFMT="%.3f";fs=sin(1);fe=exp(10);fl=log(10);fi=int(3.1415);print fs,fe,fl,fi;}'
+[root@bz39 ~]# awk 'BEGIN{srand();fr=int(100*rand());print fr;}' 
+
+
+
+
+
+[root@bz39 ~]# awk 'BEGIN{info="this is a test2010test!";gsub(/[0-9]+/,"!",info);print info}'
+[root@bz39 ~]# awk 'BEGIN{info="this is a test2010test!";print index(info,"test")?"ok":"no found";}'
+[root@bz39 ~]# awk 'BEGIN{info="this is a test2010test!";print match(info,/[0-9]+/)?"ok":"no found";}' 
+[root@bz39 ~]# awk 'BEGIN{info="this is a test2010test!";print substr(info,4,10);}' 
+[root@bz39 ~]# awk 'BEGIN{info="this is a test";split(info,tA," ");print length(tA);for(k in tA){print k,tA[k];}}' 
+
+
+
+
+[root@bz39 ~]# awk 'BEGIN{n1=124.113;n2=-1.224;n3=1.2345; printf("%.2f,%.2u,%.2g,%X,%on",n1,n2,n3,n1,n1);}' 
+
+
+
+
+
+
+[root@bz39 ~]# awk 'BEGIN{while("cat /etc/passwd"|getline){print $0;};close("/etc/passwd");}' 
+[root@bz39 ~]# awk 'BEGIN{while(getline < "/etc/passwd"){print $0;};close("/etc/passwd");}'
+[root@bz39 ~]# awk 'BEGIN{print "Enter your name:";getline name;print name;}' 
+[root@bz39 ~]# awk 'BEGIN{b=system("ls -al");print b;}'
+
+
+
+
+
+
+时间函数 
+mktime( YYYY MM dd HH MM ss[ DST])	生成时间格式
+strftime([format [, timestamp]])	格式化时间输出，将时间戳转为时间字符串 具体格式，见下表.
+systime()	得到时间戳,返回从1970年1月1日开始到当前时间(不计闰年)的整秒数
+
+
+
+[root@bz39 ~]# awk 'BEGIN{tstamp=mktime("2001 01 01 12 12 12");print strftime("%c",tstamp);}'
+[root@bz39 ~]# awk 'BEGIN{tstamp1=mktime("2001 01 01 12 12 12");tstamp2=mktime("2001 02 01 0 0 0");print tstamp2-tstamp1;}'
+[root@bz39 ~]# awk 'BEGIN{tstamp1=mktime("2001 01 01 12 12 12");tstamp2=systime();print tstamp2-tstamp1;}'
+
+
+
+
+strftime日期和时间格式说明符
+%a	星期几的缩写(Sun)
+%A	星期几的完整写法(Sunday)
+%b	月名的缩写(Oct)
+%B	月名的完整写法(October)
+%c	本地日期和时间
+%d	十进制日期
+%D	日期 08/20/99
+%e	日期，如果只有一位会补上一个空格
+%H	用十进制表示24小时格式的小时
+%I	用十进制表示12小时格式的小时
+%j	从1月1日起一年中的第几天
+%m	十进制表示的月份
+%M	十进制表示的分钟
+%p	12小时表示法(AM/PM)
+%S	十进制表示的秒
+%U	十进制表示的一年中的第几个星期(星期天作为一个星期的开始)
+%w	十进制表示的星期几(星期天是0)
+%W	十进制表示的一年中的第几个星期(星期一作为一个星期的开始)
+%x	重新设置本地日期(08/20/99)
+%X	重新设置本地时间(12：00：00)
+%y	两位数字表示的年(99)
+%Y	当前月份 %Z	时区(PDT)
+%%	百分号(%)
+
+
+
+
+
+正则表达式由以下内容组合而成：
+
+普通字符，例如空格、下划线、A-Z、a-z、0-9。
+可以扩展为普通字符的元字符，它们包括：
+(.) 它匹配除了换行符外的任何单个字符。
+(*) 它匹配零个或多个在其之前紧挨着的字符。
+[ character(s) ] 它匹配任何由其中的字符/字符集指定的字符，你可以使用连字符(-)代表字符区间，例如 [a-f]、[1-5]等。
+^ 它匹配文件中一行的开头。
+$ 它匹配文件中一行的结尾。
+\ 这是一个转义字符。
+
+[0-9] 代表一个单独的数字
+[a-z] 代表一个单独的小写字母
+[A-Z] 代表一个单独的大写字母
+[a-zA-Z] 代表一个单独的字母
+[a-zA-Z 0-9] 代表一个单独的字母或数字
+
+
+
+
+[wyd@bz39 test]$ for i in `seq 1 5`; do echo "data${i}1,data${i}2,data${i}3" >> c.txt; done;
+[wyd@bz39 test]$ cat c.txt
+data11,data12,data13
+data21,data22,data23
+data31,data32,data33
+data41,data42,data43
+data51,data52,data53
+[wyd@bz39 test]$ awk 'BEGIN{FS=",";OFS="--";}{print $1,$2,$3}' c.txt
+data11--data12--data13
+data21--data22--data23
+data31--data32--data33
+data41--data42--data43
+data51--data52--data53
+
+[wyd@bz39 test]$ cat c.txt
+data11,data12,data13--
+data21,data22,data23--
+data31,data32,data33--
+data41,data42,data43--
+data51,data52,data53
+[wyd@bz39 test]$ awk 'BEGIN{FS=",";RS="--\\n";OFS="***";}{print $1,$2,$3;}' c.txt
+data11***data12***data13
+data21***data22***data23
+data31***data32***data33
+data41***data42***data43
+data51***data52***data53
+
+[wyd@bz39 test]$ 
+
+
+
+
+
+
+
+
+
+
+

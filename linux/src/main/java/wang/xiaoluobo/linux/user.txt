@@ -1,0 +1,6 @@
+useradd -u 222 -d /usr/wyd -g 0 -m wyd
+userdel wyd
+
+
+scp -P8000 /Users/dongzai1005/Downloads/jdk-8u131-linux-x64.tar.gz  wyd@114.215.131.39:/opt/wars
+

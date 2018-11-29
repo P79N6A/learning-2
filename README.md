@@ -3,3 +3,9 @@
   
   有道笔记内容逐渐迁移到github
 
+##### idea build慢解决方法    
+maven-->runner-->vm options配置 -DarchetypeCatalog=internal
+
+
+
+
