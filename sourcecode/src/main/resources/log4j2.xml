@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="off">
     <Properties>
-        <Property name="SERVICE_NAME">kafka-message-provider</Property>
+        <Property name="SERVICE_NAME">sourcecode</Property>
         <Property name="PID">????</Property>
         <Property name="LOG_EXCEPTION_CONVERSION_WORD">%xwEx</Property>
         <Property name="LOG_LEVEL_PATTERN">%5p</Property>
