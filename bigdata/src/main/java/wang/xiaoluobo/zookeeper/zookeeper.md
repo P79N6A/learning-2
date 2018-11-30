@@ -1,6 +1,6 @@
 ### zk集群部署 version 3.4.13
 
-1. 配置 hosts
+1. 配置hosts
 2. cd zookeeper-3.4.13/conf
 3. mv zoo.template.cfg zoo.cfg
     ```
