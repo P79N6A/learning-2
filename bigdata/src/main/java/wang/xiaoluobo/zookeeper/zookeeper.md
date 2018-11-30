@@ -9,11 +9,11 @@
     server.2=bigdata02:2888:3888
     server.3=bigdata03:2888:3888
     ```
-4. 通过item2分屏同时启动zk server
+4. 通过item2分屏同时启动zk server  
 $ sudo ./bin/zkServer.sh start
 
 5. 查看zk server状态
-$ sudo ./bin/zkServer.sh status
+$ sudo ./bin/zkServer.sh status  
 [](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/zookeeper/images/zk01.png)
 [](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/zookeeper/images/zk02.png)
 [](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/zookeeper/images/zk03.png)
