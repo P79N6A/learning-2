@@ -1,9 +1,0 @@
-1.使用root账户登录系统，添加一个普通账户例如test，并为其设置密码
-useradd test
-passwd test
-2.编辑配置文件
-    vi /etc/ssh/sshd_config
- 修改PermitRootLogin 后面的yes 为 no ,并且去掉前面的注释符
-3.最后重启sshd服务
-service sshd restart
-此时再用root用户登录，如果不能登陆则代表配置成功。如果需要使用root权限，可以使用su/sudo进行切换

@@ -1,3 +1,4 @@
+```sbtshell
 [root@bz39 data1]# cat /proc/meminfo
 MemTotal:      8184876 kB
 MemFree:       2673288 kB
@@ -46,3 +47,4 @@ vm.drop_caches = 3
 Mem:          7993        109       7883          0          0         26
 -/+ buffers/cache:         82       7910
 Swap:            0          0          0
+```
