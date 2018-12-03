@@ -25,6 +25,8 @@ wyd@wangyandong:~/soft/flink-1.6.0$ tail log/flink-*-standalonesession-*.log
 ```
 
 #### 3. SocketWindowWordCount
+单词在5秒的时间窗口中计算(处理时间与翻滚窗口)并打印到标准输出  
+
 ```java
 public class SocketWindowWordCount {
 
@@ -163,7 +165,7 @@ $ vim flink-1.6.0/conf/logback.xml
 $ vim flink-1.6.0/conf/logback-console.xml
 $ vim flink-1.6.0/conf/logback-yarn.xml
 
-# 
+# 管理jar包
 $ rm -f slf4j-log4j12-1.7.7.jar
 $ cp logback-classic-1.2.3.jar flink-1.6.0/lib
 $ cp logback-core-1.2.3.jar flink-1.6.0/lib
