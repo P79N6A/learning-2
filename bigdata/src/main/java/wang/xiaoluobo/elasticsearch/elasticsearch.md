@@ -90,4 +90,4 @@ $ ./grunt server
 
 #### 5. head web页面
 ![elasticsearch01](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/elasticsearch/images/elasticsearch01.png)    
-![elasticsearch02](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/elasticsearch/images/elasticsearch01.png)    
+![elasticsearch02](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/elasticsearch/images/elasticsearch02.png)    
