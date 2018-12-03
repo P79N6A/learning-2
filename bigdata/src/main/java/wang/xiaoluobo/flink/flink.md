@@ -151,9 +151,22 @@ bigdata01:8081
 ```
 
 #### 2. [flink config logback](https://ci.apache.org/projects/flink/flink-docs-release-1.6/dev/best_practices.html)
+[logback-classic-1.2.3.jar](http://central.maven.org/maven2/ch/qos/logback/logback-classic/1.2.3/logback-classic-1.2.3.jar)  
+[logback-core-1.2.3.jar](http://central.maven.org/maven2/ch/qos/logback/logback-core/1.2.3/logback-core-1.2.3.jar)  
+
 ```sbtshell
 [hadoop@bigdata01 flink-1.6.0]$ sudo mkdir /mnt/log/flink
 [hadoop@bigdata01 flink-1.6.0]$ sudo chown -R hadoop:hadoop /mnt/log/flink
+
+# 编辑logback配置
+$ vim flink-1.6.0/conf/logback.xml
+$ vim flink-1.6.0/conf/logback-console.xml
+$ vim flink-1.6.0/conf/logback-yarn.xml
+
+# 
+$ rm -f slf4j-log4j12-1.7.7.jar
+$ cp logback-classic-1.2.3.jar flink-1.6.0/lib
+$ cp logback-core-1.2.3.jar flink-1.6.0/lib
 ```
 
 #### 3. 启动和停止flink
