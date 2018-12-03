@@ -20,7 +20,7 @@
 [root@mvare01 kafka-manager-1.3.3.18]# nohup bin/kafka-manager -Dconfig.file=conf/application.conf -Dhttp.port=8080 &
 ```
 
-#### kafka-manager页面
+#### kafka-manager管理页面
 ![add cluster](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/kafka/images/kafka-manager01.png)  
 ![cluster view](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/kafka/images/kafka-manager02.png)  
 ![cluster detail view](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/kafka/images/kafka-manager03.png)  
