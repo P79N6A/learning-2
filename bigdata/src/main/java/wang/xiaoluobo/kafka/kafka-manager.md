@@ -1,4 +1,4 @@
-### kafka-manager version 1.3.3.18
+## kafka-manager version 1.3.3.18
 
 ##### 配置[application.conf](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/kafka/application.conf)
 ```sbtshell
