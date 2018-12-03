@@ -7,6 +7,13 @@
     
 #### 以下是修改前的代码
 ```java
+@Bean
+public SessionManager sessionManager() {
+    MySessionManager mySessionManager = new MySessionManager();
+    mySessionManager.setSessionDAO(redisSessionDAO());
+    return mySessionManager;
+}
+
 public RedisManager redisManager() {
     RedisManager redisManager = new RedisManager();
     redisManager.setHost(host);
@@ -33,6 +40,14 @@ public RedisSessionDAO redisSessionDAO() {
 
 #### 以下是修改后的代码
 ```java
+@Bean
+public SessionManager sessionManager() {
+    MySessionManager mySessionManager = new MySessionManager();
+    mySessionManager.setSessionDAO(redisSessionDAO());
+    mySessionManager.setGlobalSessionTimeout(60*60*24*30*3 * 1000L);    // session超时时间
+    return mySessionManager;
+}
+
 public RedisSentinelManager redisManager() {
     RedisSentinelManager redisManager = new RedisSentinelManager();
     redisManager.setHost(host);
