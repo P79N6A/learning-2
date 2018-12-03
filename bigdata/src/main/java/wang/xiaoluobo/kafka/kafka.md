@@ -3,7 +3,7 @@
 1. 集群环境  
 两个节点：mware01，mware02  
 2. 安装 [jdk](https://github.com/Dongzai1005/learning/blob/master/notes/src/main/java/wang/xiaoluobo/jdk.md), [zookeeper](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/zookeeper/zookeeper.md)  
-3. 修改[server.properties](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/kafka/server.properties)    
+3. 修改[server.properties](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/kafka/config/server.properties)    
 4. 启动kafka节点  
     
         [root@mvare01 kafka_2.12-2.0.0]$ ./bin/kafka-server-start.sh -daemon config/server.properties

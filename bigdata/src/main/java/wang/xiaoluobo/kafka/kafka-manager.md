@@ -1,6 +1,6 @@
 ## kafka-manager version 1.3.3.18
 
-##### 配置[application.conf](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/kafka/application.conf)
+##### 配置[application.conf](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/kafka/config/application.conf)
 ```sbtshell
 [root@mvare01 opt]# unzip -q kafka-manager-1.3.3.18.zip
 [root@mvare01 conf]# vim application.conf
