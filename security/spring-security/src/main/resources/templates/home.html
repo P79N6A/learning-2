@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>spring_security</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="/static/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container">
+    <div class="navbar">
+        <div class="navbar-inner">
+            <a class="brand" style="color:white;">spring_security</a>
+            <ul class="nav" style="float:right;margin-top:10px;color:white;font-size:20px;">
+                <li>
+                    您好，<span th:text="${username}"></span>
+                </li>
+                <li style="margin-left: 15px; margin-top:-2px;">
+                    <form th:action="@{/logout}" method="post">
+                        <input type="submit" value=" 退出"/>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row" sec:authorize="hasRole('ROLE_USER')">
+        ROLE_USER
+    </div>
+
+    <div class="row" sec:authorize="hasRole('ROLE_ADMIN')">
+        ROLE_ADMIN
+    </div>
+</body>
+</html>

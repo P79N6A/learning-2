@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>登录</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="/static/css/bootstrap.min.css" />
+</head>
+<body onload="document.f.username.focus();">
+	<div class="container">
+		<div class="navbar">
+			<div class="navbar-inner">
+				<a class="brand" style="color:white;">spring_security</a>
+			</div>
+		</div>
+		<div class="content">
+			<p th:if="${param.logout}" class="alert">You have been logged out</p>
+
+			<form name="form" th:action="@{/login}" action="/login" method="POST">
+                用户：<input type="text" name="username" value="admin" placeholder="用户" /> <br/>
+                密码：<input type="password" name="password" value="123456" placeholder="密码" /> <br/>
+				<input type="submit" id="login" value="登录" class="btn btn-primary" />
+			</form>
+		</div>
+	</div>
+</body>
+</html>
