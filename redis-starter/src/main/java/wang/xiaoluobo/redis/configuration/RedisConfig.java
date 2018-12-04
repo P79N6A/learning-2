@@ -12,6 +12,7 @@ import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.time.Duration;
@@ -77,11 +78,66 @@ public class RedisConfig {
     public RedisTemplate redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate redisTemplate = new RedisTemplate();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new StringRedisSerializer());
-        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-        redisTemplate.setHashValueSerializer(new StringRedisSerializer());
+        if(redisProperties.getKeySerializer() == null || "".equals(redisProperties.getKeySerializer())) {
+            redisTemplate.setKeySerializer(new StringRedisSerializer());
+        }else {
+            try {
+                redisTemplate.setKeySerializer(getRedisSerializer(redisProperties.getKeySerializer()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(redisProperties.getValueSerializer() == null || "".equals(redisProperties.getValueSerializer())) {
+            redisTemplate.setValueSerializer(new StringRedisSerializer());
+        }else {
+            try {
+                redisTemplate.setValueSerializer(getRedisSerializer(redisProperties.getValueSerializer()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(redisProperties.getHashKeySerializer() == null || "".equals(redisProperties.getHashKeySerializer())) {
+            redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+        }else {
+            try {
+                redisTemplate.setHashKeySerializer(getRedisSerializer(redisProperties.getHashKeySerializer()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(redisProperties.getHashValueSerializer() == null || "".equals(redisProperties.getHashValueSerializer())) {
+            redisTemplate.setHashValueSerializer(new StringRedisSerializer());
+        }else {
+            try {
+                redisTemplate.setHashValueSerializer(getRedisSerializer(redisProperties.getHashValueSerializer()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         redisTemplate.afterPropertiesSet();
         return redisTemplate;
+    }
+
+    private RedisSerializer getRedisSerializer(String serializer) throws Exception {
+        Class clazz = Class.forName(serializer);
+        if(clazz == null){
+            throw new RuntimeException("cann't create redis serializer instance");
+        }
+
+        Object c = clazz.newInstance();
+        if(c == null){
+            throw new RuntimeException("cann't create redis serializer instance");
+        }
+
+        if(c instanceof RedisSerializer){
+            RedisSerializer redisSerializer = (RedisSerializer)c;
+            return redisSerializer;
+        }else {
+            throw new RuntimeException("redis serializer is wrong");
+        }
     }
 }

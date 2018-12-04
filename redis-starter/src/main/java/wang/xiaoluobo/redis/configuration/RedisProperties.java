@@ -25,6 +25,22 @@ public class RedisProperties {
     private boolean testOnReturn;
     private String master;
     private String sentinel;
+    /**
+     * @see org.springframework.data.redis.serializer.RedisSerializer
+     * @see org.springframework.data.redis.serializer.StringRedisSerializer
+     * @see org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer
+     * etc.
+     *
+     * org.springframework.data.redis.serializer.StringRedisSerializer
+     */
+    private String keySerializer;
+
+    private String valueSerializer;
+
+    private String hashKeySerializer;
+
+    private String hashValueSerializer;
+
 
     public RedisProperties() {
 
@@ -140,5 +156,37 @@ public class RedisProperties {
 
     public void setSentinel(String sentinel) {
         this.sentinel = sentinel;
+    }
+
+    public String getKeySerializer() {
+        return keySerializer;
+    }
+
+    public void setKeySerializer(String keySerializer) {
+        this.keySerializer = keySerializer;
+    }
+
+    public String getValueSerializer() {
+        return valueSerializer;
+    }
+
+    public void setValueSerializer(String valueSerializer) {
+        this.valueSerializer = valueSerializer;
+    }
+
+    public String getHashKeySerializer() {
+        return hashKeySerializer;
+    }
+
+    public void setHashKeySerializer(String hashKeySerializer) {
+        this.hashKeySerializer = hashKeySerializer;
+    }
+
+    public String getHashValueSerializer() {
+        return hashValueSerializer;
+    }
+
+    public void setHashValueSerializer(String hashValueSerializer) {
+        this.hashValueSerializer = hashValueSerializer;
     }
 }
