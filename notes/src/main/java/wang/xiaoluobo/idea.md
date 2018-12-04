@@ -1,4 +1,4 @@
-### idea
+### [idea plugin](https://plugins.jetbrains.com/)
 - idea2018.2.6破解  
 https://blog.csdn.net/halen001/article/details/81137092
 
@@ -18,5 +18,5 @@ https://blog.csdn.net/halen001/article/details/81137092
 
 - [advanced-java-folding](https://plugins.jetbrains.com/plugin/9320-advanced-java-folding)
 
-
+- [python](https://plugins.jetbrains.com/plugin/631-python)
 
