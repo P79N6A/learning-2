@@ -1,0 +1,34 @@
+server:
+  port: 8103
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+
+spring:
+  thymeleaf:
+    cache: false
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 194559997606-q3l426c6opunn3iu3q13cgg4esalr1km.apps.googleusercontent.com
+            client-secret: XhGFe3Bmp_Legfq5cKXWFEjJ
+            client-authentication-method: basic
+            authorization-grant-type: authorization_code
+            redirect-uri-template: "http://127.0.0.1:8103/login/oauth2/code/{registrationId}"
+            scope: openid, profile, email, address, phone
+            client-name: Google Login
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
+            token-uri: https://www.googleapis.com/oauth2/v4/token
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+            jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
+            user-name-attribute: sub
+
+logging:
+  config: classpath:log4j2.xml

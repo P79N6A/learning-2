@@ -1,0 +1,21 @@
+server:
+  port: 8201
+  servlet:
+    context-path: /ui
+
+spring:
+  thymeleaf:
+    cache: false
+
+security:
+  oauth2:
+    client:
+      clientId: SameClientId
+      clientSecret: secret
+      accessTokenUri: http://127.0.0.1:8200/auth/oauth/token
+      userAuthorizationUri: http://127.0.0.1:8200/auth/oauth/authorize
+    resource:
+      userInfoUri: http://127.0.0.1:8200/auth/user/me
+
+logging:
+  config: classpath:log4j2.xml

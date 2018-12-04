@@ -25,6 +25,8 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <spring-boot.version>2.1.0.RELEASE</spring-boot.version>
+        <oauth2.version>2.3.3.RELEASE</oauth2.version>
+        <oauth2.autoconfigure.version>2.0.3.RELEASE</oauth2.autoconfigure.version>
     </properties>
 
     <parent>
@@ -65,6 +67,36 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>1.2.54</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.security.oauth</groupId>
+                <artifactId>spring-security-oauth2</artifactId>
+                <version>${oauth2.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>wang.xiaoluobo</groupId>
+                <artifactId>redis-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>wang.xiaoluobo</groupId>
+                <artifactId>mongodb-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.thymeleaf.extras</groupId>
+                <artifactId>thymeleaf-extras-springsecurity4</artifactId>
+                <version>3.0.4.RELEASE</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.security.oauth.boot</groupId>
+                <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+                <version>${oauth2.autoconfigure.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

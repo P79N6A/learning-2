@@ -1,0 +1,17 @@
+auth-server: http://127.0.0.1:8200
+
+server:
+  port: 8201
+security:
+  oauth2:
+    client:
+      client-id: test0_clientId
+      client-secret: test0_secret
+      scope: authorization_code
+      access-token-uri: ${auth-server}/oauth/token
+      user-authorization-uri: ${auth-server}/oauth/authorize
+    resource:
+      token-info-uri: ${auth-server}/oauth/check_token
+
+logging:
+  config: classpath:log4j2.xml
