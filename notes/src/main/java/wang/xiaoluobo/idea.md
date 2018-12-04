@@ -2,7 +2,7 @@
 - idea2018.2.6破解  
 https://blog.csdn.net/halen001/article/details/81137092
 
-- [coding guidelines](https://plugins.jetbrains.com/plugin/10046-alibaba-java-coding-guidelines)
+- [alibaba-java-coding-guidelines](https://plugins.jetbrains.com/plugin/10046-alibaba-java-coding-guidelines)
 
 - idea maven build 项目慢  
   -DarchetypeCatalog=internal  
@@ -16,7 +16,7 @@ https://blog.csdn.net/halen001/article/details/81137092
 
 - [scala](https://plugins.jetbrains.com/plugin/1347-scala)
 
-
+- [advanced-java-folding](https://plugins.jetbrains.com/plugin/9320-advanced-java-folding)
 
 
 
