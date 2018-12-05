@@ -4,22 +4,20 @@ https://blog.csdn.net/suifeng3051/article/details/48053965
 http://www.jasongj.com/tags/Kafka/  
 
 #### 一、kafka介绍
-1. Kafka通常用于两大类应用：  
+1. Kafka通常用于两类应用：  
     1. 构建可在系统或应用程序之间可靠获取数据的实时流数据管道
     2. 构建转换或响应数据流的实时流应用程序
-2. Kafka是一种分布式的，基于发布/订阅的消息系统。主要设计目标如下：  
-    1. 以时间复杂度为O(1)的方式提供消息持久化能力，即使对TB级以上数据也能保证常数时间的访问性能
-    2. 高吞吐率。即使在非常廉价的商用机器上也能做到单机支持每秒100K条消息的传输
-    3. 支持Kafka Server间的消息分区，及分布式消费，同时保证每个partition内的消息顺序传输
-    4. 同时支持离线数据处理和实时数据处理
-3. kafka
-    1. Kafka作为一个集群运行在一个或多个可跨多个数据中心的服务器上。
-    2. Kafka集群以称为主题的类别存储记录流。
-    3. 每条记录都包含一个键，一个值和一个时间戳。
+    
+2. kafka特性
+    1. 高吞吐量、低延迟：kafka每秒可以处理几十万条消息，它的延迟最低只有几毫秒
+    2. 可扩展性：kafka集群支持热扩展
+    3. 持久性、可靠性：消息被持久化到本地磁盘，并且支持数据备份防止数据丢失
+    4. 容错性：允许集群中节点失败（若副本数量为n,则允许n-1个节点失败）
+    5. 高并发：支持数千个客户端同时读写
 
 #### 二、kafka架构
 - zookeeper
-    负责存储kafka
+    zk负责存储kafka broker信息
 - Broker  
     即kafka server
 - Topic  
@@ -31,19 +29,20 @@ http://www.jasongj.com/tags/Kafka/
     log.dirs=/tmp/kafka-logs
     ```
 - Partition  
-    ![log consumer](http://kafka.apache.org/21/images/log_consumer.png)
+    ![log consumer](http://kafka.apache.org/21/images/log_consumer.png)  
+    
     kafka的每个分区都是一个有序的，不可变的记录序列，不断附加到结构化的提交日志中。
     分区中的记录每个都分配了一个称为offset的顺序ID号，它唯一地标识分区中的每个记录。
     
-    日志中的分区有多种用途。
+    日志中的分区用途:
     1. 它们允许日志扩展到超出适合单个服务器的大小。每个单独的分区必须适合托管它的服务器，但主题可能有许多分区，
     因此它可以处理任意数量的数据。
     2. 充当了并行性的单位
     
-    日志的分区分布在Kafka集群中的服务器上，每个服务器处理数据并请求分区的共享。每个分区都在可配置数量的服务器上进行复制，以实现容错。
+    日志的分区分布在Kafka集群中的server上，每个server处理数据并请求分区的共享。每个分区都在可配置数量的server上进行复制，以实现容错。
     
-    每个分区都有一个kafka server充当“领导者”，零个或多个kafka server充当follower。
-    leader处理分区的所有读取和写入请求，而follow被动地复制leader。 如果leader失败，其中一个follower将自动成为新的领导者。
+    每个分区都有一个kafka server充当leader，零个或多个kafka server充当follower。
+    leader处理分区的所有读取和写入请求，而follow被动地复制leader。 如果leader失败，其中一个follower将自动成为新的leader。
     每个kafka server都充当其某些分区的leader和其他kafka server的follower，因此负载在群集中得到很好的平衡。
 - Producer
 Producer将数据发布到指定的topic(可以指定partition)
@@ -75,7 +74,6 @@ Kafka MirrorMaker为您的群集提供地理复制支持。使用MirrorMaker，�
 　　leader会track“in sync”的node list。如果一个follower宕机，或者落后太多，leader将把它从”in sync” list中移除。这里所描述的“落后太多”指follower复制的消息落后于leader后的条数超过预定值，该值可在$KAFKA_HOME/config/server.properties中配置
 
 replica.lag.max.messages=4000
-
 replica.lag.time.max.ms=10000
 
 需要说明的是，Kafka只解决”fail/recover”，不处理“Byzantine”（“拜占庭”）问题。
