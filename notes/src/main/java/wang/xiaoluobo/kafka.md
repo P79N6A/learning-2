@@ -19,6 +19,7 @@
 - Broker  
     即kafka server
 - Topic  
+    [partition log](http://kafka.apache.org/21/images/log_anatomy.png)  
     topic是发布记录的类别或订阅源名称。Kafka的topic总是多用户; 也就是说，一个topic可以有零个，一个或多个消费者订阅写入它的数据。  
     ```sbtshell
     # topic在kafka server的存储位置
@@ -26,9 +27,15 @@
     log.dirs=/tmp/kafka-logs
     ```
 - Partition  
-    [partition log](http://kafka.apache.org/21/images/log_anatomy.png)  
-    kafka的每个分区都是一个有序的，不可变的记录序列，不断附加到结构化的提交日志中。分区中的记录每个都分配了一个称为offset的顺序ID号，它唯一地标识分区中的每个记录。
-    Kafka集群持久保存所有已发布的记录 - 无论是否已使用 - 使用可配置的保留期。 例如，如果保留策略设置为两天，则在发布记录后的两天内，它可供使用，之后将被丢弃以释放空间。 Kafka的性能在数据大小方面实际上是恒定的，因此长时间存储数据不是问题。
+    [log consumer](http://kafka.apache.org/21/images/log_consumer.png)
+    kafka的每个分区都是一个有序的，不可变的记录序列，不断附加到结构化的提交日志中。
+    分区中的记录每个都分配了一个称为offset的顺序ID号，它唯一地标识分区中的每个记录。
+    
+    日志中的分区有多种用途。
+    1. 它们允许日志扩展到超出适合单个服务器的大小。每个单独的分区必须适合托管它的服务器，但主题可能有许多分区，
+    因此它可以处理任意数量的数据。
+    2. 充当了并行性的单位
     
 - Producer
+
 - Consumer
