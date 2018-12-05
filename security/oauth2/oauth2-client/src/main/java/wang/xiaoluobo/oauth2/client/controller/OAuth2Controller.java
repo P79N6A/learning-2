@@ -2,6 +2,7 @@ package wang.xiaoluobo.oauth2.client.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -15,6 +16,7 @@ import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.util.Collections;
 import java.util.Map;
 
@@ -41,7 +43,7 @@ public class OAuth2Controller {
                 authentication.getAuthorizedClientRegistrationId(), authentication.getName());
     }
 
-    @RequestMapping("/userInfo")
+    @RequestMapping("/userinfo")
     public String userInfo(Model model, OAuth2AuthenticationToken authentication) {
         OAuth2AuthorizedClient authorizedClient =
                 this.authorizedClientService.loadAuthorizedClient(authentication.getAuthorizedClientRegistrationId(), authentication.getName());
@@ -52,11 +54,12 @@ public class OAuth2Controller {
                 .getProviderDetails().getUserInfoEndpoint().getUri();
         if (!StringUtils.isEmpty(userInfoEndpointUri)) {
             userAttributes = WebClient.builder()
+                    .clientConnector(new ReactorClientHttpConnector())
                     .filter(oauth2Credentials(authorizedClient))
-                    .build().get().uri(userInfoEndpointUri).retrieve().bodyToMono(Map.class).block();
+                    .build().get().uri(userInfoEndpointUri).retrieve().bodyToMono(Map.class).block(Duration.ofSeconds(10));
         }
         model.addAttribute("userAttributes", userAttributes);
-        return "user-info";
+        return "user_info";
     }
 
     private ExchangeFilterFunction oauth2Credentials(OAuth2AuthorizedClient authorizedClient) {
