@@ -19,7 +19,7 @@
 - Broker  
     即kafka server
 - Topic  
-    [partition log](http://kafka.apache.org/21/images/log_anatomy.png)  
+    ![partition log](http://kafka.apache.org/21/images/log_anatomy.png)  
     topic是发布记录的类别或订阅源名称。Kafka的topic总是多用户; 也就是说，一个topic可以有零个，一个或多个消费者订阅写入它的数据。  
     ```sbtshell
     # topic在kafka server的存储位置
@@ -27,7 +27,7 @@
     log.dirs=/tmp/kafka-logs
     ```
 - Partition  
-    [log consumer](http://kafka.apache.org/21/images/log_consumer.png)
+    ![log consumer](http://kafka.apache.org/21/images/log_consumer.png)
     kafka的每个分区都是一个有序的，不可变的记录序列，不断附加到结构化的提交日志中。
     分区中的记录每个都分配了一个称为offset的顺序ID号，它唯一地标识分区中的每个记录。
     
