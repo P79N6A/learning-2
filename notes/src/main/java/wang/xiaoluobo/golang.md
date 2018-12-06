@@ -33,5 +33,15 @@ vet         report likely mistakes in packages
 ``` 
 
 #### qor
-[issues](https://github.com/qor/qor-example/issues/155)  
+[solution](https://github.com/qor/qor-example/issues/155)  
 ![qor01](https://github.com/Dongzai1005/learning/blob/master/notes/src/main/java/wang/xiaoluobo/images/qor01.png)
+
+#### go in action
+- go get -u github.com/qor/qor-example  
+
+
+
+
+
+
+
