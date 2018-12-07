@@ -197,6 +197,30 @@ vet         report likely mistakes in packages
 - 变量值交换  
     a, b = b, a
 
+- defer
+    类似finally，用于释放资源等，多个defer时，则后进先出(原理同栈)
+    ```text
+    1. 关闭文件流：
+    // open a file defer file.Close()
+    
+    2. 解锁一个加锁的资源
+    mu.Lock() defer mu.Unlock()
+    
+    3. 打印最终报告
+    printHeader() defer printFooter()
+    
+    4. 关闭数据库链接
+    // open a database connection defer disconnectFromDB()
+    ```
+    
+- 内置函数  
+    | 名称 | 说明 |  
+    | :---- | :---- |  
+    |![baidu][baidu-logo] | 百度|  
+    |close|用于管道通信|
+
+
+
 
 
 
