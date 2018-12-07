@@ -3,14 +3,10 @@
 ```sbtshell
 $ vim .bash_profile
 export GOROOT=/usr/local/go
-export PATH=$GOROOT/bin:$PATH
+export PATH=$PATH:$GOROOT/bin
 
-export GOBIN=$GOROOT/bin
-export PATH=$GOROOT:$PATH
-
-
-export GOPATH=/Users/wyd/gopath
-export PATH=$GOPATH/bin:$PATH
+export GOPATH=/Users/wyd/go
+export PATH=$PATH:$GOPATH/bin
 
 $ source .bash_profile
 ```
@@ -40,7 +36,8 @@ vet         report likely mistakes in packages
 [solution](https://github.com/qor/qor-example/issues/155)  
 ![qor01](https://github.com/Dongzai1005/learning/blob/master/notes/src/main/java/wang/xiaoluobo/images/qor01.png)
 
-#### go in action
+#### [go in action](https://www.kancloud.cn/kancloud/the-way-to-go/72432)  
+[go in action](https://github.com/Unknwon/the-way-to-go_ZH_CN)
 - 垃圾回收器
     ```text
     垃圾回收器Go拥有简单却高效的标记-清除回收器。
@@ -191,6 +188,7 @@ vet         report likely mistakes in packages
     }
 
     # 需要先把hello下的包install，才能调用
+    # 在$GOPATH/pkg/darwin_amd64下，生成一个hello.a文件(go编译文件)
     $ go install hello
     $ go run test/test.go
     hello go
