@@ -80,7 +80,6 @@ vet         report likely mistakes in packages
     ```
 
 - 引用类型  
-    ```text
     通道(channel)、映射(map)和切片(slice)都是引用类型
     1. channel
     
@@ -90,8 +89,8 @@ vet         report likely mistakes in packages
     会在试图使用这个map变量时收到出错信息。这是因为map变量默认的零值是nil
     
     3. slice
-  
-    ```
+    
+    
 - 数据类型
     ```text
     基本类型：int、float、bool、string
@@ -225,10 +224,51 @@ vet         report likely mistakes in packages
     | print、println		 | 底层打印函数，建议使用 fmt 包 |
     | complex、real imag	 | 创建和操作复数 |
 
+- 回调
+    ```golang
+    package main
+    
+    import (
+        "fmt"
+    )
+    
+    func main() {
+        callback(1, Add)
+    }
+    
+    func Add(a, b int) {
+        fmt.Printf("The sum of %d and %d is: %d\n", a, b, a+b)
+    }
+    
+    func callback(y int, f func(int, int)) {
+        f(y, 2) // this becomes Add(1, 2)
+    }
+    ```
 
-
-
-
-
+- 闭包
+    ```golang
+    # 匿名函数同样被称之为闭包：它们被允许调用定义在其它环境下的变量
+    # 闭包可使得某个函数捕捉到一些外部状态
+    # 一个闭包继承了函数所声明时的作用域。这种状态都被共享到闭包的环境中，因此这些变量可以在闭包中被操作，直到被销毁
+    # 闭包经常被用作包装函数：它们会预先定义好1个或多个参数以用于包装
+    # 使用闭包来完成更加简洁的错误检查
+    package main
+    
+    import "fmt"
+    
+    func main() {
+        f()
+    }
+    
+    func f() {
+        for i := 0; i < 4; i++ {
+            g := func(i int) { fmt.Printf("%d ", i) }
+            g(i)
+            fmt.Printf(" - g is of type %T and has value %v\n", g, g)
+        }
+    }
+    
+    4 3 2 1 0
+    ```
 
 
