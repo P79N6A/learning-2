@@ -217,8 +217,13 @@ vet         report likely mistakes in packages
 
     | 名称 | 说明 |  
     | :---- | :---- |  
-    | ![baidu][baidu-logo] | 百度 |  
-    | close | 用于管道通信 |
+    | close              | 用于管道通信 |
+    | len、cap	         | len用于字符串、数组、切片、map 和管道，cap只能用于切片和map |
+    | new、make	         | new 用于值类型和用户定义的类型，make 用户内置引用类型 |
+    | copy、append	     | 用于复制和连接切片 |
+    | panic、recover		 | 错误处理机制 |
+    | print、println		 | 底层打印函数，建议使用 fmt 包 |
+    | complex、real imag	 | 创建和操作复数 |
 
 
 
