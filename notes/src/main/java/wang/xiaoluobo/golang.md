@@ -216,8 +216,8 @@ vet         report likely mistakes in packages
 - 内置函数  
     | 名称 | 说明 |  
     | :---- | :---- |  
-    |![baidu][baidu-logo] | 百度|  
-    |close|用于管道通信|
+    | ![baidu][baidu-logo] | 百度 |  
+    | close | 用于管道通信 |
 
 
 
