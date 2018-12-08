@@ -1,4 +1,6 @@
 ## golang version 1.10.3
+[golang标准库](https://gowalker.org/search?q=gorepos)
+
 #### 环境配置
 ```sbtshell
 $ vim .bash_profile
@@ -47,7 +49,7 @@ vet         report likely mistakes in packages
 - 下载依赖  
     go get -u github.com/qor/qor-example  
 
-- 包  
+- [包](https://gowalker.org/search?q=gorepos)  
     ```text
     1. package main表示一个可独立执行的程序
     2. 所有的包名使用小写字母
@@ -78,7 +80,30 @@ vet         report likely mistakes in packages
     3. 然后以相反的顺序在每个包中初始化常量和变量，如果该包含有 init 函数的话，则调用该函数
     4. 在完成这一切之后，main 也执行同样的过程，最后调用 main 函数开始执行程序
     ```
-
+    
+- 数据类型
+    ```text
+    基本类型：int、float、bool、string
+    结构化类型：struct、array、slice、map、channel；
+    描述类型的行为：interface
+    Go语言不存在类型继承
+    结构化的类型没有真正的值，它使用nil作为默认值
+    ```
+    
+    ```golang
+    # 数组
+    var arr [5]int
+    var arrKeyValue = [5]string{3: "Chris", 4: "Ron"}
+    var arrAge = [5]int{18, 20, 15, 22, 16}
+    var arrLazy = [...]int{5, 6, 7, 8, 22}
+    var screen [WIDTH][HEIGHT]pixel
+    
+    seasons := []string{"Spring", "Summer", "Autumn", "Winter"}
+    for i, season := range seasons {
+        fmt.Printf("Season %d is: %s\n", i, season)
+    }
+    ```
+    
 - 引用类型  
     通道(channel)、映射(map)和切片(slice)都是引用类型
     1. channel
@@ -89,15 +114,95 @@ vet         report likely mistakes in packages
     会在试图使用这个map变量时收到出错信息。这是因为map变量默认的零值是nil
     
     3. slice
+    切片(slice)是对数组一个连续片段的引用，所以切片是一个引用类型  
+    切片提供了一个相关数组的动态窗口  
+    切片是可索引的，并且可以由len()函数获取长度  
+    多个切片如果表示同一个数组的片段，它们可以共享数据；因此一个切片和相关数组的其他切片是共享存储的，相反，不同的数组总是代表不同的存储。数组实际上是切片的构建块  
+    **优点**因为切片是引用，所以它们不需要使用额外的内存并且比使用数组更有效率   
+    声明切片的格式是： var identifier []type(不需要说明长度)  
+    一个切片在未初始化之前默认为nil，长度为0  
+    切片的初始化格式是：var slice1 []type = arr[start:end]  
+    切片的底层指向一个数组，该数组的实际体积可能要大于切片所定义的体积。只有在没有任何切片指向的时候，底层的数组内层才会被释放，这种特性有时会导致程序占用多余的内存。  
     
+    ```golang
+    var arr = [6]int{0, 1, 2, 3, 4, 5}
+    var slice1 = arr[2:5]    // 2, 3, 4
+    fmt.Println(slice1)
+    var slice2 = slice1[0:2] // 2, 3
+    fmt.Println(slice2)
+    var slice3 = slice1[3:4] // 5
+    fmt.Println(slice3)
+    var slice4 = slice1[3:6] // panic: runtime error: slice bounds out of range
+    fmt.Println(slice4)
+    var slice5 = slice1[4:5] // panic: runtime error: slice bounds out of range
+    fmt.Println(slice5)
     
-- 数据类型
+    slice6 := make([]int, 5)
+    
+    // 扩容1位
+    sl = sl[0:len(sl)+1]
+    
+    // 复制和追加
+    slFrom := []int{1, 2, 3}
+    slTo := make([]int, 10)
+    n := copy(slTo, slFrom)
+    slTo = append(slTo, 4, 5, 6)
+    ```
+    
+    ```golang
+    // 这段代码可以顺利运行，但返回的 []byte 指向的底层是整个文件的数据。只要该返回的切片不被释放，
+    // 垃圾回收器就不能释放整个文件所占用的内存。换句话说，一点点有用的数据却占用了整个文件的内存。
+    func FindDigits(filename string) []byte {
+        b, _ := ioutil.ReadFile(filename)
+        return digitRegexp.Find(b)
+    }
+    
+    func FindDigits(filename string) []byte {
+       b, _ := ioutil.ReadFile(filename)
+       b = digitRegexp.Find(b)
+       
+       // 新建切片并将数据拷贝到新切片中，避免切片占用底层数组，不释放内存(垃圾回收器无法回收内存)
+       c := make([]byte, len(b))
+       copy(c, b)
+       
+       return c
+    }
+    ```
+    
+- map
     ```text
-    基本类型：int、float、bool、string
-    结构化类型：struct、array、slice、map、channel；
-    描述类型的行为：interface
-    Go语言不存在类型继承
-    结构化的类型没有真正的值，它使用nil作为默认值
+    var map1 map[keytype]valuetype
+    var map1 map[string]int
+  
+    （[keytype]``和valuetype` 之间允许有空格，但是gofmt移除了空格）
+    未初始化的 map 的值是 nil
+    
+    // map
+    var mapLit map[string]int
+    var mapAssigned map[string]int
+
+    mapLit = map[string]int{"one": 1, "two": 2}
+    mapCreated := make(map[string]float32)
+    mapAssigned = mapLit
+
+    mapCreated["key1"] = 4.5
+    mapCreated["key2"] = 3.14159
+    mapAssigned["two"] = 3
+    fmt.Println(len(mapCreated))  // 2
+
+    mp1 := make(map[int][]int)
+    mp2 := make(map[int]*[]int)
+
+    capitals := map[string] string {"France":"Paris", "Italy":"Rome", "Japan":"Tokyo" }
+    for key := range capitals {
+        fmt.Println("Map item: Capital of", key, "is", capitals[key])
+    }
+  
+    items := make([]map[int]int, 5)
+    for i:= range items {
+        items[i] = make(map[int]int, 1)
+        items[i][1] = 2
+    }
     ```
     
 - func  
