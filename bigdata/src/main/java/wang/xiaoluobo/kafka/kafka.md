@@ -17,7 +17,7 @@
 #### 二、[kafka命令行](http://kafka.apache.org/documentation/#operations)
 ##### 1. topic
 - 创建topic  
-bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 3 --topic courier_lbs
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 3 --topic test
 
 - topic列表  
 bin/kafka-topics.sh --list --zookeeper localhost:2181
@@ -68,9 +68,28 @@ $ echo "last data" >> test.txt
 ![kafka data](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/kafka/images/kafka01.png)
 
 #### 三、kafka help
+
+- kafka server config 
 ```text
-Tips:
 config/connect-standalone.properties：可以修改kafka连接信息等
 config/connect-file-source.properties：可以修改读取文件名称及topic名称等
 config/connect-file-sink.properties：可以修改输出文件名称及topic名称等
 ```
+
+- [broker configs](http://kafka.apache.org/documentation.html#brokerconfigs)
+
+- [topic configs](http://kafka.apache.org/documentation.html#topicconfigs)
+
+- [producer configs](http://kafka.apache.org/documentation.html#producerconfigs)
+
+- [consumer configs](http://kafka.apache.org/documentation.html#consumerconfigs)
+
+- [connect configs](http://kafka.apache.org/documentation.html#connectconfigs)
+
+- [source connect configs](http://kafka.apache.org/documentation.html#sourceconnectconfigs)
+
+- [sink connect configs](http://kafka.apache.org/documentation.html#sinkconnectconfigs)
+
+- [streams configs](http://kafka.apache.org/documentation.html#streamsconfigs)
+
+- [admin client configs](http://kafka.apache.org/documentation.html#adminclientconfigs)

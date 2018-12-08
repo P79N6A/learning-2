@@ -1,4 +1,4 @@
-## [kafka_2.12-2.0.0](http://kafka.apache.org/documentation/)
+## [kafka_2.12-2.0.0](http://kafka.apache.org/documentation.html)
 [kafka install](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/kafka/kafka.md)
 https://blog.csdn.net/suifeng3051/article/details/48053965  
 http://www.jasongj.com/tags/Kafka/  
@@ -14,12 +14,17 @@ http://www.jasongj.com/tags/Kafka/
     3. 持久性、可靠性：消息被持久化到本地磁盘，并且支持数据备份防止数据丢失
     4. 容错性：允许集群中节点失败（若副本数量为n,则允许n-1个节点失败）
     5. 高并发：支持数千个客户端同时读写
-
+    6. 直观地在简单读取上构建持久队列，并将其附加到文件，这与日志记录解决方案的情况一样。
+    该结构的优点是所有操作都是O(1)并且读取不会阻止写入或相互阻塞。这具有明显的性能优势，因为性能完全与数据大小分离
+    7. Kafka支持GZIP，Snappy，LZ4和ZStandard压缩协议
+    
 #### 二、kafka架构
 - zookeeper
     zk负责存储kafka broker信息
+    
 - Broker  
     即kafka server
+    
 - Topic  
     ![partition log](http://kafka.apache.org/21/images/log_anatomy.png)  
     topic是发布记录的类别或订阅源名称。Kafka的topic总是多用户; 也就是说，一个topic可以有零个，一个或多个消费者订阅写入它的数据。  
@@ -28,6 +33,7 @@ http://www.jasongj.com/tags/Kafka/
     $ cat server.properties | grep "log.dir"
     log.dirs=/tmp/kafka-logs
     ```
+    
 - Partition  
     ![log consumer](http://kafka.apache.org/21/images/log_consumer.png)  
     
@@ -80,7 +86,11 @@ replica.lag.time.max.ms=10000
 　　一条消息只有被“in sync” list里的所有follower都从leader复制过去才会被认为已提交。这样就避免了部分数据被写进了leader，还没来得及被任何follower复制就宕机了，而造成数据丢失（consumer无法消费这些数据）。而对于producer而言，它可以选择是否等待消息commit，这可以通过request.required.acks来设置。这种机制确保了只要“in sync” list有一个或以上的flollower，一条被commit的消息就不会丢失。
 　　这里的复制机制即不是同步复制，也不是单纯的异步复制。事实上，同步复制要求“活着的”follower都复制完，这条消息才会被认为commit，这种复制方式极大的影响了吞吐率（高吞吐率是Kafka非常重要的一个特性）。而异步复制方式下，follower异步的从leader复制数据，数据只要被leader写入log就被认为已经commit，这种情况下如果follwer都落后于leader，而leader突然宕机，则会丢失数据。而Kafka的这种使用“in sync” list的方式则很好的均衡了确保数据不丢失以及吞吐率。follower可以批量的从leader复制数据，这样极大的提高复制性能（批量写磁盘），极大减少了follower与leader的差距（前文有说到，只要follower落后leader不太远，则被认为在“in sync” list里）。
 
+复制单元是主题分区。在非故障情况下，Kafka中的每个分区都有一个Leader和零个或多个follower。包括Leader在内的副本总数构成复制因子。所有读写都将转到分区的leader。通常，除broker之外还有更多的分区，leader在broker之间平均分配。follower的日志与leader的日志相同-具有相同顺序的偏移和消息
+
 - Leader election
+
+http://kafka.apache.org/documentation.html#design_replicatedlog
 
 Kafka所使用的leader election算法更像微软的PacificA算法。
 　　Kafka在Zookeeper中动态维护了一个ISR（in-sync replicas） set，这个set里的所有replica都跟上了leader，只有ISR里的成员才有被选为leader的可能。在这种模式下，对于f+1个replica，一个Kafka topic能在保证不丢失已经ommit的消息的前提下容忍f个replica的失败。在大多数使用场景中，这种模式是非常有利的。事实上，为了容忍f个replica的失败，majority vote和ISR在commit前需要等待的replica数量是一样的，但是ISR需要的总的replica的个数几乎是majority vote的一半。
@@ -97,18 +107,32 @@ Kafka所使用的leader election算法更像微软的PacificA算法。
 
 
 - Consumer Rebalance
+Consumer挂掉或重新分配分区时会发生Consumer Rebalance
 
 
 
+- kafka Security 
+    ```text
+    在0.9.0.0版中，Kafka社区添加了许多功能，这些功能可单独使用或一起使用，从而提高Kafka群集的安全性。目前支持以下安全措施：
+    使用SSL或SASL验证来自客户（生产者和消费者），其他经纪人和工具的经纪人的连接。 Kafka支持以下SASL机制：
+    SASL / GSSAPI（Kerberos） - 从版本0.9.0.0开始
+    SASL / PLAIN  - 从版本0.10.0.0开始
+    SASL / SCRAM-SHA-256和SASL / SCRAM-SHA-512  - 从版本0.10.2.0开始
+    SASL / OAUTHBEARER  - 从2.0版开始
+    验证从代理到ZooKeeper的连接
+    使用SSL加密在代理和客户端之间，代理之间或代理和工具之间传输的数据（请注意，启用SSL时性能会下降，其大小取决于CPU类型和JVM实现。）
+    客户端对读/写操作的授权
+    授权是可插拔的，并且支持与外部授权服务的集成
+    ```
 
+- 消息传递语义  
+最多一次 - 消息可能会丢失，但永远不会重新传递  
+至少一次 - 消息永远不会丢失，但可能会被重新传递  
+恰好一次 - 这是人们真正想要的，每条消息只发送一次  
 
+从0.11.0.0开始，生产者支持使用类似事务的语义向多个主题分区发送消息的能力：即，所有消息都被成功写入，或者都没有。这方面的主要用例是Kafka主题之间的一次性处理
 
-
-
-
-
-
-
+恰好一次语义呢？当从Kafka主题消费并生成另一个主题时，Consumer的位置作为topic中的消息存储，因此我们可以在与接收处理数据的输出topic相同的事务中将offset写入Kafka。如果事务中止，则消费者的位置将恢复为其旧值，并且输出topic上生成的数据将不会被其他consumer看到，具体取决于其“隔离级别”。在默认的“read_uncommitted”隔离级别中，消费者可以看到所有消息，即使它们是中止事务的一部分，但在“read_committed”中，消费者只会从已提交的事务(以及任何不属于的消息)返回消息交易
 
 
 
