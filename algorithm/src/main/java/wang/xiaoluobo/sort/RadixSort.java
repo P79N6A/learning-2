@@ -16,7 +16,7 @@ import java.util.Arrays;
  * 最高位优先法(MSD)(Most Significant Digit first)
  * 最低位优先法(LSD)(Least Significant Digit first)
  * <p>
- * 基数排序是稳定的排序算法，它的平均时间复杂程度为：O(d(r+n))，空间复杂度为：O（rd+n）。
+ * 基数排序是稳定的排序算法，它的平均时间复杂程度为：O(d(r+n))，空间复杂度为：O(rd+n)。
  *
  * @author wangyd
  * @date 2018/11/6

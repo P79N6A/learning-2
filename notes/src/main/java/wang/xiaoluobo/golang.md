@@ -69,7 +69,7 @@ vet         report likely mistakes in packages
 
 - 可见性规则
     ```text
-    当标识符（包括常量、变量、类型、函数名、结构字段等等）以一个大写字母开头，如：Group1，那么使用这种形式的标识符的对象就可以被外部包的代码所使用  
+    当标识符(包括常量、变量、类型、函数名、结构字段等等)以一个大写字母开头，如：Group1，那么使用这种形式的标识符的对象就可以被外部包的代码所使用  
     标识符如果以小写字母开头，则对包外是不可见的，但是他们在整个包的内部是可见并且可用的
     ```
 
@@ -174,7 +174,7 @@ vet         report likely mistakes in packages
     var map1 map[keytype]valuetype
     var map1 map[string]int
   
-    （[keytype]``和valuetype` 之间允许有空格，但是gofmt移除了空格）
+    ([keytype]``和valuetype` 之间允许有空格，但是gofmt移除了空格)
     未初始化的 map 的值是 nil
     
     // map

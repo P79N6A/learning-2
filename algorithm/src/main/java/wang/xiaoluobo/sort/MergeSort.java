@@ -53,7 +53,7 @@ public class MergeSort<T extends Comparable<T>> extends AbstractSort<Integer> {
             }
         }
 
-        // 剩余部分依次放入临时数组（实际上两个while只会执行其中一个）
+        // 剩余部分依次放入临时数组(实际上两个while只会执行其中一个)
         while (left <= center) {
             tmp[k++] = data[left++];
         }

@@ -2119,7 +2119,7 @@ public class HashMap<K, V> extends AbstractMap<K, V>
          * somewhere between 2 and 6 nodes, depending on tree structure).
          *
          * 删除在此调用之前必须存在的给定节点。 这比典型的红黑删除代码更麻烦，因为我们不能将内部节点的内容与叶子后继交换，后者由遍历期间可独立访问的“下一个”指针固定。
-         * 所以我们交换树链接。 如果当前树似乎具有太少的节点，则将bin转换回普通bin。（测试会在2到6个节点之间触发，具体取决于树结构）。
+         * 所以我们交换树链接。 如果当前树似乎具有太少的节点，则将bin转换回普通bin。(测试会在2到6个节点之间触发，具体取决于树结构)。
          */
         final void removeTreeNode(HashMap<K, V> map, Node<K, V>[] tab,
                                   boolean movable) {

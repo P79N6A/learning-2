@@ -12,7 +12,7 @@ http://www.jasongj.com/tags/Kafka/
     1. 高吞吐量、低延迟：kafka每秒可以处理几十万条消息，它的延迟最低只有几毫秒
     2. 可扩展性：kafka集群支持热扩展
     3. 持久性、可靠性：消息被持久化到本地磁盘，并且支持数据备份防止数据丢失
-    4. 容错性：允许集群中节点失败（若副本数量为n,则允许n-1个节点失败）
+    4. 容错性：允许集群中节点失败(若副本数量为n,则允许n-1个节点失败)
     5. 高并发：支持数千个客户端同时读写
     6. 直观地在简单读取上构建持久队列，并将其附加到文件，这与日志记录解决方案的情况一样。
     该结构的优点是所有操作都是O(1)并且读取不会阻止写入或相互阻塞。这具有明显的性能优势，因为性能完全与数据大小分离
@@ -62,7 +62,7 @@ Producer将数据发布到指定的topic(可以指定partition)
 如果所有Consumer实例具有不同的Consumer group，则每个记录将广播到所有消费者进程。
 ![consumer-groups](http://kafka.apache.org/21/images/consumer-groups.png)
 
-两个服务器Kafka群集，托管四个分区（P0-P3），包含两个使用者组。消费者组A有两个消费者实例，B组有四个消费者实例。
+两个服务器Kafka群集，托管四个分区(P0-P3)，包含两个使用者组。消费者组A有两个消费者实例，B组有四个消费者实例。
 
 然而，更常见的是，我们发现主题具有少量的消费者群体，每个“逻辑订户”一个。每个组由许多用于可伸缩性和容错的消费者实例组成。这只不过是发布 - 订阅语义，其中订阅者是消费者群集而不是单个进程。
 
@@ -82,25 +82,27 @@ Kafka MirrorMaker为您的群集提供地理复制支持。使用MirrorMaker，�
 replica.lag.max.messages=4000
 replica.lag.time.max.ms=10000
 
-需要说明的是，Kafka只解决”fail/recover”，不处理“Byzantine”（“拜占庭”）问题。
-　　一条消息只有被“in sync” list里的所有follower都从leader复制过去才会被认为已提交。这样就避免了部分数据被写进了leader，还没来得及被任何follower复制就宕机了，而造成数据丢失（consumer无法消费这些数据）。而对于producer而言，它可以选择是否等待消息commit，这可以通过request.required.acks来设置。这种机制确保了只要“in sync” list有一个或以上的flollower，一条被commit的消息就不会丢失。
-　　这里的复制机制即不是同步复制，也不是单纯的异步复制。事实上，同步复制要求“活着的”follower都复制完，这条消息才会被认为commit，这种复制方式极大的影响了吞吐率（高吞吐率是Kafka非常重要的一个特性）。而异步复制方式下，follower异步的从leader复制数据，数据只要被leader写入log就被认为已经commit，这种情况下如果follwer都落后于leader，而leader突然宕机，则会丢失数据。而Kafka的这种使用“in sync” list的方式则很好的均衡了确保数据不丢失以及吞吐率。follower可以批量的从leader复制数据，这样极大的提高复制性能（批量写磁盘），极大减少了follower与leader的差距（前文有说到，只要follower落后leader不太远，则被认为在“in sync” list里）。
+需要说明的是，Kafka只解决”fail/recover”，不处理“Byzantine”(“拜占庭”)问题。
+　　一条消息只有被“in sync” list里的所有follower都从leader复制过去才会被认为已提交。这样就避免了部分数据被写进了leader，还没来得及被任何follower复制就宕机了，而造成数据丢失(consumer无法消费这些数据)。而对于producer而言，它可以选择是否等待消息commit，这可以通过request.required.acks来设置。这种机制确保了只要“in sync” list有一个或以上的flollower，一条被commit的消息就不会丢失。
+　　这里的复制机制即不是同步复制，也不是单纯的异步复制。事实上，同步复制要求“活着的”follower都复制完，这条消息才会被认为commit，这种复制方式极大的影响了吞吐率(高吞吐率是Kafka非常重要的一个特性)。而异步复制方式下，follower异步的从leader复制数据，数据只要被leader写入log就被认为已经commit，这种情况下如果follwer都落后于leader，而leader突然宕机，则会丢失数据。而Kafka的这种使用“in sync” list的方式则很好的均衡了确保数据不丢失以及吞吐率。follower可以批量的从leader复制数据，这样极大的提高复制性能(批量写磁盘)，极大减少了follower与leader的差距(前文有说到，只要follower落后leader不太远，则被认为在“in sync” list里)。
 
 复制单元是主题分区。在非故障情况下，Kafka中的每个分区都有一个Leader和零个或多个follower。包括Leader在内的副本总数构成复制因子。所有读写都将转到分区的leader。通常，除broker之外还有更多的分区，leader在broker之间平均分配。follower的日志与leader的日志相同-具有相同顺序的偏移和消息
+
+Kafka分区的核心是复制日志
 
 - Leader election
 
 http://kafka.apache.org/documentation.html#design_replicatedlog
 
 Kafka所使用的leader election算法更像微软的PacificA算法。
-　　Kafka在Zookeeper中动态维护了一个ISR（in-sync replicas） set，这个set里的所有replica都跟上了leader，只有ISR里的成员才有被选为leader的可能。在这种模式下，对于f+1个replica，一个Kafka topic能在保证不丢失已经ommit的消息的前提下容忍f个replica的失败。在大多数使用场景中，这种模式是非常有利的。事实上，为了容忍f个replica的失败，majority vote和ISR在commit前需要等待的replica数量是一样的，但是ISR需要的总的replica的个数几乎是majority vote的一半。
+　　Kafka在Zookeeper中动态维护了一个ISR(in-sync replicas) set，这个set里的所有replica都跟上了leader，只有ISR里的成员才有被选为leader的可能。在这种模式下，对于f+1个replica，一个Kafka topic能在保证不丢失已经ommit的消息的前提下容忍f个replica的失败。在大多数使用场景中，这种模式是非常有利的。事实上，为了容忍f个replica的失败，majority vote和ISR在commit前需要等待的replica数量是一样的，但是ISR需要的总的replica的个数几乎是majority vote的一半。
 　　虽然majority vote与ISR相比有不需等待最慢的server这一优势，但是Kafka作者认为Kafka可以通过producer选择是否被commit阻塞来改善这一问题，并且节省下来的replica和磁盘使得ISR模式仍然值得。
 　　
 　　上文提到，在ISR中至少有一个follower时，Kafka可以确保已经commit的数据不丢失，但如果某一个partition的所有replica都挂了，就无法保证数据不丢失了。这种情况下有两种可行的方案：
 
 等待ISR中的任一个replica“活”过来，并且选它作为leader
-选择第一个“活”过来的replica（不一定是ISR中的）作为leader
-　　这就需要在可用性和一致性当中作出一个简单的平衡。如果一定要等待ISR中的replica“活”过来，那不可用的时间就可能会相对较长。而且如果ISR中的所有replica都无法“活”过来了，或者数据都丢失了，这个partition将永远不可用。选择第一个“活”过来的replica作为leader，而这个replica不是ISR中的replica，那即使它并不保证已经包含了所有已commit的消息，它也会成为leader而作为consumer的数据源（前文有说明，所有读写都由leader完成）。Kafka0.8.*使用了第二种方式。根据Kafka的文档，在以后的版本中，Kafka支持用户通过配置选择这两种方式中的一种，从而根据不同的使用场景选择高可用性还是强一致性。
+选择第一个“活”过来的replica(不一定是ISR中的)作为leader
+　　这就需要在可用性和一致性当中作出一个简单的平衡。如果一定要等待ISR中的replica“活”过来，那不可用的时间就可能会相对较长。而且如果ISR中的所有replica都无法“活”过来了，或者数据都丢失了，这个partition将永远不可用。选择第一个“活”过来的replica作为leader，而这个replica不是ISR中的replica，那即使它并不保证已经包含了所有已commit的消息，它也会成为leader而作为consumer的数据源(前文有说明，所有读写都由leader完成)。Kafka0.8.*使用了第二种方式。根据Kafka的文档，在以后的版本中，Kafka支持用户通过配置选择这两种方式中的一种，从而根据不同的使用场景选择高可用性还是强一致性。
 　　
 　　上文说明了一个parition的replication过程，然尔Kafka集群需要管理成百上千个partition，Kafka通过round-robin的方式来平衡partition从而避免大量partition集中在了少数几个节点上。同时Kafka也需要平衡leader的分布，尽可能的让所有partition的leader均匀分布在不同broker上。另一方面，优化leadership election的过程也是很重要的，毕竟这段时间相应的partition处于不可用状态。一种简单的实现是暂停宕机的broker上的所有partition，并为之选举leader。实际上，Kafka选举一个broker作为controller，这个controller通过watch Zookeeper检测所有的broker failure，并负责为所有受影响的parition选举leader，再将相应的leader调整命令发送至受影响的broker，过程如下图所示。
 
@@ -114,13 +116,13 @@ Consumer挂掉或重新分配分区时会发生Consumer Rebalance
 - kafka Security 
     ```text
     在0.9.0.0版中，Kafka社区添加了许多功能，这些功能可单独使用或一起使用，从而提高Kafka群集的安全性。目前支持以下安全措施：
-    使用SSL或SASL验证来自客户（生产者和消费者），其他经纪人和工具的经纪人的连接。 Kafka支持以下SASL机制：
-    SASL / GSSAPI（Kerberos） - 从版本0.9.0.0开始
+    使用SSL或SASL验证来自客户(生产者和消费者)，其他经纪人和工具的经纪人的连接。 Kafka支持以下SASL机制：
+    SASL / GSSAPI(Kerberos) - 从版本0.9.0.0开始
     SASL / PLAIN  - 从版本0.10.0.0开始
     SASL / SCRAM-SHA-256和SASL / SCRAM-SHA-512  - 从版本0.10.2.0开始
     SASL / OAUTHBEARER  - 从2.0版开始
     验证从代理到ZooKeeper的连接
-    使用SSL加密在代理和客户端之间，代理之间或代理和工具之间传输的数据（请注意，启用SSL时性能会下降，其大小取决于CPU类型和JVM实现。）
+    使用SSL加密在代理和客户端之间，代理之间或代理和工具之间传输的数据(请注意，启用SSL时性能会下降，其大小取决于CPU类型和JVM实现。)
     客户端对读/写操作的授权
     授权是可插拔的，并且支持与外部授权服务的集成
     ```
