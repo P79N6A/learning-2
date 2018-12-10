@@ -586,34 +586,34 @@ GFS使用基于日志的方法在主服务器上维护元数据;主服务器在�
 
 ***
 ### 7. 参考文献
-[1] A.Adya,W.J.Bolosky,M.Castro,G.Cermak,R.Chaiken,J.R. Douceur, J. Howell, J. R. Lorch, M. Theimer, and R. P. Wattenhofer. FARSITE: Federated, available, and reliable storage for an incompletely trusted environment. In Proc. of OSDI 2002, pages 1–14, December 2002.
-[2] P.AlsbergandJ.Day.Aprincipleforresilientsharingofdistributed resources. In Proc. of the 2nd International Conference on Software Engineering, pages 627–644, October 1976.
-[3] M.BakerandJ.K.Ousterhout.AvailabilityintheSpritedistributed file system. Operating System Review, 25(2):95–98, April 1991.
-[4] N.Belaramani,M.Dahlin,L.Gao,A.Nayate,A.Venkataramani, P. Yalagandula, and J. Zheng. PRACTI replication. In Proc. of 3rd NSDI, May 2006.
-[5] M.Burrows.Thechubbylockserviceforloosely-coupled distributed systems. In Proc. of the Seventh Symposium on Operating System Design and Implementation (OSDI 2006), November 2006.
-[6] M.CastroandB.Liskov.Practicalbyzantinefaulttolerance.In Proc. of the 3rd OSDI, February 1999.
-[7] F.Chang,J.Dean,S.Ghemawat,W.C.Hsieh,D.A.Wallach, M. Burrows, T. Chandra, A. Fikes, and R. E. Gruber. Bigtable: A distributed storage system for structured data. In Proc. of the 7th OSDI, November 2006.
-[8] F. Dabek, M. F. Kaashoek, D. Karger, R. Morris, and I. Stoica. Wide-area cooperative storage with CFS. In Proc. of the 18th SOSP, pages 202–215, 2001.
-[9] S.Frølund,A.Merchant,Y.Saito,S.Spence,andA.Veitch.FAB: Building reliable enterprise storage systems on the cheap. In Proc. 11th ASPLOS, October 2004.
-[10] S.Ghemawat,H.Gobioff,andS.T.Leung.TheGooglefilesystem. In Proc. of the 19th SOSP, October, 2003.
-[11] C. Gray and D. Cheriton. Leases: An efficient fault-tolerant mechanism for distributed file cache consistency. In Proc. 12th Symp. Operating Systems Principles (SOSP), pages 202–210, December 1989.
-[12] J.Gray.Notesondatabaseoperatingsystems.OperatingSystems: An Advanced Course, Lecture Notes in Computer Science, 60:393– 481, 1978.
-[13] R.Hagmann.ReimplementingtheCedarfilesystemusinglogging and group commit. In Proc. of 11th SOSP, pages 155–162, 1987.
-[14] M. P. Herlihy and J. M. Wing. Linearizability: a correctness condition for concurrent objects. ACM Trans. Program. Lang. Syst., 12(3):463–492, 1990.
-[15] M.Kazar,B.Leverett,O.Anderson,V.Apostolides,B.Buttos, S. Chutani, C. Everhart, W. Mason, S. Tu, and E. Zayas. Decorum file system architectural overview. In Proc. of the USENIX Summer’90 Conference, pages 151–163, 1990.
-[16] J.J.KistlerandM.Satyanarayanan.Disconnectedoperationinthe Coda file system. In Proc. of the 13th SOSP, pages 213–225, 1991.
-[17] J. Kubiatowicz, D. Bindel, Y. Chen, S. Czerwinski, P. Eaton, D. Geels, R. Gummadi, S. Rhea, H. Weatherspoon, W. Weimer, C. Wells, and B. Zhao. OceanStore: An architecture for global-scale persistent storage. In Proc. of 9th ASPLOS, pages 190–201, November 2000.
-[18] L.Lamport.Thepart-timeparliament.ACMTrans.onComputer Systems, 16(2):133–169, May 1998.
-[19] E.K.LeeandC.A.Thekkath.Petal:Distributedvirtualdisks.In Proc. 7th ASPLOS, pages 84–92, October 1996.
-[20] B.Liskov,S.Ghemawat,R.Gruber,P.Johnson,L.Shrira,and M. Williams. Replication in the Harp file system. In Proc. of 13th SOSP, pages 226–238, 1991.
-[21] J.MacCormick,N.Murphy,M.Najork,C.A.Thekkath,and L. Zhou. Boxwood: Abstractions as the foundation for storage infrastructure. In Proc. of the 6th OSDI, pages 105–120, December 2004.
-[22] B. M. Oki and B. H. Liskov. Viewstamped replication: a new primary copy method to support highly-available distributed systems. In Proc. of 7th PODC, pages 8–17, 1988.
-[23] C.H.Papadimitriou.Theserializabilityofconcurrentdatabase updates. Journal of the ACM, 26(4):631–653, October 1979.
-[24] M.RosenblumandJ.K.Ousterhout.Thedesignand implementation of a log-structured file system. ACM Trans. on Computer Systems, 10(1):26–52, 1992.
-[25] A.RowstronandP.Druschel.Storagemanagementandcachingin PAST, a large-scale, persistent peer-to-peer storage utility. In Proc. of the 18th SOSP, pages 188–201, 2001.
-[26] G.Swart,A.Birrell,A.Hisgen,andT.Mann.Availabilityinthe Echo file system. Research Report 112, System Research Center, Digital Equipment Corporation, September 1993.
-[27] D.B.Terry,M.M.Theimer,K.Petersen,A.J.Demers,M.J. Spreitzer, and C. H. Hauser. Managing update conflicts in Bayou, a weakly connected replicated storage system. In Proc. of the 15th SOSP, pages 172–183, December 1995.
-[28] C.A.Thekkath,T.P.Mann,andE.K.Lee.Frangipani:Ascalable distributed file system. In Proc. 16th Symp. Operating Systems Principles (SOSP), pages 224–237, October 1997.
-[29] R.vanRenesseandF.B.Schneider.Chainreplicationfor supporting high throughput and availability. In Proc. of the 6th OSDI, pages 91–104, 2004.
+[1] A.Adya,W.J.Bolosky,M.Castro,G.Cermak,R.Chaiken,J.R. Douceur, J. Howell, J. R. Lorch, M. Theimer, and R. P. Wattenhofer. FARSITE: Federated, available, and reliable storage for an incompletely trusted environment. In Proc. of OSDI 2002, pages 1–14, December 2002.  
+[2] P.AlsbergandJ.Day.Aprincipleforresilientsharingofdistributed resources. In Proc. of the 2nd International Conference on Software Engineering, pages 627–644, October 1976.  
+[3] M.BakerandJ.K.Ousterhout.AvailabilityintheSpritedistributed file system. Operating System Review, 25(2):95–98, April 1991.  
+[4] N.Belaramani,M.Dahlin,L.Gao,A.Nayate,A.Venkataramani, P. Yalagandula, and J. Zheng. PRACTI replication. In Proc. of 3rd NSDI, May 2006.  
+[5] M.Burrows.Thechubbylockserviceforloosely-coupled distributed systems. In Proc. of the Seventh Symposium on Operating System Design and Implementation (OSDI 2006), November 2006.  
+[6] M.CastroandB.Liskov.Practicalbyzantinefaulttolerance.In Proc. of the 3rd OSDI, February 1999.  
+[7] F.Chang,J.Dean,S.Ghemawat,W.C.Hsieh,D.A.Wallach, M. Burrows, T. Chandra, A. Fikes, and R. E. Gruber. Bigtable: A distributed storage system for structured data. In Proc. of the 7th OSDI, November 2006.  
+[8] F. Dabek, M. F. Kaashoek, D. Karger, R. Morris, and I. Stoica. Wide-area cooperative storage with CFS. In Proc. of the 18th SOSP, pages 202–215, 2001.  
+[9] S.Frølund,A.Merchant,Y.Saito,S.Spence,andA.Veitch.FAB: Building reliable enterprise storage systems on the cheap. In Proc. 11th ASPLOS, October 2004.  
+[10] S.Ghemawat,H.Gobioff,andS.T.Leung.TheGooglefilesystem. In Proc. of the 19th SOSP, October, 2003.  
+[11] C. Gray and D. Cheriton. Leases: An efficient fault-tolerant mechanism for distributed file cache consistency. In Proc. 12th Symp. Operating Systems Principles (SOSP), pages 202–210, December 1989.  
+[12] J.Gray.Notesondatabaseoperatingsystems.OperatingSystems: An Advanced Course, Lecture Notes in Computer Science, 60:393– 481, 1978.  
+[13] R.Hagmann.ReimplementingtheCedarfilesystemusinglogging and group commit. In Proc. of 11th SOSP, pages 155–162, 1987.  
+[14] M. P. Herlihy and J. M. Wing. Linearizability: a correctness condition for concurrent objects. ACM Trans. Program. Lang. Syst., 12(3):463–492, 1990.  
+[15] M.Kazar,B.Leverett,O.Anderson,V.Apostolides,B.Buttos, S. Chutani, C. Everhart, W. Mason, S. Tu, and E. Zayas. Decorum file system architectural overview. In Proc. of the USENIX Summer’90 Conference, pages 151–163, 1990.  
+[16] J.J.KistlerandM.Satyanarayanan.Disconnectedoperationinthe Coda file system. In Proc. of the 13th SOSP, pages 213–225, 1991.  
+[17] J. Kubiatowicz, D. Bindel, Y. Chen, S. Czerwinski, P. Eaton, D. Geels, R. Gummadi, S. Rhea, H. Weatherspoon, W. Weimer, C. Wells, and B. Zhao. OceanStore: An architecture for global-scale persistent storage. In Proc. of 9th ASPLOS, pages 190–201, November 2000.  
+[18] L.Lamport.Thepart-timeparliament.ACMTrans.onComputer Systems, 16(2):133–169, May 1998.  
+[19] E.K.LeeandC.A.Thekkath.Petal:Distributedvirtualdisks.In Proc. 7th ASPLOS, pages 84–92, October 1996.  
+[20] B.Liskov,S.Ghemawat,R.Gruber,P.Johnson,L.Shrira,and M. Williams. Replication in the Harp file system. In Proc. of 13th SOSP, pages 226–238, 1991.  
+[21] J.MacCormick,N.Murphy,M.Najork,C.A.Thekkath,and L. Zhou. Boxwood: Abstractions as the foundation for storage infrastructure. In Proc. of the 6th OSDI, pages 105–120, December 2004.  
+[22] B. M. Oki and B. H. Liskov. Viewstamped replication: a new primary copy method to support highly-available distributed systems. In Proc. of 7th PODC, pages 8–17, 1988.  
+[23] C.H.Papadimitriou.Theserializabilityofconcurrentdatabase updates. Journal of the ACM, 26(4):631–653, October 1979.  
+[24] M.RosenblumandJ.K.Ousterhout.Thedesignand implementation of a log-structured file system. ACM Trans. on Computer Systems, 10(1):26–52, 1992.  
+[25] A.RowstronandP.Druschel.Storagemanagementandcachingin PAST, a large-scale, persistent peer-to-peer storage utility. In Proc. of the 18th SOSP, pages 188–201, 2001.  
+[26] G.Swart,A.Birrell,A.Hisgen,andT.Mann.Availabilityinthe Echo file system. Research Report 112, System Research Center, Digital Equipment Corporation, September 1993.  
+[27] D.B.Terry,M.M.Theimer,K.Petersen,A.J.Demers,M.J. Spreitzer, and C. H. Hauser. Managing update conflicts in Bayou, a weakly connected replicated storage system. In Proc. of the 15th SOSP, pages 172–183, December 1995.  
+[28] C.A.Thekkath,T.P.Mann,andE.K.Lee.Frangipani:Ascalable distributed file system. In Proc. 16th Symp. Operating Systems Principles (SOSP), pages 224–237, October 1997.  
+[29] R.vanRenesseandF.B.Schneider.Chainreplicationfor supporting high throughput and availability. In Proc. of the 6th OSDI, pages 91–104, 2004.  
 [30] H.YuandA.Vahdat.Designandevaluationofaconit-based continuous consistency model for replicated services. ACM Trans. Comput. Syst., 20(3):239–182, 2002.
 
