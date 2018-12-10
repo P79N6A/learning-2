@@ -12,6 +12,8 @@ export PATH=$PATH:$GOPATH/bin
 
 $ source .bash_profile
 ```
+#### golang ide debug
+> $ xcode-select --install
 
 #### go 命令行  
 [go command](http://wiki.jikexueyuan.com/project/go-command-tutorial/0.0.html)
