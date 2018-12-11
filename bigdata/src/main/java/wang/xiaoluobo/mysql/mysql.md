@@ -2,7 +2,7 @@
 http://ftp.kaist.ac.kr/mysql/Downloads/MySQL-5.7/
 
 ##### 1. 查看mysql版本
-```sbtshell
+```Bash
 [wangyandong@bigdata01 opt]$ lsb_release -a
 LSB Version:	:base-4.0-amd64:base-4.0-noarch:core-4.0-amd64:core-4.0-noarch
 Distributor ID:	CentOS
@@ -12,7 +12,7 @@ Codename:	Final
 ```
 
 ##### 2. 卸载mysql
-```sbtshell
+```Bash
 [wangyandong@bigdata01 opt]$ sudo su -
 [root@bigdata01 opt]# rpm -qa | grep mysql
 mysql-libs-5.1.73-8.el6_8.x86_64
@@ -25,13 +25,13 @@ mysql-devel-5.1.73-8.el6_8.x86_64
 ```
 
 ##### 3. 查看mysql用户组及密码是否存在
-```sbtshell
+```Bash
 [root@bigdata01 opt]# cat /etc/group | grep mysql
 [root@bigdata01 opt]# cat /etc/passwd | grep mysql
 ```
 
 ##### 4. 添加用户及组
-```sbtshell
+```Bash
 [root@bigdata01 opt]# groupadd mysql
 [root@bigdata01 opt]# useradd -d /home/mysql -g mysql -m mysql -s /sbin/nologin
 [root@bigdata01 opt]# chown -R mysql:mysql mysql-5.7.23
@@ -42,7 +42,7 @@ mysql-devel-5.1.73-8.el6_8.x86_64
 ```
 
 ##### 5. 初始化mysql
-```sbtshell
+```Bash
 [mysql@bigdata01 mysql-5.7.23]$ ./bin/mysqld --initialize --user=mysql --basedir=/mnt/data/mysql/ --datadir=/mnt/data/mysql/data/
 [mysql@bigdata01 mysql-5.7.23]$ tail -f /mnt/log/mysql/mysqld.log
 2018-09-10T07:23:51.110288Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
@@ -55,7 +55,7 @@ mysql-devel-5.1.73-8.el6_8.x86_64
 ```
 
 ##### 6. mysql安全
-```sbtshell
+```Bash
 [root@bigdata01 mysql-5.7.23]# ./bin/mysql_ssl_rsa_setup --datadir=/mnt/data/mysql/data/
 Generating a 2048 bit RSA private key
 .................................+++
@@ -75,7 +75,7 @@ writing new private key to 'client-key.pem'
 ```
 
 ##### 7. 添加mysql开机启动
-```sbtshell
+```Bash
 [root@bigdata01 mysql-5.7.23]# cp ./support-files/mysql.server /etc/init.d/mysql
 [root@bigdata01 mysql-5.7.23]# chmod +x /etc/init.d/mysql
 [root@bigdata01 mysql-5.7.23]# chkconfig --add mysql
@@ -84,7 +84,7 @@ mysql          	0:off	1:off	2:on	3:on	4:on	5:on	6:off
 ```
 
 ##### 8. mysql配置
-```sbtshell
+```Bash
 [root@bigdata01 mysql-5.7.23]# vim /etc/init.d/mysql
 basedir=/mnt/opt/mysql-5.7.23
 datadir=/mnt/data/mysql/data
@@ -102,7 +102,7 @@ pid-file=/mnt/opt/mysql-5.7.23/mysqld.pid
 ```
 
 ##### 9. 修改mysql密码
-```sbtshell
+```Bash
 # 查看mysql默认密码
 [root@bigdata01 mysql]# tail -f /mnt/log/mysql/mysqld.log
 2018-09-10T07:23:52.113568Z 1 [Note] A temporary password is generated for root@localhost: _d?S*8voweo#

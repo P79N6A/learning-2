@@ -1,18 +1,18 @@
 ## kafka-manager version 1.3.3.18
 
 ##### 一、配置[application.conf](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/kafka/config/application.conf)
-```sbtshell
+```Bash
 [root@mvare01 opt]# unzip -q kafka-manager-1.3.3.18.zip
 [root@mvare01 conf]# vim application.conf
 ```
 
 #### 二、启动kafka-manager
-```sbtshell
+```Bash
 [root@mvare01 kafka-manager-1.3.3.18]# nohup bin/kafka-manager -Dconfig.file=conf/application.conf -Dhttp.port=8080 &
 ```
 
 #### 三、停止kafka-manager
-```sbtshell
+```Bash
 [root@mware01 kafka-manager-1.3.3.18]# ps -ef| grep kafka-manager | grep -v grep | awk '{print $2}'
 2385
 [root@mvare01 kafka-manager-1.3.3.18]# kill -4 2385

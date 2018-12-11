@@ -1,6 +1,6 @@
 #### 字体
 
-```sbtshell
+```Bash
 # 查看现有字体列表：
 fc-list
 

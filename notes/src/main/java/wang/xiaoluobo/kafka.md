@@ -28,7 +28,7 @@ http://www.jasongj.com/tags/Kafka/
 - Topic  
     ![partition log](http://kafka.apache.org/21/images/log_anatomy.png)  
     topic是发布记录的类别或订阅源名称。Kafka的topic总是多用户; 也就是说，一个topic可以有零个，一个或多个消费者订阅写入它的数据。  
-    ```sbtshell
+    ```Bash
     # topic在kafka server的存储位置
     $ cat server.properties | grep "log.dir"
     log.dirs=/tmp/kafka-logs

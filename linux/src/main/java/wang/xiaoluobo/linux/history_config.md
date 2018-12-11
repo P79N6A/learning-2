@@ -1,6 +1,6 @@
 #### history配置
 
-```sbtshell
+```Bash
 # 设置history历史记录数
 vi /etc/profile
 export HISTTIMEFORMAT='%F %T '

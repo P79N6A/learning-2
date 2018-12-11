@@ -44,7 +44,7 @@ bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --describe --grou
 bin/kafka-consumer-groups.sh --zookeeper localhost:2181 --describe --group test  
 
 ##### 4. 导入导出数据
-```sbtshell
+```Bash
 $ cd kafka_2.11-2.0.0
 # 向test.txt中写入两条数据
 $ echo -e "foo\nbar\nAnother line" > test.txt，会将数据写到topic【connect-test】中

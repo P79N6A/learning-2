@@ -1,6 +1,6 @@
 ## [gradle5.0](http://services.gradle.org/distributions/gradle-5.0-bin.zip)
 
-```sbtshell
+```Bash
 $ unzip -q gradle-5.0-bin.zip
 
 $ vim .bash_profile

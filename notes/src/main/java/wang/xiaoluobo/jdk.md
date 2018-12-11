@@ -1,6 +1,6 @@
 ### jdk
 ##### 多版本jdk配置
-```sbtshell
+```Bash
 sudo vi ~/.bash_profile
 
 export JAVA_8_HOME=`/usr/libexec/java_home -v 1.8`
@@ -13,7 +13,7 @@ alias jdk11="export JAVA_HOME=$JAVA_11_HOME"
 ```
 
 ##### linux配置jdk
-```sbtshell
+```Bash
 # 删除jdk
 [root@mvare02 config]# rpm -qa | grep jdk
 jdk-1.7.0_79-fcs.x86_64
@@ -33,7 +33,7 @@ OpenJDK 64-Bit Server VM (build 25.181-b13, mixed mode)
 ```
 
 ##### /usr/java/default/bin/java: No such file or directory
-```sbtshell
+```Bash
 JDK错误解决方法：软连接不存在，重新添加即可
 bigdata01: /mnt/opt/hadoop-2.8.4/bin/hdfs: line 305: /usr/java/default/bin/java: No such file or directory
 [root@bigdata01 mnt]# ll /usr/java/default

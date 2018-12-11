@@ -4,7 +4,7 @@ namenode节点-bigdata01
 datanode节点-bigdata02,bigdata03
 
 ##### 1. 创建用户和用户组(三台机器都需要配置)
-```sbtshell
+```Bash
 [root@bigdata01 hadoop-2.8.4]# sudo visudo
 hadoop ALL=(ALL) NOPASSWD: ALL
 # 创建hadoop用户和用户组
@@ -15,7 +15,7 @@ hadoop ALL=(ALL) NOPASSWD: ALL
 ```
 
 ##### 2. 三台机器hadoop用户相互免密码授权
-```sbtshell
+```Bash
 [root@bigdata01 opt]# su - hadoop
 [hadoop@bigdata01 ~]$ ls -a
 .  ..  .bash_history  .bash_logout  .bash_profile  .bashrc
@@ -69,7 +69,7 @@ Connection to bigdata01 closed.
 ```
 
 ##### 3. 环境变量与目录(三台机器都需要配置)
-```sbtshell
+```Bash
 [root@bigdata01 opt]# chown -R hadoop:hadoop hadoop-2.8.4
 [hadoop@bigdata01 hadoop]$ vim /home/hadoop/.bash_profile
 export HADOOP_CONF_DIR=/mnt/opt/hadoop-2.8.4/etc/hadoop
@@ -89,7 +89,7 @@ export PATH=$HADOOP_HOME/bin:$PATH
 ```
 
 ##### 4. hadoop配置文件(三台机器都需要配置)
-```sbtshell
+```Bash
 [hadoop@bigdata01 hadoop]$ vim slaves
 bigdata02
 bigdata03
@@ -107,7 +107,7 @@ bigdata03
 ```
 
 ##### 5. 格式化namenode(bigdata01执行)
-```sbtshell
+```Bash
 只在bigdata01上执行
 [hadoop@bigdata01 hadoop-2.8.4]$ ./bin/hdfs namenode -format
 18/09/06 14:57:50 INFO namenode.NameNode: STARTUP_MSG:
@@ -185,7 +185,7 @@ SHUTDOWN_MSG: Shutting down NameNode at bigdata01/10.27.223.1
 ```
 
 ##### 6. 启动hdfs(bigdata01执行)
-```sbtshell
+```Bash
 [hadoop@bigdata01 hadoop-2.8.4]$ ./sbin/start-dfs.sh
 18/09/06 14:58:33 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
 Starting namenodes on [bigdata01]
@@ -213,7 +213,7 @@ bigdata01: starting secondarynamenode, logging to /mnt/opt/hadoop-2.8.4/logs/had
 ```
 
 ##### 7. 启动yarn(bigdata01执行)
-```sbtshell
+```Bash
 [hadoop@bigdata01 hadoop-2.8.4]$ ./sbin/start-yarn.sh
 starting yarn daemons
 starting resourcemanager, logging to /mnt/opt/hadoop-2.8.4/logs/yarn-hadoop-resourcemanager-bigdata01.out
@@ -236,7 +236,7 @@ bigdata03: starting nodemanager, logging to /mnt/opt/hadoop-2.8.4/logs/yarn-hado
 ```
 
 ##### 8. 查看进程(三台机器都需要配置)
-```sbtshell
+```Bash
 [hadoop@bigdata01 hadoop-2.8.4]$ jps
 26385 ResourceManager
 26658 Jps
@@ -255,7 +255,7 @@ bigdata03: starting nodemanager, logging to /mnt/opt/hadoop-2.8.4/logs/yarn-hado
 ```
 
 ##### 9. 测试hadoop环境
-```sbtshell
+```Bash
 [hadoop@bigdata01 hadoop-2.8.4]$ ./bin/hadoop fs -mkdir -p /mnt/data/hadoop/wordcount/
 [hadoop@bigdata01 hadoop-2.8.4]$ ./bin/hadoop fs -copyFromLocal LICENSE.txt hdfs:///mnt/data/hadoop/wordcount/
 [hadoop@bigdata01 hadoop-2.8.4]$ ./bin/hadoop fs -ls /mnt/data/hadoop/wordcount/
@@ -265,7 +265,7 @@ Found 1 items
 
 ##### 10. 安装hadoop遇到的问题
 - jdk
-```sbtshell
+```Bash
 [hadoop@bigdata01 hadoop-2.8.4]$ ./sbin/start-dfs.sh
 18/09/06 11:24:21 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
 Starting namenodes on [bigdata01]
@@ -303,7 +303,7 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.181-b13, mixed mode)
 http://ftp.ntu.edu.tw/gnu/glibc/glibc-2.14.tar.gz  
 http://ftp.ntu.edu.tw/gnu/glibc/glibc-ports-2.5.tar.bz2  
 
-```sbtshell
+```Bash
 [hadoop@bigdata01 hadoop-2.8.4]$ hadoop fs -ls /
 18/09/10 10:58:26 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
 Found 2 items
@@ -364,7 +364,7 @@ drwxr-xr-x   - hadoop supergroup          0 2018-09-06 17:55 /user
 
 ##### 11. hadoop命令行
 - hdfs
-```sbtshell
+```Bash
 [hadoop@bigdata01 bin]$ ./hdfs dfs -help
 Usage: hadoop fs [generic options]
 	[-appendToFile <localsrc> ... <dst>]
@@ -767,7 +767,7 @@ command [genericOptions] [commandOptions]
 ```
 
 - 查看hadoop配置
-```sbtshell
+```Bash
 [hadoop@bigdata01 data]$ du -ha /mnt/data/hadoop/hdfs
 [hadoop@bigdata01 bin]$ ./hadoop fs -du -s /
 3943039008  /

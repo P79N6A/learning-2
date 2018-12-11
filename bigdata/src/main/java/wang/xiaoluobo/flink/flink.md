@@ -2,7 +2,7 @@
 ### 一、flink cluster
 https://archive.apache.org/dist/flink/flink-1.6.0/flink-1.6.0-bin-scala_2.11.tgz
 #### 1. [flink cluster setup](https://ci.apache.org/projects/flink/flink-docs-release-1.6/quickstart/setup_quickstart.html)
-```sbtshell
+```Bash
 $ tar -zxvf flink-1.6.0-bin-scala_2.11.tgz
 $ cd flink-1.6.0
 $ ./bin/start-cluster.sh
@@ -95,7 +95,7 @@ public class SocketWindowWordCount {
 ```
 
 #### 4. run flink example
-```sbtshell
+```Bash
 # netcat 启动本地服务器
 $ nc -l 9000
 
@@ -133,14 +133,14 @@ go : 2
 ```
 
 #### 5. stop flink cluster
-```sbtshell
+```Bash
 # 停止flink cluster
 $ ./bin/stop-cluster.sh
 ```
 
 ### 二、[flink on yarn](https://ci.apache.org/projects/flink/flink-docs-release-1.6/ops/deployment/yarn_setup.html)
 #### 1. 配置
-```sbtshell
+```Bash
 [root@bigdata01 opt]# chown -R hadoop:hadoop flink-1.6.0
 [hadoop@bigdata01 conf]$ vim flink-conf.yaml
 
@@ -156,7 +156,7 @@ bigdata01:8081
 [logback-classic-1.2.3.jar](http://central.maven.org/maven2/ch/qos/logback/logback-classic/1.2.3/logback-classic-1.2.3.jar)  
 [logback-core-1.2.3.jar](http://central.maven.org/maven2/ch/qos/logback/logback-core/1.2.3/logback-core-1.2.3.jar)  
 
-```sbtshell
+```Bash
 [hadoop@bigdata01 flink-1.6.0]$ sudo mkdir /mnt/log/flink
 [hadoop@bigdata01 flink-1.6.0]$ sudo chown -R hadoop:hadoop /mnt/log/flink
 
@@ -172,7 +172,7 @@ $ cp logback-core-1.2.3.jar flink-1.6.0/lib
 ```
 
 #### 3. 启动和停止flink
-```sbtshell
+```Bash
 # 启动flink
 [hadoop@bigdata02 flink-1.6.0]$ ./bin/yarn-session.sh -n 3 -jm 1024 -tm 4096  -s 3 -nm FlinkOnYarnSession -d -st
 2018-09-10 10:32:53,118 INFO  org.apache.flink.configuration.GlobalConfiguration            - Loading configuration property: yarn.application-attempts, 10
@@ -209,7 +209,7 @@ yarn application -kill application_1536545538166_0002
 ```
 
 #### 4. 环境测试
-```sbtshell
+```Bash
 # hdfs创建测试目录并上传文件到hdfs
 [hadoop@bigdata01 hadoop-2.8.4]$ ./bin/hadoop fs -mkdir -p /mnt/data/hadoop/wordcount/
 [hadoop@bigdata01 hadoop-2.8.4]$ ./bin/hadoop fs -copyFromLocal LICENSE.txt hdfs:///mnt/data/hadoop/wordcount/

@@ -2,7 +2,7 @@
 [golang标准库](https://gowalker.org/search?q=gorepos)
 
 #### 环境配置
-```sbtshell
+```Bash
 $ vim .bash_profile
 export GOROOT=/usr/local/go
 export PATH=$PATH:$GOROOT/bin
@@ -263,7 +263,7 @@ vet         report likely mistakes in packages
     ```
     
 - fist test
-    ```sbtshell
+    ```Bash
     $ vim test.go
     package main
     

@@ -1,4 +1,4 @@
-```sbtshell
+```Bash
 [root@bz39 data1]# cat /proc/meminfo
 MemTotal:      8184876 kB
 MemFree:       2673288 kB

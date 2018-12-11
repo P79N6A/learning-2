@@ -1,6 +1,6 @@
 ## elasticsearch-5.3.0
 #### 1. 配置elasticsearch
-```sbtshell
+```Bash
 [root@bigdata01 ~]# groupadd elastic
 [root@bigdata01 ~]# useradd -d /home/elastic -g elastic -m elastic
 [root@bigdata01 opt]# chown -R elastic:elastic elasticsearch-5.3.0
@@ -19,7 +19,7 @@ bootstrap.system_call_filter: false
 ```
 
 #### 2. 问题处理
-```sbtshell
+```Bash
 # 错误：max file descriptors [65535] for elasticsearch process is too low, increase to at least [65536]
 # memory locking requested for elasticsearch process but memory is not locked
 # max number of threads [1024] for user [hadoop] is too low, increase to at least [2048]
@@ -79,7 +79,7 @@ http://es.benz.bingex.com/customer/doc/1?pretty
 ```
 
 #### 4. head插件
-```sbtshell
+```Bash
 $ yum install git npm  
 $ npm install -g grunt-cli
 $ npm run start

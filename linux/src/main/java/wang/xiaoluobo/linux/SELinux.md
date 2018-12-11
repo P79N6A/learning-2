@@ -1,4 +1,4 @@
-```sbtshell
+```Bash
 查看SELinux状态：
 1. /usr/sbin/sestatus -v      
 SELinux status:                 enabled

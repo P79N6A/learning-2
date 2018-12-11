@@ -7,13 +7,13 @@ export PATH=$MONGODB_HOME/bin:$PATH
 ```
 
 ##### 2. 创建数据与日志目录
-```sbtshell
+```Bash
 [wangyandong@mvare01 mongodb-linux-x86_64-rhel62-4.0.2]$ sudo mkdir -p /mnt/data/mongodb/
 [wangyandong@mvare01 mongodb-linux-x86_64-rhel62-4.0.2]$ sudo mkdir -p /mnt/log/mongodb/
 ```
 
 ##### 3. mongodb配置文件
-```sbtshell
+```Bash
 [wangyandong@mvare01 conf]$ cat mongodb.conf
 bind_ip = 192.168.1.10
 dbpath = /mnt/data/mongodb/
@@ -23,7 +23,7 @@ fork = true
 ```
 
 ##### 4. 启动mongodb
-```sbtshell
+```Bash
 [wangyandong@mvare01 mongodb-4.0.2]$ sudo ./bin/mongod --config conf/mongodb.conf
 2018-09-05T15:22:40.078+0800 I CONTROL  [main] Automatically disabling TLS 1.0, to force-enable TLS 1.0 specify --sslDisabledProtocols 'none'
 about to fork child process, waiting until server is ready for connections.
@@ -32,7 +32,7 @@ child process started successfully, parent exiting
 ```
 
 ##### 5. 远程连接mongodb
-```sbtshell
+```Bash
 [root@mvare01 bin]# ps -ef| grep mongo | grep -v grep | awk '{print $2}'
 22819
 [root@mvare01 bin]# kill -4 22819

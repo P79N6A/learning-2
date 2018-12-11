@@ -4,7 +4,7 @@ hiveserver2: bigdata01
 metastore: bigdata02,bigdata03
 
 #### 二、配置环境变量
-```sbtshell
+```Bash
 [hadoop@bigdata01 hive-2.3.3]$ sudo vim /etc/profile
 export HIVE_HOME=/mnt/opt/hive-2.3.3
 export HIVE_CONF_DIR=$HIVE_HOME/conf
@@ -13,7 +13,7 @@ PATH=$HIVE_HOME/bin:$PATH
 ```
 
 #### 三、hive权限配置
-```sbtshell
+```Bash
 [root@bigdata01 opt]# chown -R hadoop.hadoop hive-2.3.3
 
 [hadoop@bigdata01 bin]$ ./hdfs dfs -mkdir -p /user/hive/warehouse
@@ -28,13 +28,13 @@ drwxr-xr-x   - hadoop supergroup          0 2018-09-11 10:05 /user
 ```
 
 #### 四、[hive-env.sh](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/hive/config/hive-env.sh)
-```sbtshell
+```Bash
 [hadoop@bigdata01 conf]$ mv hive-default.xml.template hive-site.xml
 [hadoop@bigdata01 conf]# vim hive-env.sh
 ```
 
 #### 五、[hive-site.sh](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/hive/config/hive-site.sh)
-```sbtshell
+```Bash
 # hiveserver2配置，只配置metastore信息，不配置mysql连接信息，替换内容metastore节点也需要修改
 [hadoop@bigdata01 conf]$ vim hive-site.xml
 <property>
@@ -93,7 +93,7 @@ drwxr-xr-x   - hadoop supergroup          0 2018-09-11 10:05 /user
 ```
 
 #### 六、配置log目录
-```sbtshell
+```Bash
 [hadoop@bigdata01 conf]$ sudo mkdir -p /mnt/data/hive/tmp
 [hadoop@bigdata01 conf]$ sudo chown -R hadoop:hadoop /mnt/data/hive/tmp
 [wangyandong@bigdata01 ~]$ sudo cp mysql-connector-java-8.0.12.jar /mnt/opt/hive-2.3.3/lib/
@@ -106,7 +106,7 @@ property.hive.log.dir = /mnt/log/hive
 ```
 
 #### 七、初始化hive数据源mysql数据库
-```sbtshell
+```Bash
 # bigdata01执行
 [hadoop@bigdata01 bin]$ ./schematool -initSchema -dbType mysql
 SLF4J: Class path contains multiple SLF4J bindings.
@@ -190,7 +190,7 @@ mysql> show tables;
 ```
 
 #### 八、启动hiveserver2和metastore
-```sbtshell
+```Bash
 # 启动hiveserver2
 [hadoop@bigdata01 bin]$ ./hiveserver2 &
 # 启动metastore
@@ -199,7 +199,7 @@ mysql> show tables;
 ```
 
 #### 八、连接hive
-```sbtshell
+```Bash
 [hadoop@bigdata03 bin]$ ./beeline -u jdbc:hive2://bigdata01:10000
 SLF4J: Class path contains multiple SLF4J bindings.
 SLF4J: Found binding in [jar:file:/mnt/opt/hive-2.3.3/lib/log4j-slf4j-impl-2.6.2.jar!/org/slf4j/impl/StaticLoggerBinder.class]
