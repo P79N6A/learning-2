@@ -184,9 +184,9 @@ Boxwood和Bigtable / Chubby [5]。这些系统的主要区别在于租约是从�
 
 (图1：调节：一个例子。 A是旧配置中的主要内容。在新配置中，旧辅助B被提升为新主节点，其中A已从配置中删除。第一行显示准备好的列表的状态以及基于列表中最高序列号的副本的已提交列表。第二行显示对帐后的相应状态)
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;图1说明了主要更改时准备好的列表和已完成的点如何变化。最初，A是B，C和D作为辅助设备的主要部分。
-请注意，committedB是committedA的前缀，它是任何副本上准备好的列表的前缀。考虑重新配置，将B替换失败的A作为主要。B完成协调后，新的committedB与旧的
-preparedB相同，后者包含committedA。已更新preparedC以保留Commit Invariant。对preparedD的额外请求被删除(或撤消)[注1]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;图1说明了主节点更改时准备列表和提交点的更改方式。最初，A是辅助节点B，C和D的主节点。
+请注意，committedB是committedA的前缀，它是任何副本上准备好的列表的前缀。考虑重新配置，将B替换失败的A作为主要。B完成协调后，新的committedB
+与旧的preparedB相同，后者包含committedA。已更新preparedC以保留Commit Invariant。对preparedD的额外请求被删除(或撤消)[注1]
 >注1：在某些情况下，当D从具有相同序列号的新主节B新请求接收时，可以懒惰地完成预备D的截断。这些要求将取代现有的要求。
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;__增加新的辅助__。可以将新副本添加到副本组，以在组中副本失败后恢复冗余级别。
