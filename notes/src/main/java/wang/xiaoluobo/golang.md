@@ -378,4 +378,146 @@ vet         report likely mistakes in packages
     4 3 2 1 0
     ```
 
+- 结构与方法
+    ```golang
+    type Interval struct {
+        start int
+        end   int
+    }
+    
+    // 初始化方式
+    // (A)值必须以字段在结构体定义时的顺序给出，&不是必须的
+    // (B)字段名加一个冒号放在值的前面
+    // (C)值的顺序不必一致，并且某些字段还可以被忽略掉
+    intr := Interval{0, 3}            (A)
+    intr := Interval{end:5, start:1}  (B)
+    intr := Interval{end:5}           (C)
+    
+    // 匿名字段和内嵌结构体
+    // 结构体可以包含一个或多个匿名(或内嵌)字段，即这些字段没有显式的名字，只有字段的类型是必须的，此时类型也就是字段的名字。匿名字段本身可以是一个结构体类型，即结构体可以包含内嵌结构体
+    package main
+    
+    import "fmt"
+    
+    type innerS struct {
+        in1 int
+        in2 int
+    }
+    
+    type outerS struct {
+        b    int
+        c    float32
+        int  // anonymous field
+        innerS //anonymous field
+    }
+    
+    func main() {
+        outer := new(outerS)
+        outer.b = 6
+        outer.c = 7.5
+        outer.int = 60
+        outer.in1 = 5
+        outer.in2 = 10
+    
+        fmt.Printf("outer.b is: %d\n", outer.b)
+        fmt.Printf("outer.c is: %f\n", outer.c)
+        fmt.Printf("outer.int is: %d\n", outer.int)
+        fmt.Printf("outer.in1 is: %d\n", outer.in1)
+        fmt.Printf("outer.in2 is: %d\n", outer.in2)
+    
+        // 使用结构体字面量
+        outer2 := outerS{6, 7.5, 60, innerS{5, 10}}
+        fmt.Printf("outer2 is:", outer2)
+    }
+    
+    // 方法
+    package main
+    
+    import "fmt"
+    
+    type TwoInts struct {
+        a int
+        b int
+    }
+    
+    func main() {
+        two1 := new(TwoInts)
+        two1.a = 12
+        two1.b = 10
+    
+        fmt.Printf("The sum is: %d\n", two1.AddThem())
+        fmt.Printf("Add them to the param: %d\n", two1.AddToParam(20))
+    
+        two2 := TwoInts{3, 4}
+        fmt.Printf("The sum is: %d\n", two2.AddThem())
+    }
+    
+    func (tn *TwoInts) AddThem() int {
+        return tn.a + tn.b
+    }
+    
+    func (tn *TwoInts) AddToParam(param int) int {
+        return tn.a + tn.b + param
+    }
+    ```
 
+- 接口
+    ```golang
+    package main
+    
+    import "fmt"
+    
+    type Shaper interface {
+        Area() float32
+    }
+    
+    type Square struct {
+        side float32
+    }
+    
+    func (sq *Square) Area() float32 {
+        return sq.side * sq.side
+    }
+    
+    type Rectangle struct {
+        length, width float32
+    }
+    
+    func (r Rectangle) Area() float32 {
+        return r.length * r.width
+    }
+    
+    func main() {
+        r := Rectangle{5, 3} // Area() of Rectangle needs a value
+        q := &Square{5}      // Area() of Square needs a pointer
+        // shapes := []Shaper{Shaper(r), Shaper(q)}
+        // or shorter
+        shapes := []Shaper{r, q}
+        fmt.Println("Looping through shapes for area ...")
+        for n, _ := range shapes {
+            fmt.Println("Shape details: ", shapes[n])
+            fmt.Println("Area of this shape is: ", shapes[n].Area())
+        }
+    }
+    
+    // 接口嵌套接口
+    type ReadWrite interface {
+        Read(b Buffer) bool
+        Write(b Buffer) bool
+    }
+    
+    type Lock interface {
+        Lock()
+        Unlock()
+    }
+    
+    type File interface {
+        ReadWrite
+        Lock
+        Close()
+    }
+    
+    type Any interface {}
+    ```
+    
+    
