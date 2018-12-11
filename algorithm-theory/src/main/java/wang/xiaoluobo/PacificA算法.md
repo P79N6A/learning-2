@@ -18,7 +18,7 @@ PacificA是微软为大规模分布式存储系统开发的一个通用复制框
 配置管理集群维护的其实是分片的副本信息(分片位于哪些节点)。数据分片的副本称之为复制组(Replication Group)。
 因为每个存储节点上会存在众多的数据分片，因此，每个存储节点会位于多个复制组中。
 
-## 一、[PacificA算法原文](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.188.450&rep=rep1&type=pdf)
+## 三、[PacificA算法原文](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.188.450&rep=rep1&type=pdf)
 ### **抽象**
 ****
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;大规模分布式存储系统已经普及，用于存储和处理不断增加的数据量。复制机制通常是在这种
