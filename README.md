@@ -12,3 +12,4 @@
 - [redis-starter](https://github.com/Dongzai1005/learning/tree/master/redis-starter)
 - [mongodb-starter](https://github.com/Dongzai1005/learning/tree/master/mongodb-starter)
 - [sourcecode](https://github.com/Dongzai1005/learning/tree/master/sourcecode)
+- [spring cloud](https://github.com/Dongzai1005/spring-cloud-demo)
