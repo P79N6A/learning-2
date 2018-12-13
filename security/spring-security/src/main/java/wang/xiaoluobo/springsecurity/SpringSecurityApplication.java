@@ -5,6 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 import wang.xiaoluobo.redis.configuration.RedisConfig;
 
+/**
+ * SpringSecurityApplication扫描不到{@link RedisConfig}，帮需要引入该包
+ */
 @Import(RedisConfig.class)
 @SpringBootApplication
 public class SpringSecurityApplication {
