@@ -27,6 +27,9 @@
         <spring-boot.version>2.1.0.RELEASE</spring-boot.version>
         <oauth2.version>2.3.4.RELEASE</oauth2.version>
         <oauth2.autoconfigure.version>2.0.3.RELEASE</oauth2.autoconfigure.version>
+
+        <shiro.version>1.4.0</shiro.version>
+        <shiro-redis.version>3.2.1</shiro-redis.version>
     </properties>
 
     <parent>
@@ -97,6 +100,29 @@
                 <groupId>org.springframework.security.oauth.boot</groupId>
                 <artifactId>spring-security-oauth2-autoconfigure</artifactId>
                 <version>${oauth2.autoconfigure.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-spring</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-core</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.crazycake</groupId>
+                <artifactId>shiro-redis</artifactId>
+                <version>${shiro-redis.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>4.0.1</version>
+                <scope>provided</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
