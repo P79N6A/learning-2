@@ -520,4 +520,9 @@ vet         report likely mistakes in packages
     type Any interface {}
     ```
     
-    
+#### qor问题
+```text
+(sql: Scan error on column index 1: unsupported Scan, storing driver.Value type []uint8 into type *time.Time)
+
+database = "root:1234@tcp(localhost:3306)/test?charset=utf8&loc=Local&parseTime=true"
+``` 
