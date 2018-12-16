@@ -3,7 +3,7 @@
 https://blog.csdn.net/suifeng3051/article/details/48053965  
 http://www.jasongj.com/tags/Kafka/  
 
-#### 一、kafka介绍
+### 一、kafka介绍
 1. Kafka通常用于两类应用：  
     1. 构建可在系统或应用程序之间可靠获取数据的实时流数据管道
     2. 构建转换或响应数据流的实时流应用程序
@@ -18,7 +18,7 @@ http://www.jasongj.com/tags/Kafka/
     该结构的优点是所有操作都是O(1)并且读取不会阻止写入或相互阻塞。这具有明显的性能优势，因为性能完全与数据大小分离
     7. Kafka支持GZIP，Snappy，LZ4和ZStandard压缩协议
     
-#### 二、kafka架构
+### 二、kafka架构
 - zookeeper
     zk负责存储kafka broker信息
     
@@ -136,8 +136,44 @@ Consumer挂掉或重新分配分区时会发生Consumer Rebalance
 
 恰好一次语义呢？当从Kafka主题消费并生成另一个主题时，Consumer的位置作为topic中的消息存储，因此我们可以在与接收处理数据的输出topic相同的事务中将offset写入Kafka。如果事务中止，则消费者的位置将恢复为其旧值，并且输出topic上生成的数据将不会被其他consumer看到，具体取决于其“隔离级别”。在默认的“read_uncommitted”隔离级别中，消费者可以看到所有消息，即使它们是中止事务的一部分，但在“read_committed”中，消费者只会从已提交的事务(以及任何不属于的消息)返回消息交易
 
+### 三、kafka leader election
+1. Kafka集群Leader选举原理  
+    Kafka的Leader选举是通过在zookeeper上创建/controller临时节点来实现leader选举，并在该节点中写入当前broker的信息
+    {“version”:1,”brokerid”:1,”timestamp”:”1512018424988”}
+    利用Zookeeper的强一致性特性，一个节点只能被一个客户端创建成功，创建成功的broker即为leader，即先到先得原则，leader也就是集群中的controller，负责集群中所有大小事务。
+    当leader和zookeeper失去连接时，临时节点会删除，而其他broker会监听该节点的变化，当节点删除时，其他broker会收到事件通知，重新发起leader选举。
 
+2. KafkaController  
+    KafkaController初始化ZookeeperLeaderElector对象，为ZookeeperLeaderElector设置两个回调方法，onControllerFailover和onControllerResignation
+    onControllerFailover在选举leader成功后会回调，在onControllerFailover中进行leader依赖的模块初始化，包括向zookeeper上/controller_epoch节点上记录leader的选举次数，这个epoch数值在处理分布式脑裂的场景中很有用。
+    而onControllerResignation在当前broker不再成为leader（即当前leader退位后）时会回调。
+    KafkaController在启动后注册zookeeper的会话超时监听器，并尝试选举leader。
 
+3. SessionExpirationListener  
+    当broker和zookeeper重新建立连接后，SessionExpirationListener中的handleNewSession会被调用，这时先关闭之前的leader相关模块，然后重新尝试选举成为leader。
+    
+4. ZookeeperLeaderElector  
+    ZookeeperLeaderElector类实现leader选举的功能，但是它并不负责处理broker和zookeeper的会话超时（连接超时）的情况，而是认为调用者应该在会话恢复（连接重新建立）时进行重新选举。
+    
+    ZookeeperLeaderElector的startup方法中调用elect方法选举leader
+    
+    有下面几种情况会调用elect方法
+    
+    broker启动时，第一次调用
+    上一次创建节点成功，但是可能在等Zookeeper响应的时候，连接中断，resign方法中删除/controller节点后，触发了leaderChangeListener的handleDataDeleted
+    上一次创建节点未成功，但是可能在等Zookeeper响应的时候，连接中断，而再次进入elect方法时，已有别的broker创建controller节点成功，成为了leader
+    上一次创建节点成功，但是onBecomingLeader抛出了异常，而再次进入
+    所以elect方法中先获取/controller节点信息，判断是否已经存在，然后再尝试选举leader
 
+    在创建/controller节点时，若收到的异常是ZkNodeExistsException，则说明其他broker已经成为了leader。
+    而若是onBecomingLeader的回调方法里出了异常，一般是初始化leader的相关的模块出了问题，如果初始化失败，则调用resign方法先删除/controller节点。
+    当/controller节点被删除时，会触发leaderChangeListener的handleDataDeleted，会重新尝试选举成Leader。
+    更重要的是也让其他broker有机会成为leader，避免某一个broker的onBecomingLeader一直失败造成整个集群一直处于“群龙无首”的尴尬局面。
 
-
+5. LeaderChangeListener  
+    在startup方法中，注册了/controller节点的IZkDataListener监听器即LeaderChangeListener。
+    若节点数据有变化时，则有可能别的broker成为了leader，则调用onResigningAsLeader方法。
+    若节点被删除，则是leader已经出了故障下线了，如果当前broker之前是leader，则调用onResigningAsLeader方法，然后重新尝试选举成为leader。
+    
+    onBecomingLeader方法对应KafkaController里的onControllerFailover方法，当成为新的leader后，要初始化leader所依赖的功能模块
+    onResigningAsLeader方法对应KafkaController里的onControllerResignation方法，当leader退位后，要关闭leader所依赖的功能模块
