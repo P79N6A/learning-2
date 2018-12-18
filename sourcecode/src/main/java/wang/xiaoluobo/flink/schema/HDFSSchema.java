@@ -1,7 +1,9 @@
-package wang.xiaoluobo.flink;
+package wang.xiaoluobo.flink.schema;
 
 import org.apache.flink.api.common.serialization.DeserializationSchema;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
+import wang.xiaoluobo.flink.Constants;
+import wang.xiaoluobo.flink.vo.HDFSObject;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -15,7 +17,7 @@ public class HDFSSchema implements DeserializationSchema<HDFSObject> {
     @Override
     public HDFSObject deserialize(byte[] message) throws IOException {
         String s = new String(message, StandardCharsets.UTF_8);
-        String[] ss = s.split(Constant.COMMA);
+        String[] ss = s.split(Constants.COMMA);
         if (ss.length != 4) {
             String err = "Deserialize failed: The input element fields should be <timestamp,taskId,cid,eventType>.";
             throw new IOException(err);

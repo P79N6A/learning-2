@@ -1,4 +1,4 @@
-package wang.xiaoluobo.flink.data;
+package wang.xiaoluobo.flink.vo;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,13 +6,12 @@ import lombok.Setter;
 import java.io.Serializable;
 
 /**
- * Message_Topic_WsInfo = "iss_mobile_dynamic"
- * timestamp,content,clientId,type
- * 1539677071483,region:"Beijing" ip:"10.53.254.11" ,1000000500,DYNAMIC
+ * Message_Topic_WsInfo = "iss_ws_clog"
+ * timestamp,clientId,type,content
  */
 @Getter
 @Setter
-public class DynamicObject implements Serializable {
+public class HDFSObject implements Serializable {
 
     /**
      * 毫秒
