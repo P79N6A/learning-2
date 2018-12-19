@@ -156,3 +156,4 @@ ctx
 ## StandaloneSessionClusterEntrypoint
 
 ## TaskManagerRunner
+TaskManagerRunner.main()
