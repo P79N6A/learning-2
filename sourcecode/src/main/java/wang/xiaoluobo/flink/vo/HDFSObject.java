@@ -6,7 +6,7 @@ import lombok.Setter;
 import java.io.Serializable;
 
 /**
- * Message_Topic_WsInfo = "iss_ws_clog"
+ * Message_Topic_WsInfo = "test_topic"
  * timestamp,clientId,type,content
  */
 @Getter

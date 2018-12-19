@@ -8,10 +8,6 @@ import wang.xiaoluobo.flink.vo.HDFSObject;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-/**
- * 将来自Kafka的二进制数据转换为Java对象。
- * 允许程序员指定这个序列化的实现 
- */
 public class HDFSSchema implements DeserializationSchema<HDFSObject> {
 
     @Override

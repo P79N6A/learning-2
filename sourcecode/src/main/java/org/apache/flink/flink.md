@@ -11,12 +11,60 @@ MiniCluster(java 实现)
 - StreamPlanEnvironment(流计划环境)  
 生成用户可检查的流式传输作业图时，在Web前端中使用的特殊StreamExecutionEnvironment
 
+## [flink应用](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/flink/flink.md)
+### 1. yarn session方式启动flink
+```Bash
+$ ./bin/yarn-session.sh -d -n 2 -tm1024 -s 1 -nm flink-test  
+$ ./bin/flink run ./app/bigdata-statistics-1.0.jar --kafka mware01:9092,mware02:9092 --interval 20
+```
+
+### 2. flink cluster(非HA模式)方式启动flink
+- 命令行参数
+```Bash
+$ ./bin/start-cluster.sh
+$ ./bin/flink run ./app/bigdata-statistics-1.0.jar --kafka mware01:9092,mware02:9092 --interval 20
+```
+
+- 启动日志
+    - jobmanager启动类(org.apache.flink.runtime.entrypoint.StandaloneSessionClusterEntrypoint)
+    - taskmanager启动类(org.apache.flink.runtime.taskexecutor.TaskManagerRunner)
+```Bash
+$ wyd@wangyandong:~/soft/flink-1.6.0/bin$ ./start-cluster.sh
+Starting cluster.
+/Users/wyd/soft/flink-1.6.0/bin/flink-daemon.sh start standalonesession --configDir /Users/wyd/soft/flink-1.6.0/conf --executionMode cluster
+Starting standalonesession daemon on host wangyandong.local.
+        /Library/Java/JavaVirtualMachines/jdk1.8.0_172.jdk/Contents/Home/bin/java  -Xms1024m -Xmx1024m  -Dlog.file=/Users/wyd/soft/flink-1.6.0/log/flink-wyd-standalonesession-0-wangyandong.local.log -Dlog4j.configuration=file:/Users/wyd/soft/flink-1.6.0/conf/log4j.properties -Dlogback.configurationFile=file:/Users/wyd/soft/flink-1.6.0/conf/logback.xml -classpath /Users/wyd/soft/flink-1.6.0/lib/flink-python_2.11-1.6.0.jar:/Users/wyd/soft/flink-1.6.0/lib/log4j-1.2.17.jar:/Users/wyd/soft/flink-1.6.0/lib/slf4j-log4j12-1.7.7.jar:/Users/wyd/soft/flink-1.6.0/lib/flink-dist_2.11-1.6.0.jar::/Users/wyd/soft/hadoop-2.8.4/etc/hadoop: org.apache.flink.runtime.entrypoint.StandaloneSessionClusterEntrypoint --configDir /Users/wyd/soft/flink-1.6.0/conf --executionMode cluster > /Users/wyd/soft/flink-1.6.0/log/flink-wyd-standalonesession-0-wangyandong.local.out 200<&- 2>&1 < /dev/null &
+
+/Users/wyd/soft/flink-1.6.0/bin/taskmanager.sh start
+/Users/wyd/soft/flink-1.6.0/bin/flink-daemon.sh start taskexecutor --configDir /Users/wyd/soft/flink-1.6.0/conf        
+Starting taskexecutor daemon on host wangyandong.local.
+        /Library/Java/JavaVirtualMachines/jdk1.8.0_172.jdk/Contents/Home/bin/java  -XX:+UseG1GC -Xms922M -Xmx922M -XX:MaxDirectMemorySize=8388607T  -Dlog.file=/Users/wyd/soft/flink-1.6.0/log/flink-wyd-taskexecutor-0-wangyandong.local.log -Dlog4j.configuration=file:/Users/wyd/soft/flink-1.6.0/conf/log4j.properties -Dlogback.configurationFile=file:/Users/wyd/soft/flink-1.6.0/conf/logback.xml -classpath /Users/wyd/soft/flink-1.6.0/lib/flink-python_2.11-1.6.0.jar:/Users/wyd/soft/flink-1.6.0/lib/log4j-1.2.17.jar:/Users/wyd/soft/flink-1.6.0/lib/slf4j-log4j12-1.7.7.jar:/Users/wyd/soft/flink-1.6.0/lib/flink-dist_2.11-1.6.0.jar::/Users/wyd/soft/hadoop-2.8.4/etc/hadoop: org.apache.flink.runtime.taskexecutor.TaskManagerRunner --configDir /Users/wyd/soft/flink-1.6.0/conf > /Users/wyd/soft/flink-1.6.0/log/flink-wyd-taskexecutor-0-wangyandong.local.out 200<&- 2>&1 < /dev/null &
+```
+
+- shell脚本调用关系
+```text
+# 启动jobmanager
+1. start-cluster.sh-->"$FLINK_BIN_DIR"/jobmanager.sh start
+2. jobmanager.sh-->"${FLINK_BIN_DIR}"/flink-daemon.sh $STARTSTOP $JOBMANAGER_TYPE "${args[@]}"
+3. flink-daemon.sh-->$JAVA_RUN $JVM_ARGS ${FLINK_ENV_JAVA_OPTS} "${log_setting[@]}" -classpath "`manglePathList "$FLINK_TM_CLASSPATH:$INTERNAL_HADOOP_CLASSPATHS"`" ${CLASS_TO_RUN} "${ARGS[@]}" > "$out" 200<&- 2>&1 < /dev/null &
+
+# 启动taskmanager
+4. start-cluster.sh-->TMSlaves start
+5. config.sh-->TMSlaves()方法
+6. TMSlaves()-->"${FLINK_BIN_DIR}"/taskmanager.sh "${CMD}"
+7. taskmanager.sh-->"${FLINK_BIN_DIR}"/flink-daemon.sh $STARTSTOP $TYPE "${ARGS[@]}"
+8. flink-daemon.sh-->$JAVA_RUN $JVM_ARGS ${FLINK_ENV_JAVA_OPTS} "${log_setting[@]}" -classpath "`manglePathList "$FLINK_TM_CLASSPATH:$INTERNAL_HADOOP_CLASSPATHS"`" ${CLASS_TO_RUN} "${ARGS[@]}" > "$out" 200<&- 2>&1 < /dev/null &
+```
 
 ## flink程序启动过程
-StreamExecutionEnvironment.getExecutionEnvironment() --> ExecutionEnvironment.getExecutionEnvironment() --> ContextEnvironmentFactory.createExecutionEnvironment() 
+>ParameterTool.fromArgs(args) --> StreamExecutionEnvironment.getExecutionEnvironment() --> ExecutionEnvironment.getExecutionEnvironment() --> ContextEnvironmentFactory.createExecutionEnvironment() 
 --> new ContextEnvironment(client, jarFilesToAttach, classpathsToAttach, userCodeClassLoader, savepointSettings) --> (StreamExecutionEnvironment)new StreamContextEnvironment((ContextEnvironment) env) 
 
-### 1. 创建StreamExecutionEnvironment
+### 1. 读取命令行参数ParameterTool.fromArgs(args)
+解析获取该命令行参数kafka与interval的值
+>bin/flink run ./app/bigdata-statistics-1.0.jar --kafka mware01:9092,mware02:9092 --interval 20
+
+### 2. 创建StreamExecutionEnvironment
 ```java
 StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
@@ -34,7 +82,7 @@ env.enableCheckpointing(Constant.CheckPoint);
 env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
 ```
 
-### 2. 创建数据源(kafka)
+### 3. 创建数据源(kafka)
 ```java
 Properties props = new Properties();
 props.setProperty("bootstrap.servers", kafka);
@@ -53,7 +101,7 @@ source.assignTimestampsAndWatermarks(new AscendingTimestampExtractor<HDFSObject>
 });
 ```
 
-### 3. 创建DataStream
+### 4. 创建DataStream
 ```java
 DataStream<Tuple4<Long, String, String, Integer>> s = env
         .addSource(source)
@@ -86,7 +134,7 @@ DataStream<Tuple4<Long, String, String, Integer>> s = env
         });
 ```
 
-### 4. 创建Sink
+### 5. 创建HDFS Sink
 ```java
 BucketingSink bucketingSink = new BucketingSink<Tuple2<IntWritable, Text>>(Constant.HDFS_BASE_DIR)
         // 存储为 hadoop hdfs 文件
@@ -103,7 +151,7 @@ BucketingSink bucketingSink = new BucketingSink<Tuple2<IntWritable, Text>>(Const
 s.addSink(bucketingSink);
 ```
 
-### 5. 执行flink程序
+### 6. 执行flink程序
 ```java
 env.execute("test service");
 
