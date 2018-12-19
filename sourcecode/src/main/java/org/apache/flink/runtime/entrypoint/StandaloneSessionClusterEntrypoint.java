@@ -36,6 +36,8 @@ import javax.annotation.Nullable;
 
 /**
  * Entry point for the standalone session cluster.
+ *
+ * 独立会话集群的入口点
  */
 public class StandaloneSessionClusterEntrypoint extends SessionClusterEntrypoint {
 
@@ -96,6 +98,7 @@ public class StandaloneSessionClusterEntrypoint extends SessionClusterEntrypoint
 
 		StandaloneSessionClusterEntrypoint entrypoint = new StandaloneSessionClusterEntrypoint(configuration);
 
+		// 启动集群
 		entrypoint.startCluster();
 	}
 }
