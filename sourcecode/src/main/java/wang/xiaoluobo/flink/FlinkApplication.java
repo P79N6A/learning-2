@@ -40,14 +40,14 @@ public class FlinkApplication {
 
         kafka = parameters.get("kafka");
         interval = parameters.getInt("interval");
-        topic = parameters.get("topic");
+
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.enableCheckpointing(Constants.CheckPoint);
         env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
 
         fromKafka2HDFS(env);
 
-        env.execute("bigdata-statistics-service" + topic);
+        env.execute("bigdata-service");
         logger.info("Application started.");
     }
 

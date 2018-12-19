@@ -11,7 +11,7 @@ MiniCluster(java 实现)
 - StreamPlanEnvironment(流计划环境)  
 生成用户可检查的流式传输作业图时，在Web前端中使用的特殊StreamExecutionEnvironment
 
-## [flink应用](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/flink/flink.md)
+## [flink应用启动过程](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/flink/flink.md)
 ### 1. yarn session方式启动flink
 ```Bash
 $ ./bin/yarn-session.sh -d -n 2 -tm1024 -s 1 -nm flink-test  
@@ -66,6 +66,10 @@ Starting taskexecutor daemon on host wangyandong.local.
 
 ### 2. 创建StreamExecutionEnvironment
 ```java
+ParameterTool parameters = ParameterTool.fromArgs(args);
+kafka = parameters.get("kafka");
+interval = parameters.getInt("interval");
+
 StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
 ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
@@ -76,18 +80,24 @@ lastEnvCreated = isDetached
    ? new DetachedEnvironment(client, jarFilesToAttach, classpathsToAttach, userCodeClassLoader, savepointSettings)
    : new ContextEnvironment(client, jarFilesToAttach, classpathsToAttach, userCodeClassLoader, savepointSettings); // 默认为 false
    
-new StreamContextEnvironment((ContextEnvironment) env);  // 创建流环境完毕
+new StreamContextEnvironment((ContextEnvironment) env);  // 创建流上下文环境完毕
 
 env.enableCheckpointing(Constant.CheckPoint);
 env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
+
+fromKafka2HDFS(env);
+
+env.execute("bigdata service");
 ```
 
 ### 3. 创建数据源(kafka)
 ```java
+// 初始化kafka配置
 Properties props = new Properties();
 props.setProperty("bootstrap.servers", kafka);
 props.setProperty("group.id", "test_topic");
 
+// 创建kafka consumer
 FlinkKafkaConsumer011<HDFSObject> source = new FlinkKafkaConsumer011<>(Constant.Topic, new HDFSSchema(), props);
 source.assignTimestampsAndWatermarks(new AscendingTimestampExtractor<HDFSObject>() {
     @Override
@@ -103,60 +113,44 @@ source.assignTimestampsAndWatermarks(new AscendingTimestampExtractor<HDFSObject>
 
 ### 4. 创建DataStream
 ```java
-DataStream<Tuple4<Long, String, String, Integer>> s = env
+DataStream<String> dataStream = env
         .addSource(source)
-        .keyBy("id", "event")
+        .keyBy("clientId")
         .window(TumblingEventTimeWindows.of(Time.seconds(interval)))
-        .allowedLateness(Time.seconds(Constant.Delay))
-        .apply(new WindowFunction<FeedbackObject, Tuple4<Long, String, String, Integer>, Tuple, TimeWindow>() {
+        .allowedLateness(Time.seconds(Constants.Delay))
+        .apply(new WindowFunction<HDFSObject, String, Tuple, TimeWindow>() {
             @Override
-            public void apply(Tuple tuple, TimeWindow window, Iterable<FeedbackObject> input, Collector<Tuple4<Long, String, String, Integer>> out) throws Exception {
-                int sum = 0;
-                for (FeedbackObject fo : input) {
-                    log.info("event time : " + fo.ts);
-                    sum++;
+            public void apply(Tuple tuple, TimeWindow window, Iterable<HDFSObject> input, Collector<String> out) throws Exception {
+                for (HDFSObject hdfsObject : input) {
+                    logger.info("fromKafka2HDFS is {}", hdfsObject.toString());
+                    out.collect(hdfsObject.toString());
                 }
-
-                Tuple4<Long, String, String, Integer> record = new Tuple4();
-                record.f0 = window.getStart();
-                record.f1 = tuple.getField(0);
-                record.f2 = tuple.getField(1);
-                record.f3 = sum;
-
-                log.info("key : " + tuple.getField(0) + " | " + tuple.getField(1));
-                log.info("window start: " + window.getStart());
-                log.info("window end: " + window.getEnd());
-                log.info("window max ts: " + window.maxTimestamp());
-                log.info("sum is : " + sum);
-
-                out.collect(record);
             }
         });
 ```
 
 ### 5. 创建HDFS Sink
 ```java
-BucketingSink bucketingSink = new BucketingSink<Tuple2<IntWritable, Text>>(Constant.HDFS_BASE_DIR)
-        // 存储为 hadoop hdfs 文件
-        .setWriter(new SequenceFileWriter<>())
+BucketingSink bucketingSink = new BucketingSink<String>(Constants.HDFS_BASE_DIR)
         .setBucketer(new DateTimeBucketer("yyyy-MM-dd"))
         // bucket size: 500MB
         .setBatchSize(500 * 1024 * 1024L)
         // 设置文件前缀，默认为 part
-        .setPartPrefix("flink_")
+        .setPartPrefix("bigdata-")
         // 一小时
-        .setBatchRolloverInterval(60 * 60 * 1000)
-        ;
+        .setBatchRolloverInterval(60 * 60 * 1000);
 
-s.addSink(bucketingSink);
+dataStream.addSink(bucketingSink);
 ```
 
 ### 6. 执行flink程序
 ```java
-env.execute("test service");
+env.execute("bigdata service");
 
 ctx
    .getClient()
    .run(streamGraph, ctx.getJars(), ctx.getClasspaths(), ctx.getUserCodeClassLoader(), ctx.getSavepointRestoreSettings())
    .getJobExecutionResult();
 ```
+
+
