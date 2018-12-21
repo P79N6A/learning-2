@@ -398,6 +398,7 @@ public class TaskManagerRunner implements FatalErrorHandler, AutoCloseableAsync 
                         remoteAddress,
                         localCommunicationOnly);
 
+        // 分配内存：TaskManagerServices管理多个TaskExecutor，相当于TaskExecutor的内存管理器
         TaskManagerServices taskManagerServices = TaskManagerServices.fromConfiguration(
                 taskManagerServicesConfiguration,
                 resourceID,
@@ -405,6 +406,7 @@ public class TaskManagerRunner implements FatalErrorHandler, AutoCloseableAsync 
                 EnvironmentInformation.getSizeOfFreeHeapMemoryWithDefrag(),
                 EnvironmentInformation.getMaxJvmHeapMemory());
 
+        // TaskManager容器组
         TaskManagerMetricGroup taskManagerMetricGroup = MetricUtils.instantiateTaskManagerMetricGroup(
                 metricRegistry,
                 taskManagerServices.getTaskManagerLocation(),

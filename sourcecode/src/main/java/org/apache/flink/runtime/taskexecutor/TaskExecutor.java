@@ -193,6 +193,7 @@ public class TaskExecutor extends RpcEndpoint implements TaskExecutorGateway {
 		this.taskManagerMetricGroup = checkNotNull(taskManagerMetricGroup);
 		this.blobCacheService = checkNotNull(blobCacheService);
 
+		// flink分配的资源
 		this.taskSlotTable = taskExecutorServices.getTaskSlotTable();
 		this.jobManagerTable = taskExecutorServices.getJobManagerTable();
 		this.jobLeaderService = taskExecutorServices.getJobLeaderService();
@@ -205,18 +206,21 @@ public class TaskExecutor extends RpcEndpoint implements TaskExecutorGateway {
 
 		final ResourceID resourceId = taskExecutorServices.getTaskManagerLocation().getResourceID();
 
+		// 与job manager heartbeat
 		this.jobManagerHeartbeatManager = heartbeatServices.createHeartbeatManager(
 			resourceId,
 			new JobManagerHeartbeatListener(),
 			rpcService.getScheduledExecutor(),
 			log);
 
+		// 与resource manager heartbeat
 		this.resourceManagerHeartbeatManager = heartbeatServices.createHeartbeatManager(
 			resourceId,
 			new ResourceManagerHeartbeatListener(),
 			rpcService.getScheduledExecutor(),
 			log);
 
+		// 硬件资源
 		this.hardwareDescription = HardwareDescription.extractFromSystem(
 			taskExecutorServices.getMemoryManager().getMemorySize());
 
@@ -246,6 +250,7 @@ public class TaskExecutor extends RpcEndpoint implements TaskExecutorGateway {
 		// start the job leader service
 		jobLeaderService.start(getAddress(), getRpcService(), haServices, new JobLeaderListenerImpl());
 
+		// 用于缓存发布task(类似hdfs功能)，如果使用hadoop，则存储到hdfs中
 		fileCache = new FileCache(taskManagerConfiguration.getTmpDirectories(), blobCacheService.getPermanentBlobService());
 
 		startRegistrationTimeout();
@@ -970,6 +975,9 @@ public class TaskExecutor extends RpcEndpoint implements TaskExecutorGateway {
 		startRegistrationTimeout();
 	}
 
+	/**
+	 * 注册超时回调
+	 */
 	private void startRegistrationTimeout() {
 		final Time maxRegistrationDuration = taskManagerConfiguration.getMaxRegistrationDuration();
 
