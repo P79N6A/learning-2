@@ -20,6 +20,7 @@ package org.apache.flink.runtime.highavailability;
 
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.configuration.Configuration;
+import org.apache.flink.configuration.HighAvailabilityOptions;
 import org.apache.flink.configuration.JobManagerOptions;
 import org.apache.flink.configuration.RestOptions;
 import org.apache.flink.runtime.blob.BlobStoreService;
@@ -74,6 +75,11 @@ public class HighAvailabilityServicesUtils {
 		Executor executor,
 		AddressResolution addressResolution) throws Exception {
 
+		/**
+		 * 获取flink集群运行模式
+		 * flink-conf.yaml   high-availability参数(默认为NONE)
+		 * {@link HighAvailabilityOptions#HA_MODE}
+		 */
 		HighAvailabilityMode highAvailabilityMode = LeaderRetrievalUtils.getRecoveryMode(configuration);
 
 		switch(highAvailabilityMode) {

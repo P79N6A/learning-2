@@ -87,6 +87,14 @@ public class StandaloneSessionClusterEntrypoint extends SessionClusterEntrypoint
 		final CommandLineParser<EntrypointClusterConfiguration> commandLineParser = new CommandLineParser<>(new EntrypointClusterConfigurationParserFactory());
 
 		try {
+			// /Library/Java/JavaVirtualMachines/jdk1.8.0_172.jdk/Contents/Home/bin/java  -Xms1024m -Xmx1024m
+			// -Dlog.file=/Users/wyd/soft/flink-1.6.0/log/flink-wyd-standalonesession-0-wangyandong.local.log
+			// -Dlog4j.configuration=file:/Users/wyd/soft/flink-1.6.0/conf/log4j.properties -Dlogback.configurationFile=file:/Users/wyd/soft/flink-1.6.0/conf/logback.xml
+			// -classpath /Users/wyd/soft/flink-1.6.0/lib/flink-python_2.11-1.6.0.jar:/Users/wyd/soft/flink-1.6.0/lib/log4j-1.2.17.jar:/Users/wyd/soft/flink-1.6.0/lib/slf4j-log4j12-1.7.7.jar:
+			// /Users/wyd/soft/flink-1.6.0/lib/flink-dist_2.11-1.6.0.jar::/Users/wyd/soft/hadoop-2.8.4/etc/hadoop:
+			// org.apache.flink.runtime.entrypoint.StandaloneSessionClusterEntrypoint --configDir /Users/wyd/soft/flink-1.6.0/conf
+			// --executionMode cluster > /Users/wyd/soft/flink-1.6.0/log/flink-wyd-standalonesession-0-wangyandong.local.out 200<&- 2>&1 < /dev/null &
+			// 解析上面的命令行
 			entrypointClusterConfiguration = commandLineParser.parse(args);
 		} catch (FlinkParseException e) {
 			LOG.error("Could not parse command line arguments {}.", args, e);

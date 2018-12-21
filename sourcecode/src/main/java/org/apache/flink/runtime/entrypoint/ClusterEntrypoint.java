@@ -36,6 +36,7 @@ import org.apache.flink.runtime.entrypoint.parser.CommandLineParser;
 import org.apache.flink.runtime.heartbeat.HeartbeatServices;
 import org.apache.flink.runtime.highavailability.HighAvailabilityServices;
 import org.apache.flink.runtime.highavailability.HighAvailabilityServicesUtils;
+import org.apache.flink.runtime.highavailability.nonha.standalone.StandaloneHaServices;
 import org.apache.flink.runtime.leaderelection.LeaderElectionService;
 import org.apache.flink.runtime.leaderretrieval.LeaderRetrievalService;
 import org.apache.flink.runtime.metrics.MetricRegistry;
@@ -155,6 +156,7 @@ public abstract class ClusterEntrypoint implements FatalErrorHandler {
 		this.configuration = generateClusterConfiguration(configuration);
 		this.terminationFuture = new CompletableFuture<>();
 
+		// 创建钩子
 		shutDownHook = ShutdownHookUtil.addShutdownHook(this::cleanupDirectories, getClass().getSimpleName(), LOG);
 	}
 
@@ -171,6 +173,7 @@ public abstract class ClusterEntrypoint implements FatalErrorHandler {
 			SecurityContext securityContext = installSecurityContext(configuration);
 
 			securityContext.runSecured((Callable<Void>) () -> {
+				// 启动集群
 				runCluster(configuration);
 
 				return null;
@@ -190,6 +193,7 @@ public abstract class ClusterEntrypoint implements FatalErrorHandler {
 		LOG.info("Install default filesystem.");
 
 		try {
+			// 初始化文件系统 hadoop hdfs
 			FileSystem.initialize(configuration);
 		} catch (IOException e) {
 			throw new IOException("Error while setting the default " +
@@ -319,6 +323,7 @@ public abstract class ClusterEntrypoint implements FatalErrorHandler {
 			LOG.debug("Starting Dispatcher REST endpoint.");
 			webMonitorEndpoint.start();
 
+			// 创建resource manager
 			resourceManager = createResourceManager(
 				configuration,
 				ResourceID.generate(),
@@ -332,6 +337,7 @@ public abstract class ClusterEntrypoint implements FatalErrorHandler {
 
 			jobManagerMetricGroup = MetricUtils.instantiateJobManagerMetricGroup(metricRegistry, rpcService.getAddress());
 
+			// 历史归档信息
 			final HistoryServerArchivist historyServerArchivist = HistoryServerArchivist.createHistoryServerArchivist(configuration, webMonitorEndpoint);
 
 			dispatcher = createDispatcher(
@@ -381,6 +387,14 @@ public abstract class ClusterEntrypoint implements FatalErrorHandler {
 		return new AkkaRpcService(actorSystem, Time.of(duration.length(), duration.unit()));
 	}
 
+	/**
+	 * 默认返回{@link StandaloneHaServices}
+	 *
+	 * @param configuration
+	 * @param executor
+	 * @return
+	 * @throws Exception
+	 */
 	protected HighAvailabilityServices createHaServices(
 		Configuration configuration,
 		Executor executor) throws Exception {

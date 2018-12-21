@@ -1,4 +1,8 @@
 # [flink version 1.6.0](https://ci.apache.org/projects/flink/flink-docs-release-1.6/quickstart/setup_quickstart.html)
+- [flink configuration](https://ci.apache.org/projects/flink/flink-docs-stable/ops/config.html)
+- [akka](https://doc.akka.io/docs/akka/current/index-actors.html?language=java)
+- [akka](https://doc.yonyoucloud.com/doc/akka-doc-cn/2.3.6/scala/book/index.html)
+
 ## 抽象类(StreamExecutionEnvironment)共有5个子类
 - LegacyLocalStreamEnvironment(遗留本地流环境)  
 LocalFlinkMiniCluster(scala实现)
