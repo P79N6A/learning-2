@@ -161,6 +161,7 @@
         </dependency>
         <!--flink-->
 
+        <!--dubbo-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>dubbo</artifactId>
@@ -190,6 +191,9 @@
             <artifactId>dubbo-spring-boot-starter</artifactId>
             <version>${dubbo-spring-boot.version}</version>
         </dependency>
+
+        <!--hadoop-->
+
     </dependencies>
 
     <build>
