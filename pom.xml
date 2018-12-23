@@ -34,6 +34,8 @@
         <hadoop.version>2.8.4</hadoop.version>
         <dubbo.version>2.6.2</dubbo.version>
         <dubbo-spring-boot.version>2.0.0</dubbo-spring-boot.version>
+        <akka.version>2.5.19</akka.version>
+        <scala.version>2.12.8</scala.version>
     </properties>
 
     <parent>

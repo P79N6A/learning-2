@@ -34,6 +34,16 @@ https://atom.io/
 https://www.sublimetext.com/  
 https://code.visualstudio.com/download
 
+- scala
+https://downloads.lightbend.com/scala/2.12.8/scala-2.12.8.tgz  
+```Bash
+$ vim .bash_profile
+export SCALA_HOME=/Users/dongzai1005/softwares/scala-2.12.8
+export PATH=$PATH:$SCALA_HOME/bin
+$ source .bash_profile
+dongzai1005@localhost:~$ scala -version
+Scala code runner version 2.12.8 -- Copyright 2002-2018, LAMP/EPFL and Lightbend, Inc.
+```
 
 
 
