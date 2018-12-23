@@ -25,3 +25,6 @@
 ## spring启动过程
 核心方法：ClassPathXmlApplicationContext中refresh方法
 
+# spring boot version 2.1.0.RELEASE
+## spring boot启动过程
+SpringApplication的run方法
