@@ -64,6 +64,8 @@ public interface BaseStream<T, S extends BaseStream<T, S>>
     /**
      * Returns an iterator for the elements of this stream.
      *
+     * 返回此流的元素的迭代器。
+     *
      * <p>This is a <a href="package-summary.html#StreamOps">terminal
      * operation</a>.
      *
@@ -88,6 +90,8 @@ public interface BaseStream<T, S extends BaseStream<T, S>>
      * would execute in parallel.  Calling this method after invoking an
      * terminal stream operation method may yield unpredictable results.
      *
+     * 返回此流(如果要执行终端操作)是否将并行执行。在调用终端流操作方法之后调用此方法可能会产生不可预测的结果。
+     *
      * @return {@code true} if this stream would execute in parallel if executed
      */
     boolean isParallel();
@@ -96,6 +100,8 @@ public interface BaseStream<T, S extends BaseStream<T, S>>
      * Returns an equivalent stream that is sequential.  May return
      * itself, either because the stream was already sequential, or because
      * the underlying stream state was modified to be sequential.
+     *
+     * 返回顺序的等效流。可能会返回自己，因为流已经是顺序的，或者因为基础流状态被修改为顺序。
      *
      * <p>This is an <a href="package-summary.html#StreamOps">intermediate
      * operation</a>.
@@ -109,6 +115,8 @@ public interface BaseStream<T, S extends BaseStream<T, S>>
      * itself, either because the stream was already parallel, or because
      * the underlying stream state was modified to be parallel.
      *
+     * 返回并行的等效流。可能会返回自己，因为流已经并行，或者因为基础流状态被修改为并行。
+     *
      * <p>This is an <a href="package-summary.html#StreamOps">intermediate
      * operation</a>.
      *
@@ -121,6 +129,8 @@ public interface BaseStream<T, S extends BaseStream<T, S>>
      * <a href="package-summary.html#Ordering">unordered</a>.  May return
      * itself, either because the stream was already unordered, or because
      * the underlying stream state was modified to be unordered.
+     *
+     * 返回无序的等效流。可能会返回自己，因为流已经无序，或者因为基础流状态被修改为无序。
      *
      * <p>This is an <a href="package-summary.html#StreamOps">intermediate
      * operation</a>.
@@ -141,6 +151,11 @@ public interface BaseStream<T, S extends BaseStream<T, S>>
      * first exception, since an exception cannot suppress itself.)  May
      * return itself.
      *
+     * 返回具有附加关闭处理程序的等效流。在流上调用{@link #close()}方法时，将运行关闭处理程序，并按添加顺序执行。
+     * 即使先前的关闭处理程序抛出异常，也会运行所有关闭处理程序。如果任何关闭处理程序抛出异常，
+     * 则抛出的第一个异常将被中继到{@code close()}的调用者，并将任何剩余的异常作为抑制异常添加到该异常中
+     * (除非剩下的异常之一是与第一个例外，因为异常无法抑制自身)可能会返回自己。
+     *
      * <p>This is an <a href="package-summary.html#StreamOps">intermediate
      * operation</a>.
      *
@@ -152,6 +167,8 @@ public interface BaseStream<T, S extends BaseStream<T, S>>
     /**
      * Closes this stream, causing all close handlers for this stream pipeline
      * to be called.
+     *
+     * 关闭此流，导致调用此流管道的所有关闭处理程序。
      *
      * @see AutoCloseable#close()
      */

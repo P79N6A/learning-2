@@ -34,8 +34,12 @@ import java.util.function.*;
  * operations, such as accumulating elements into collections, summarizing
  * elements according to various criteria, etc.
  *
+ * {@link Collector}的实现，它实现了各种有用的缩减操作，例如将元素聚集到集合中，根据各种标准汇总元素等。
+ *
  * <p>The following are examples of using the predefined collectors to perform
  * common mutable reduction tasks:
+ *
+ * 以下是使用预定义收集器执行常见可变约简任务的示例:
  *
  * <pre>{@code
  *     // Accumulate names into a List
@@ -97,6 +101,10 @@ public final class Collectors {
      * {@link #toMap(Function, Function, BinaryOperator) toMap()}, which always
      * throws {@code IllegalStateException}.  This can be used to enforce the
      * assumption that the elements being collected are distinct.
+     *
+     * 返回一个merge函数，该函数适用于在{@link Map#merge(Object, Object, BiFunction) Map.merge()}或
+     * {@link #toMap(Function, Function, BinaryOperator) toMap()}中使用，
+     * 该函数总是抛出{@code IllegalStateException}。这可以用来强制假定所收集的元素是不同的。
      *
      * @param <T> the type of input arguments to the merge function
      * @return a merge function which always throw {@code IllegalStateException}
@@ -173,6 +181,9 @@ public final class Collectors {
      * new {@code Collection}, in encounter order.  The {@code Collection} is
      * created by the provided factory.
      *
+     * 返回一个{@code Collector}，该{@code Collector}按照遇到的顺序将输入元素累积到一个新的{@code集合}中。
+     * {@code集合}由提供的工厂创建。
+     *
      * @param <T> the type of the input elements
      * @param <C> the type of the resulting {@code Collection}
      * @param collectionFactory a {@code Supplier} which returns a new, empty
@@ -193,6 +204,9 @@ public final class Collectors {
      * serializability, or thread-safety of the {@code List} returned; if more
      * control over the returned {@code List} is required, use {@link #toCollection(Supplier)}.
      *
+     * 返回一个{@code Collector}，该}将输入元素累积到一个新的{@code List}中。不保证返回的{@code List}的类型、
+     * 可变性、可串行性或线程安全性;如果需要对返回的{@code List}进行更多控制，请使用{@link #toCollection(Supplier)}。
+     *
      * @param <T> the type of the input elements
      * @return a {@code Collector} which collects all the input elements into a
      * {@code List}, in encounter order
@@ -210,6 +224,9 @@ public final class Collectors {
      * serializability, or thread-safety of the {@code Set} returned; if more
      * control over the returned {@code Set} is required, use
      * {@link #toCollection(Supplier)}.
+     *
+     * 返回一个{@code Collector}，它将输入元素累积为一个新的{@code集合}。不保证返回的{@code Set}的类型、
+     * 可变性、可串行性或线程安全性;如果需要对返回的{@code Set}进行更多控制，请使用{@link #toCollection(Supplier)}。
      *
      * <p>This is an {@link Collector.Characteristics#UNORDERED unordered}
      * Collector.
@@ -229,6 +246,8 @@ public final class Collectors {
      * Returns a {@code Collector} that concatenates the input elements into a
      * {@code String}, in encounter order.
      *
+     * 返回一个{@code Collector}，该{@code收集器}将输入元素按遇到顺序连接到{@code字符串}中。
+     *
      * @return a {@code Collector} that concatenates the input elements into a
      * {@code String}, in encounter order
      */
@@ -243,6 +262,8 @@ public final class Collectors {
      * Returns a {@code Collector} that concatenates the input elements,
      * separated by the specified delimiter, in encounter order.
      *
+     * 返回一个{@code Collector}，该{@code Collector}按照遇到的顺序连接由指定分隔符分隔的输入元素。
+     *
      * @param delimiter the delimiter to be used between each element
      * @return A {@code Collector} which concatenates CharSequence elements,
      * separated by the specified delimiter, in encounter order
@@ -255,6 +276,8 @@ public final class Collectors {
      * Returns a {@code Collector} that concatenates the input elements,
      * separated by the specified delimiter, with the specified prefix and
      * suffix, in encounter order.
+     *
+     * 返回一个{@code Collector}，它以相遇顺序连接由指定分隔符分隔的输入元素和指定的前缀和后缀。
      *
      * @param delimiter the delimiter to be used between each element
      * @param  prefix the sequence of characters to be used at the beginning
@@ -278,6 +301,8 @@ public final class Collectors {
      * argument into its left argument, using the provided merge function to
      * handle duplicate keys.
      *
+     * {@code BinaryOperator<Map>}，它将右参数的内容合并到左参数中，使用提供的merge函数处理重复的键。
+     *
      * @param <K> type of the map keys
      * @param <V> type of the map values
      * @param <M> type of the map
@@ -299,11 +324,18 @@ public final class Collectors {
      * accepting elements of type {@code T} by applying a mapping function to
      * each input element before accumulation.
      *
+     * 通过在累积之前对每个输入元素应用映射函数，将{@code Collector}接受类型{@code U}的元素调整为一个接受类型{@code T}的元素。
+     *
      * @apiNote
      * The {@code mapping()} collectors are most useful when used in a
      * multi-level reduction, such as downstream of a {@code groupingBy} or
      * {@code partitioningBy}.  For example, given a stream of
      * {@code Person}, to accumulate the set of last names in each city:
+     *
+     * @apiNote
+     * {@code mapping()}收集器在进行多级简化时最有用，例如{@code groupingBy}或{@code partitionby}的下游。
+     * 例如，给定一个{@code Person}流，以累积每个城市的姓氏集:
+     *
      * <pre>{@code
      *     Map<City, Set<String>> lastNamesByCity
      *         = people.stream().collect(groupingBy(Person::getCity,
@@ -333,6 +365,9 @@ public final class Collectors {
      * Adapts a {@code Collector} to perform an additional finishing
      * transformation.  For example, one could adapt the {@link #toList()}
      * collector to always produce an immutable list with:
+     *
+     * 调整{@code Collector}来执行额外的完成转换。例如，可以使用{@link #toList()}收集器来生成一个不可变的列表:
+     *
      * <pre>{@code
      *     List<String> people
      *         = people.stream().collect(collectingAndThen(toList(), Collections::unmodifiableList));
@@ -371,6 +406,8 @@ public final class Collectors {
      * counts the number of input elements.  If no elements are present, the
      * result is 0.
      *
+     * 返回一个接受类型为{@code T}的元素的{@code Collector}，该元素计算输入元素的数量。如果没有元素，结果是0。
+     *
      * @implSpec
      * This produces a result equivalent to:
      * <pre>{@code
@@ -388,6 +425,8 @@ public final class Collectors {
     /**
      * Returns a {@code Collector} that produces the minimal element according
      * to a given {@code Comparator}, described as an {@code Optional<T>}.
+     *
+     * 返回一个{@code Collector}，它根据给定的{@code Comparator}生成最小的元素，该比较器被描述为{@code Optional<T>}。
      *
      * @implSpec
      * This produces a result equivalent to:
@@ -407,6 +446,8 @@ public final class Collectors {
     /**
      * Returns a {@code Collector} that produces the maximal element according
      * to a given {@code Comparator}, described as an {@code Optional<T>}.
+     *
+     * 返回一个{@code Collector}，它根据给定的{@code Comparator}生成最大的元素，该比较器被描述为{@code Optional<T>}。
      *
      * @implSpec
      * This produces a result equivalent to:
@@ -428,6 +469,8 @@ public final class Collectors {
      * function applied to the input elements.  If no elements are present,
      * the result is 0.
      *
+     * 返回一个{@code Collector}，它生成应用于输入元素的整数值函数的和。如果没有元素，结果是0。
+     *
      * @param <T> the type of the input elements
      * @param mapper a function extracting the property to be summed
      * @return a {@code Collector} that produces the sum of a derived property
@@ -445,6 +488,8 @@ public final class Collectors {
      * Returns a {@code Collector} that produces the sum of a long-valued
      * function applied to the input elements.  If no elements are present,
      * the result is 0.
+     *
+     * 返回一个{@code Collector}，它生成应用于输入元素的长值函数的和。如果没有元素，结果是0。
      *
      * @param <T> the type of the input elements
      * @param mapper a function extracting the property to be summed
@@ -464,12 +509,18 @@ public final class Collectors {
      * function applied to the input elements.  If no elements are present,
      * the result is 0.
      *
+     * 返回一个{@code Collector}，它生成应用于输入元素的双值函数的和。如果没有元素，结果是0。
+     *
      * <p>The sum returned can vary depending upon the order in which
      * values are recorded, due to accumulated rounding error in
      * addition of values of differing magnitudes. Values sorted by increasing
      * absolute magnitude tend to yield more accurate results.  If any recorded
      * value is a {@code NaN} or the sum is at any point a {@code NaN} then the
      * sum will be {@code NaN}.
+     *
+     * 由于除了不同大小的值之外，还存在累积舍入误差，因此返回的总数可能会随记录值的顺序而变化。
+     * 按绝对值递增排序的值往往会得到更准确的结果。如果任何记录的值是{@code NaN}，
+     * 或者在任何点的和是{@code NaN}，那么总和将是{@code NaN}。
      *
      * @param <T> the type of the input elements
      * @param mapper a function extracting the property to be summed
@@ -500,9 +551,13 @@ public final class Collectors {
      * Incorporate a new double value using Kahan summation /
      * compensation summation.
      *
+     * 使用Kahan求和/补偿求和合并一个新的双重值。
+     *
      * High-order bits of the sum are in intermediateSum[0], low-order
      * bits of the sum are in intermediateSum[1], any additional
      * elements are application-specific.
+     *
+     * 和的高阶位在中间[0]，和的低阶位在中间[1]，任何附加的元素都是特定于应用的。
      *
      * @param intermediateSum the high-order and low-order words of the intermediate sum
      * @param value the name value to be included in the running sum
@@ -520,6 +575,8 @@ public final class Collectors {
      * If the compensated sum is spuriously NaN from accumulating one
      * or more same-signed infinite values, return the
      * correctly-signed infinity stored in the simple sum.
+     *
+     * 如果补偿的和是通过累积一个或多个具有相同符号的无穷大值而得到的，则返回存储在简单和中的具有正确符号的无穷大。
      */
     static double computeFinalSum(double[] summands) {
         // Better error bounds to add both terms as the final sum
@@ -535,6 +592,8 @@ public final class Collectors {
      * Returns a {@code Collector} that produces the arithmetic mean of an integer-valued
      * function applied to the input elements.  If no elements are present,
      * the result is 0.
+     *
+     * 返回一个{@code Collector}，该}生成应用于输入元素的整数值函数的算术平均值。如果没有元素，结果是0。
      *
      * @param <T> the type of the input elements
      * @param mapper a function extracting the property to be summed
@@ -554,6 +613,8 @@ public final class Collectors {
      * function applied to the input elements.  If no elements are present,
      * the result is 0.
      *
+     * 返回一个{@code Collector}，它生成应用于输入元素的长值函数的算术平均值。如果没有元素，结果是0。
+     *
      * @param <T> the type of the input elements
      * @param mapper a function extracting the property to be summed
      * @return a {@code Collector} that produces the sum of a derived property
@@ -572,6 +633,8 @@ public final class Collectors {
      * function applied to the input elements.  If no elements are present,
      * the result is 0.
      *
+     * 返回一个{@code Collector}，它生成应用于输入元素的双值函数的算术平均值。如果没有元素，结果是0。
+     *
      * <p>The average returned can vary depending upon the order in which
      * values are recorded, due to accumulated rounding error in
      * addition of values of differing magnitudes. Values sorted by increasing
@@ -579,11 +642,17 @@ public final class Collectors {
      * value is a {@code NaN} or the sum is at any point a {@code NaN} then the
      * average will be {@code NaN}.
      *
+     * 由于舍入误差的累积，加上不同大小的值，平均返回值可能会随记录值的顺序而变化。按绝对值递增排序的值往往会得到更准确的结果。
+     * 如果任何记录的值是{@code NaN}，或者总和在任何一点是{@code NaN}，那么平均值将是{@code NaN}。
+     *
      * @implNote The {@code double} format can represent all
      * consecutive integers in the range -2<sup>53</sup> to
      * 2<sup>53</sup>. If the pipeline has more than 2<sup>53</sup>
      * values, the divisor in the average computation will saturate at
      * 2<sup>53</sup>, leading to additional numerical errors.
+     *
+     * {@code double}格式可以表示-2<sup>53</sup>到2<sup>53</sup>范围内的所有连续整数。
+     * 如果管道中有大于2<sup>53</sup>值，则平均计算中的除数会在2<sup>53</sup>处饱和，导致额外的数值误差。
      *
      * @param <T> the type of the input elements
      * @param mapper a function extracting the property to be summed
@@ -610,11 +679,17 @@ public final class Collectors {
      * input elements under a specified {@code BinaryOperator} using the
      * provided identity.
      *
+     * 返回一个{@code Collector}，它使用提供的标识在指定的{@code BinaryOperator}下执行输入元素的缩减。
+     *
      * @apiNote
      * The {@code reducing()} collectors are most useful when used in a
      * multi-level reduction, downstream of {@code groupingBy} or
      * {@code partitioningBy}.  To perform a simple reduction on a stream,
      * use {@link Stream#reduce(Object, BinaryOperator)}} instead.
+     *
+     * @apiNote
+     * {@code reducingby}或{@code partitioningBy}的下游的多级简化中使用的{@code reducing()}收集器最有用。
+     * 要对流执行简单的还原，可以使用{@link流#reduce(Object, BinaryOperator)}}。
      *
      * @param <T> element type for the input and output of the reduction
      * @param identity the identity value for the reduction (also, the value
@@ -645,11 +720,17 @@ public final class Collectors {
      * input elements under a specified {@code BinaryOperator}.  The result
      * is described as an {@code Optional<T>}.
      *
+     * 返回一个{@code Collector}，它在指定的{@code BinaryOperator}下执行输入元素的缩减。结果被描述为{@code Optional<T>}。
+     *
      * @apiNote
      * The {@code reducing()} collectors are most useful when used in a
      * multi-level reduction, downstream of {@code groupingBy} or
      * {@code partitioningBy}.  To perform a simple reduction on a stream,
      * use {@link Stream#reduce(BinaryOperator)} instead.
+     *
+     * @apiNote
+     * {@code reducingby}或{@code partitioningBy}的下游的多级简化中使用的{@code reducing()}收集器最有用。
+     * 要对流执行简单的还原，可以使用{@link流#reduce(BinaryOperator)}。
      *
      * <p>For example, given a stream of {@code Person}, to calculate tallest
      * person in each city:
@@ -697,12 +778,19 @@ public final class Collectors {
      * {@link #reducing(Object, BinaryOperator)} which allows a transformation
      * of the elements before reduction.
      *
+     * 返回一个{@code Collector}，它在指定的映射函数和{@code BinaryOperator}下执行输入元素的缩减。
+     * 这是{@link #reduce(Object, BinaryOperator)}的一般化，它允许在reduce之前对元素进行转换。
+     *
      * @apiNote
      * The {@code reducing()} collectors are most useful when used in a
      * multi-level reduction, downstream of {@code groupingBy} or
      * {@code partitioningBy}.  To perform a simple map-reduce on a stream,
      * use {@link Stream#map(Function)} and {@link Stream#reduce(Object, BinaryOperator)}
      * instead.
+     *
+     * @apiNote
+     * {@code reducingby}或{@code partitioningBy}的下游的多级简化中使用的{@code reducing()}收集器最有用。
+     * 要在流上执行简单的map-reduce，可以使用{@link Stream#map(Function)}和{@link Stream#reduce(Object, BinaryOperator)}。
      *
      * <p>For example, given a stream of {@code Person}, to calculate the longest
      * last name of residents in each city:
@@ -740,6 +828,9 @@ public final class Collectors {
      * input elements of type {@code T}, grouping elements according to a
      * classification function, and returning the results in a {@code Map}.
      *
+     * 返回一个{@code Collector}，它对类型为{@code T}的输入元素执行“group by”操作，
+     * 根据分类函数对元素进行分组，并以{@code映射}的形式返回结果。
+     *
      * <p>The classification function maps elements to some key type {@code K}.
      * The collector produces a {@code Map<K, List<T>>} whose keys are the
      * values resulting from applying the classification function to the input
@@ -747,8 +838,14 @@ public final class Collectors {
      * input elements which map to the associated key under the classification
      * function.
      *
+     * 分类函数将元素映射到某个键类型{@code K}。收集器生成一个{@code Map<K, List<T>>}，
+     * 其键是将分类函数应用到输入元素所得到的值，其对应的值是{@code List}s，其中包含映射到分类函数下关联键的输入元素。
+     *
      * <p>There are no guarantees on the type, mutability, serializability, or
      * thread-safety of the {@code Map} or {@code List} objects returned.
+     *
+     * 返回的{@code Map}或{@code List}对象的类型、可变性、可串行性或线程安全性没有保证。
+     *
      * @implSpec
      * This produces a result similar to:
      * <pre>{@code
@@ -762,6 +859,11 @@ public final class Collectors {
      * preservation of the order in which elements appear in the resulting {@code Map}
      * collector is not required, using {@link #groupingByConcurrent(Function)}
      * may offer better parallel performance.
+     *
+     * @implNote
+     * 返回的{@code Collector}不是并发的。对于并行流管道，{@code combiner}函数通过将键从一个映射
+     * 合并到另一个映射来操作，这可能是一个昂贵的操作。如果不需要保存结果{@code Map}收集器中元素出现的顺序，
+     * 那么使用{@link #groupingByConcurrent(Function)}可以提供更好的并行性能。
      *
      * @param <T> the type of the input elements
      * @param <K> the type of the keys
@@ -784,13 +886,21 @@ public final class Collectors {
      * the values associated with a given key using the specified downstream
      * {@code Collector}.
      *
+     * 返回一个{@code Collector}，它对类型为{@code T}的输入元素执行级联的“group by”操作，
+     * 根据分类函数对元素进行分组，然后使用指定的下游{@code Collector}对与给定键关联的值执行还原操作。
+     *
      * <p>The classification function maps elements to some key type {@code K}.
      * The downstream collector operates on elements of type {@code T} and
      * produces a result of type {@code D}. The resulting collector produces a
      * {@code Map<K, D>}.
      *
+     * 分类函数将元素映射到某个键类型{@code K}。下游收集器操作类型为{@code T}的元素，
+     * 并生成类型为{@code D}的结果。结果收集器生成一个{@code Map<K, D>}。
+     *
      * <p>There are no guarantees on the type, mutability,
      * serializability, or thread-safety of the {@code Map} returned.
+     *
+     * 不能保证返回的{@code映射}的类型、可变性、可串行性或线程安全性。
      *
      * <p>For example, to compute the set of last names of people in each city:
      * <pre>{@code
@@ -806,6 +916,11 @@ public final class Collectors {
      * preservation of the order in which elements are presented to the downstream
      * collector is not required, using {@link #groupingByConcurrent(Function, Collector)}
      * may offer better parallel performance.
+     *
+     * @implNote
+     * 返回的{@code Collector}不是并发的。对于并行流管道，{@code combiner}函数通过将键从一个映射合并到另一个映射来操作，
+     * 这可能是一个昂贵的操作。如果不需要保存元素呈现给下游收集器的顺序，
+     * 那么使用{@link #groupingByConcurrent(Function, Collector)}可以提供更好的并行性能。
      *
      * @param <T> the type of the input elements
      * @param <K> the type of the keys
@@ -833,10 +948,17 @@ public final class Collectors {
      * {@code Collector}.  The {@code Map} produced by the Collector is created
      * with the supplied factory function.
      *
+     * 返回一个{@code Collector}，它对类型为{@code T}的输入元素执行级联的“group by”操作，
+     * 根据分类函数对元素进行分组，然后使用指定的下游{@code Collector}对与给定键关联的值执行还原操作。
+     * 收集器生成的{@code Map}是使用提供的工厂函数创建的。
+     *
      * <p>The classification function maps elements to some key type {@code K}.
      * The downstream collector operates on elements of type {@code T} and
      * produces a result of type {@code D}. The resulting collector produces a
      * {@code Map<K, D>}.
+     *
+     * 分类函数将元素映射到某个键类型{@code K}。下游收集器操作类型为{@code T}的元素，
+     * 并生成类型为{@code D}的结果。结果收集器生成一个{@code Map<K, D>}。
      *
      * <p>For example, to compute the set of last names of people in each city,
      * where the city names are sorted:
@@ -853,6 +975,11 @@ public final class Collectors {
      * preservation of the order in which elements are presented to the downstream
      * collector is not required, using {@link #groupingByConcurrent(Function, Supplier, Collector)}
      * may offer better parallel performance.
+     *
+     * @implNote
+     * 返回的{@code Collector}不是并发的。对于并行流管道，{@code combiner}函数通过将键从一个映射合并到另一个映射来操作，
+     * 这可能是一个昂贵的操作。如果不需要保存向下游收集器显示元素的顺序，
+     * 那么使用{@link #groupingByConcurrent(Function, Supplier, Collector)}可以提供更好的并行性能。
      *
      * @param <T> the type of the input elements
      * @param <K> the type of the keys
@@ -905,8 +1032,12 @@ public final class Collectors {
      * operation on input elements of type {@code T}, grouping elements
      * according to a classification function.
      *
+     * 返回一个并发的{@code Collector}，它对类型为{@code T}的输入元素执行“group by”操作，根据分类函数对元素进行分组。
+     *
      * <p>This is a {@link Collector.Characteristics#CONCURRENT concurrent} and
      * {@link Collector.Characteristics#UNORDERED unordered} Collector.
+     *
+     * 这是一个{@link Collector.Characteristics#CONCURRENT concurrent}和{@link Collector.Characteristics#UNORDERED unordered}收集器。
      *
      * <p>The classification function maps elements to some key type {@code K}.
      * The collector produces a {@code ConcurrentMap<K, List<T>>} whose keys are the
@@ -915,9 +1046,15 @@ public final class Collectors {
      * input elements which map to the associated key under the classification
      * function.
      *
+     * 分类函数将元素映射到某个键类型{@code K}。收集器生成{@code ConcurrentMap<K, List<T>>}，
+     * 其键是将分类函数应用到输入元素所得到的值，其对应的值是{@code List}s，其中包含映射到分类函数下关联键的输入元素。
+     *
      * <p>There are no guarantees on the type, mutability, or serializability
      * of the {@code Map} or {@code List} objects returned, or of the
      * thread-safety of the {@code List} objects returned.
+     *
+     * 不能保证返回的{@code映射}或{@code List}对象的类型、可变性或可串行性，也不能保证返回的{@code List}对象的线程安全性。
+     *
      * @implSpec
      * This produces a result similar to:
      * <pre>{@code
@@ -946,13 +1083,22 @@ public final class Collectors {
      * operation on the values associated with a given key using the specified
      * downstream {@code Collector}.
      *
+     * 返回一个并发{@code Collector}，它对类型为{@code T}的输入元素执行一个级联的“group by”操作，
+     * 根据一个分类函数对元素进行分组，然后使用指定的下游{@code Collector}对与给定键关联的值执行一个缩减操作。
+     *
      * <p>This is a {@link Collector.Characteristics#CONCURRENT concurrent} and
      * {@link Collector.Characteristics#UNORDERED unordered} Collector.
+     *
+     * 这是一个{@link Collector.Characteristics#CONCURRENT concurrent}和
+     * {@link Collector.Characteristics#UNORDERED unordered}收集器。
      *
      * <p>The classification function maps elements to some key type {@code K}.
      * The downstream collector operates on elements of type {@code T} and
      * produces a result of type {@code D}. The resulting collector produces a
      * {@code Map<K, D>}.
+     *
+     * 分类函数将元素映射到某个键类型{@code K}。下游收集器操作类型为{@code T}的元素，
+     * 并生成类型为{@code D}的结果。结果收集器生成一个{@code Map<K, D>}。
      *
      * <p>For example, to compute the set of last names of people in each city,
      * where the city names are sorted:
@@ -988,13 +1134,23 @@ public final class Collectors {
      * downstream {@code Collector}.  The {@code ConcurrentMap} produced by the
      * Collector is created with the supplied factory function.
      *
+     * 返回一个并发的{@code Collector}，它对类型为{@code T}的输入元素执行级联的“group by”操作，
+     * 根据分类函数对元素进行分组，然后使用指定的下游{@code Collector}对与给定键关联的值执行缩减操作。
+     * 收集器生成的{@code ConcurrentMap}是使用提供的工厂函数创建的。
+     *
      * <p>This is a {@link Collector.Characteristics#CONCURRENT concurrent} and
      * {@link Collector.Characteristics#UNORDERED unordered} Collector.
+     *
+     * 这是一个{@link Collector.Characteristics#CONCURRENT concurrent}和
+     * {@link Collector.Characteristics#UNORDERED unordered}收集器
      *
      * <p>The classification function maps elements to some key type {@code K}.
      * The downstream collector operates on elements of type {@code T} and
      * produces a result of type {@code D}. The resulting collector produces a
      * {@code Map<K, D>}.
+     *
+     * 分类函数将元素映射到某个键类型{@code K}。下游收集器操作类型为{@code T}的元素，
+     * 并生成类型为{@code D}的结果。结果收集器生成一个{@code Map<K, D>}。
      *
      * <p>For example, to compute the set of last names of people in each city,
      * where the city names are sorted:
@@ -1068,8 +1224,12 @@ public final class Collectors {
      * to a {@code Predicate}, and organizes them into a
      * {@code Map<Boolean, List<T>>}.
      *
+     * 返回一个{@code Collector}，它根据{@code谓词}对输入元素进行分区，并将它们组织为{@code Map<Boolean, List<T>>}。
+     *
      * There are no guarantees on the type, mutability,
      * serializability, or thread-safety of the {@code Map} returned.
+     *
+     * 不能保证返回的{@code映射}的类型、可变性、可串行性或线程安全性。
      *
      * @param <T> the type of the input elements
      * @param predicate a predicate used for classifying input elements
@@ -1089,8 +1249,13 @@ public final class Collectors {
      * {@code Map<Boolean, D>} whose values are the result of the downstream
      * reduction.
      *
+     * 返回{@code Collector}，它根据{@code谓词}划分输入元素，根据另一个{@code Collector}减少每个分区中的值，
+     * 并将它们组织为{@code Map<Boolean, D>}，其值是下游减少的结果。
+     *
      * <p>There are no guarantees on the type, mutability,
      * serializability, or thread-safety of the {@code Map} returned.
+     *
+     * 不能保证返回的{@code映射}的类型、可变性、可串行性或线程安全性。
      *
      * @param <T> the type of the input elements
      * @param <A> the intermediate accumulation type of the downstream collector
@@ -1132,11 +1297,16 @@ public final class Collectors {
      * {@code Map} whose keys and values are the result of applying the provided
      * mapping functions to the input elements.
      *
+     * 返回一个{@code Collector}，它将元素累积为一个{@code映射}，该映射}的键和值是将提供的映射函数应用到输入元素的结果。
+     *
      * <p>If the mapped keys contains duplicates (according to
      * {@link Object#equals(Object)}), an {@code IllegalStateException} is
      * thrown when the collection operation is performed.  If the mapped keys
      * may have duplicates, use {@link #toMap(Function, Function, BinaryOperator)}
      * instead.
+     *
+     * 如果映射的键包含重复项(根据{@link Object#equals(Object)})，则在执行集合操作时抛出{@code IllegalStateException}。
+     * 如果映射的键可能有副本，则使用{@link #toMap(Function, Function, BinaryOperator)}。
      *
      * @apiNote
      * It is common for either the key or the value to be the input elements.
@@ -1144,6 +1314,11 @@ public final class Collectors {
      * {@link Function#identity()} may be helpful.
      * For example, the following produces a {@code Map} mapping
      * students to their grade point average:
+     *
+     * @apiNote
+     * 键或值作为输入元素是很常见的。在这种情况下，实用程序方法{@link Function#identity()}可能会有所帮助。
+     * 例如，下面生成一个{@code Map}映射学生到他们的平均绩点:
+     *
      * <pre>{@code
      *     Map<Student, Double> studentToGPA
      *         students.stream().collect(toMap(Functions.identity(),
@@ -1164,6 +1339,11 @@ public final class Collectors {
      * not required that results are inserted into the {@code Map} in encounter
      * order, using {@link #toConcurrentMap(Function, Function)}
      * may offer better parallel performance.
+     *
+     * @implNote
+     * 返回的{@code Collector}不是并发的。对于并行流管道，{@code combiner}函数通过将键从一个映射合并到另一个映射来操作，
+     * 这可能是一个昂贵的操作。如果不需要按照遇到的顺序将结果插入{@code Map}，
+     * 那么使用{@link #toConcurrentMap(Function, Function)}可以提供更好的并行性能。
      *
      * @param <T> the type of the input elements
      * @param <K> the output type of the key mapping function
@@ -1189,10 +1369,14 @@ public final class Collectors {
      * {@code Map} whose keys and values are the result of applying the provided
      * mapping functions to the input elements.
      *
+     * 返回一个{@code Collector}，它将元素累积为一个{@code映射}，该映射}的键和值是将提供的映射函数应用到输入元素的结果。
+     *
      * <p>If the mapped
      * keys contains duplicates (according to {@link Object#equals(Object)}),
      * the value mapping function is applied to each equal element, and the
      * results are merged using the provided merging function.
+     *
+     * 如果映射键包含重复项(根据{@link Object#equals(Object)})，则将值映射函数应用于每个相等元素，并使用提供的合并函数合并结果。
      *
      * @apiNote
      * There are multiple ways to deal with collisions between multiple elements
@@ -1203,6 +1387,12 @@ public final class Collectors {
      * address, but it is possible that two persons have the same name, you can
      * do as follows to gracefully deals with these collisions, and produce a
      * {@code Map} mapping names to a concatenated list of addresses:
+     *
+     * @apiNote
+     * 有多种方法可以处理映射到同一个键的多个元素之间的冲突。其他形式的{@code toMap}简单地使用无条件抛出的合并函数，
+     * 但是您可以轻松地编写更灵活的合并策略。例如,如果你有一个{@code Person},你想产生一个“电话簿”名称映射到地址,
+     * 但可能两个人有相同的名字,你可以做如下优雅地处理这些碰撞,并产生一个{@code Map}映射名称连接列表的地址:
+     *
      * <pre>{@code
      *     Map<String, String> phoneBook
      *         people.stream().collect(toMap(Person::getName,
@@ -1217,6 +1407,11 @@ public final class Collectors {
      * not required that results are merged into the {@code Map} in encounter
      * order, using {@link #toConcurrentMap(Function, Function, BinaryOperator)}
      * may offer better parallel performance.
+     *
+     * @implNote
+     * 返回的{@code Collector}不是并发的。对于并行流管道，{@code combiner}函数通过将键从一个映射合并到另一个映射来操作，
+     * 这可能是一个昂贵的操作。如果不需要按照遇到的顺序将结果合并到{@code Map}中，
+     * 那么使用{@link #toConcurrentMap(Function, Function, BinaryOperator)}可以提供更好的并行性能。
      *
      * @param <T> the type of the input elements
      * @param <K> the output type of the key mapping function
@@ -1248,11 +1443,16 @@ public final class Collectors {
      * {@code Map} whose keys and values are the result of applying the provided
      * mapping functions to the input elements.
      *
+     * 返回一个{@code Collector}，它将元素累积为一个{@code映射}，该映射}的键和值是将提供的映射函数应用到输入元素的结果。
+     *
      * <p>If the mapped
      * keys contains duplicates (according to {@link Object#equals(Object)}),
      * the value mapping function is applied to each equal element, and the
      * results are merged using the provided merging function.  The {@code Map}
      * is created by a provided supplier function.
+     *
+     * 如果映射键包含重复项(根据{@link Object#equals(Object)})，则将值映射函数应用于每个相等元素，
+     * 并使用提供的合并函数合并结果。{@code Map}是由提供的供应商函数创建的。
      *
      * @implNote
      * The returned {@code Collector} is not concurrent.  For parallel stream
@@ -1261,6 +1461,11 @@ public final class Collectors {
      * not required that results are merged into the {@code Map} in encounter
      * order, using {@link #toConcurrentMap(Function, Function, BinaryOperator, Supplier)}
      * may offer better parallel performance.
+     *
+     * @implNote
+     * 返回的{@code Collector}不是并发的。对于并行流管道，{@code combiner}函数通过将键从一个映射合并到另一个映射来操作，
+     * 这可能是一个昂贵的操作。如果不需要按照遇到的顺序将结果合并到{@code Map}中，
+     * 那么使用{@link #toConcurrentMap(Function, Function, BinaryOperator, Supplier)}可以提供更好的并行性能。
      *
      * @param <T> the type of the input elements
      * @param <K> the output type of the key mapping function
@@ -1299,11 +1504,17 @@ public final class Collectors {
      * {@code ConcurrentMap} whose keys and values are the result of applying
      * the provided mapping functions to the input elements.
      *
+     * 返回一个并发的{@code Collector}，它将元素累积为{@code ConcurrentMap}，
+     * 该{@code ConcurrentMap}的键和值是将提供的映射函数应用到输入元素的结果。
+     *
      * <p>If the mapped keys contains duplicates (according to
      * {@link Object#equals(Object)}), an {@code IllegalStateException} is
      * thrown when the collection operation is performed.  If the mapped keys
      * may have duplicates, use
      * {@link #toConcurrentMap(Function, Function, BinaryOperator)} instead.
+     *
+     * 如果映射的键包含重复项(根据{@link Object#equals(Object)})，则在执行集合操作时抛出{@code IllegalStateException}。
+     * 如果映射的键可能有副本，则使用{@link #toConcurrentMap(Function, Function, BinaryOperator)}。
      *
      * @apiNote
      * It is common for either the key or the value to be the input elements.
@@ -1311,6 +1522,11 @@ public final class Collectors {
      * {@link Function#identity()} may be helpful.
      * For example, the following produces a {@code Map} mapping
      * students to their grade point average:
+     *
+     * @apiNote
+     * 键或值作为输入元素是很常见的。在这种情况下，实用程序方法{@link Function#identity()}可能会有所帮助。
+     * 例如，下面生成一个{@code Map}映射学生到他们的平均绩点:
+     *
      * <pre>{@code
      *     Map<Student, Double> studentToGPA
      *         students.stream().collect(toMap(Functions.identity(),
@@ -1352,9 +1568,14 @@ public final class Collectors {
      * {@code ConcurrentMap} whose keys and values are the result of applying
      * the provided mapping functions to the input elements.
      *
+     * 返回一个并发的{@code Collector}，它将元素累积为{@code ConcurrentMap}，
+     * 该{@code ConcurrentMap}的键和值是将提供的映射函数应用到输入元素的结果。
+     *
      * <p>If the mapped keys contains duplicates (according to {@link Object#equals(Object)}),
      * the value mapping function is applied to each equal element, and the
      * results are merged using the provided merging function.
+     *
+     * 如果映射键包含重复项(根据{@link Object#equals(Object)})，则将值映射函数应用于每个相等元素，并使用提供的合并函数合并结果。
      *
      * @apiNote
      * There are multiple ways to deal with collisions between multiple elements
@@ -1365,6 +1586,12 @@ public final class Collectors {
      * address, but it is possible that two persons have the same name, you can
      * do as follows to gracefully deals with these collisions, and produce a
      * {@code Map} mapping names to a concatenated list of addresses:
+     *
+     * @apiNote
+     * 有多种方法可以处理映射到同一个键的多个元素之间的冲突。其他形式的{@code toConcurrentMap}简单地使用无条件抛出的合并函数，
+     * 但是您可以轻松编写更灵活的合并策略。例如,如果你有一个{@code Person},你想产生一个“电话簿”名称映射到地址,
+     * 但可能两个人有相同的名字,你可以做如下优雅地处理这些碰撞,并产生一个{@code Map}映射名称连接列表的地址:
+     *
      * <pre>{@code
      *     Map<String, String> phoneBook
      *         people.stream().collect(toConcurrentMap(Person::getName,
@@ -1406,10 +1633,16 @@ public final class Collectors {
      * {@code ConcurrentMap} whose keys and values are the result of applying
      * the provided mapping functions to the input elements.
      *
+     * 返回一个并发的{@code Collector}，它将元素累积为{@code ConcurrentMap}，
+     * 该{@code ConcurrentMap}的键和值是将提供的映射函数应用到输入元素的结果。
+     *
      * <p>If the mapped keys contains duplicates (according to {@link Object#equals(Object)}),
      * the value mapping function is applied to each equal element, and the
      * results are merged using the provided merging function.  The
      * {@code ConcurrentMap} is created by a provided supplier function.
+     *
+     * 如果映射键包含重复项(根据{@link Object#equals(Object)})，则将值映射函数应用于每个相等元素，
+     * 并使用提供的合并函数合并结果。{@code ConcurrentMap}由提供的供应商函数创建。
      *
      * <p>This is a {@link Collector.Characteristics#CONCURRENT concurrent} and
      * {@link Collector.Characteristics#UNORDERED unordered} Collector.
@@ -1451,6 +1684,8 @@ public final class Collectors {
      * mapping function to each input element, and returns summary statistics
      * for the resulting values.
      *
+     * 返回一个{@code Collector}，它对每个输入元素应用一个产生{@code int}的映射函数，并返回结果值的汇总统计信息。
+     *
      * @param <T> the type of the input elements
      * @param mapper a mapping function to apply to each element
      * @return a {@code Collector} implementing the summary-statistics reduction
@@ -1471,6 +1706,8 @@ public final class Collectors {
      * mapping function to each input element, and returns summary statistics
      * for the resulting values.
      *
+     * 返回一个{@code Collector}，它对每个输入元素应用一个产生{@code long}的映射函数，并返回结果值的汇总统计信息。
+     *
      * @param <T> the type of the input elements
      * @param mapper the mapping function to apply to each element
      * @return a {@code Collector} implementing the summary-statistics reduction
@@ -1490,6 +1727,8 @@ public final class Collectors {
      * Returns a {@code Collector} which applies an {@code double}-producing
      * mapping function to each input element, and returns summary statistics
      * for the resulting values.
+     *
+     * 返回一个{@code Collector}，它对每个输入元素应用一个产生{@code双}的映射函数，并返回结果值的汇总统计信息。
      *
      * @param <T> the type of the input elements
      * @param mapper a mapping function to apply to each element
