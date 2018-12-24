@@ -58,9 +58,9 @@ public class JDK8 {
 
         // stream api
         final Collection<Streams.MyTask> tasks = Arrays.asList(
-                new Streams.MyTask(Streams.MyStatus.OPEN, 5),
-                new Streams.MyTask(Streams.MyStatus.OPEN, 13),
-                new Streams.MyTask(Streams.MyStatus.CLOSED, 8)
+                new Streams.MyTask(Streams.MyStatus.OPEN, 35),
+                new Streams.MyTask(Streams.MyStatus.OPEN, 15),
+                new Streams.MyTask(Streams.MyStatus.CLOSED, 50)
         );
 
         // 求open状态的和
