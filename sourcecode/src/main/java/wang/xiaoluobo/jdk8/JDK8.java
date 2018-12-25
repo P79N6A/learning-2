@@ -1,15 +1,15 @@
 package wang.xiaoluobo.jdk8;
 
+import com.alibaba.fastjson.JSON;
+import wang.xiaoluobo.vo.Student;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.*;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -68,6 +68,7 @@ public class JDK8 {
                 .filter(myTask -> myTask.getMyStatus() == Streams.MyStatus.OPEN)
                 .mapToInt(Streams.MyTask::getPoints)
                 .sum();
+        // 50
         System.out.println("Total Open points: " + totalPointsOfOpenTasks);
 
         // 求和
@@ -77,12 +78,14 @@ public class JDK8 {
 //                .map(myTask -> myTask.getPoints())
                 .map(Streams.MyTask::getPoints)
                 .reduce(0, Integer::sum);
+        // 100.0
         System.out.println("Total points: " + totalPoints);
 
-        // map reduce
+        // 分组
         Map<Streams.MyStatus, List<Streams.MyTask>> map = tasks
                 .stream()
                 .collect(Collectors.groupingBy(Streams.MyTask::getMyStatus));
+        // {OPEN=[[OPEN, 35], [OPEN, 15]], CLOSED=[[CLOSED, 50]]}
         System.out.println(map);
 
         // 计算任务占比
@@ -95,6 +98,8 @@ public class JDK8 {
                 .mapToLong(weigth -> (long) (weigth * 100))
                 .mapToObj(percentage -> percentage + "%")
                 .collect(Collectors.toList());
+
+        // [35%, 15%, 50%]
         System.out.println(result);
 
         // 读取文件
@@ -162,6 +167,36 @@ public class JDK8 {
 
         Thread t1 = new Thread(() -> System.out.println("*************"));
         t1.start();
+        System.out.println();
+
+        // test
+        List<Student> studentList = new ArrayList<>();
+        studentList.add(new Student(1, "a", 20));
+        studentList.add(new Student(2, "b", 20));
+        studentList.add(new Student(3, "c", 18));
+        studentList.add(new Student(4, "d",19));
+        studentList.add(new Student(5, "e",18));
+        studentList.add(new Student(6, "f", 18));
+
+        Map<Integer, List<Student>> stuMap = studentList.stream().collect(Collectors.groupingBy(Student::getAge));
+        System.out.println(JSON.toJSONString(stuMap));
+
+        int ages = studentList.stream().filter(student -> student.getAge() != 20).mapToInt(Student::getAge).reduce(0, Integer::sum);
+        System.out.println(ages);
+
+        // distinct保证输出的流中包含唯一的元素，它是通过Object.equals(Object)来检查是否包含相同的元素。
+        System.out.println(Stream.of("a", "b", "c", "d", "e").distinct().collect(Collectors.toList()));
+
+        // filter返回的流中只包含满足断言(predicate)的数据。
+        System.out.println(Stream.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10).filter(i -> i < 6).collect(Collectors.toList()));
+
+        // map方法将流中的元素映射成另外的值，新的值类型可以和原来的元素的类型不同。
+        System.out.println(Stream.of("a", "b", "c", "d", "e").map(h -> h.hashCode()).collect(Collectors.toList()));
+
+        // flatmap方法混合了map + flattern的功能，它将映射后的流的元素全部放入到一个新的流中。
+        System.out.println(Stream.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10).filter(i -> i < 6).collect(Collectors.toList()));
+
+
     }
 
     public static class Car {

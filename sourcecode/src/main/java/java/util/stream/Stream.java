@@ -36,6 +36,8 @@ import java.util.function.*;
  * operations.  The following example illustrates an aggregate operation using
  * {@link Stream} and {@link IntStream}:
  *
+ * 支持顺序和并行聚合操作的一系列元素。以下示例说明了使用{@link Stream}和{@link IntStream}的聚合操作：
+ *
  * <pre>{@code
  *     int sum = widgets.stream()
  *                      .filter(w -> w.getColor() == RED)
@@ -49,10 +51,18 @@ import java.util.function.*;
  * transform it into a stream of {@code int} values representing the weight of
  * each red widget. Then this stream is summed to produce a total weight.
  *
+ * 在此示例中，{@code widgets}是{@code Collection<Widget>}。
+ * 我们通过{@link Collection#stream Collection.stream()}创建一个{@code Widget}对象流，
+ * 过滤它以生成仅包含红色小部件的流，然后将其转换为{@code int}的流 表示每个红色小部件的权重的值。
+ * 后将该流相加以产生总重量。
+ *
  * <p>In addition to {@code Stream}, which is a stream of object references,
  * there are primitive specializations for {@link IntStream}, {@link LongStream},
  * and {@link DoubleStream}, all of which are referred to as "streams" and
  * conform to the characteristics and restrictions described here.
+ *
+ * 除了{@code Stream}(一个对象引用流)之外，还有{@link IntStream}，{@link LongStream}
+ * 和{@link DoubleStream}的原始特化，所有这些都被称为流并符合此处描述的特征和限制。
  *
  * <p>To perform a computation, stream
  * <a href="package-summary.html#StreamOps">operations</a> are composed into a
@@ -66,6 +76,11 @@ import java.util.function.*;
  * terminal operation is initiated, and source elements are consumed only
  * as needed.
  *
+ * 为了执行计算，流操作被组合成流管道。流管道由源(可能是数组，集合，生成器函数，I/O通道等)，
+ * 零个或多个中间操作(将流转换为另一个流)组成，例如{@link Stream#filter(Predicate)},
+ * 以及终端操作(产生结果或副作用，例如{@link Stream#count()}或{@link Stream#forEach(Consumer)})。
+ * Streams是懒惰的;仅在启动终端操作时才执行对源数据的计算，并且仅在需要时消耗源元素。
+ *
  * <p>Collections and streams, while bearing some superficial similarities,
  * have different goals.  Collections are primarily concerned with the efficient
  * management of, and access to, their elements.  By contrast, streams do not
@@ -75,6 +90,10 @@ import java.util.function.*;
  * However, if the provided stream operations do not offer the desired
  * functionality, the {@link #iterator()} and {@link #spliterator()} operations
  * can be used to perform a controlled traversal.
+ *
+ * 集合和流虽然有一些表面上的相似之处，但它们有不同的目标。集合主要关注元素的有效管理和访问。
+ * 相比之下，流不提供直接访问或操作其元素的方法，而是以声明的方式描述其源和将在该源上执行的计算操作。
+ * 但是，如果提供的流操作不能提供所需的功能，则可以使用{@link #iterator()}和{@link #spliterator()}操作执行受控的遍历。
  *
  * <p>A stream pipeline, like the "widgets" example above, can be viewed as
  * a <em>query</em> on the stream source.  Unless the source was explicitly

@@ -253,12 +253,12 @@ public interface IntStream extends BaseStream<Integer, IntStream> {
      * with {@link #sequential()} may improve performance.
      *
      * @apiNote
-     * 虽然{@code limit()}通常是对顺序流管道的廉价操作，但在有序并行管道上可能非常昂贵，
-     * 特别是对于{@code maxSize}的大值，因为{@code limit(n)}受到限制不仅返回任何n个元素，
+     * 虽然{@code limit()}通常是对串行流管道的廉价操作，但在有序并行管道上可能非常昂贵，
+     * 特别是对于{@code maxSize}最大值，因为{@code limit(n)}受到限制不仅返回任何n个元素，
      * 而且返回遭遇顺序中的前n个元素。使用无序流源(例如{@link #generate(IntSupplier)})
      * 或使用{@link #unordered()}删除排序约束可能会导致并行管道中{@code limit()}的显着加速，
      * 如果你的情况允许的语义。如果需要与遇到顺序的一致性，并且您在并行管道中使用{@code limit()}
-     * 遇到性能不佳或内存利用率较低，则使用{@link #sequential()}切换到顺序执行可能会提高性能。
+     * 遇到性能不佳或内存利用率较低，则使用{@link #sequential()}切换到串行执行可能会提高性能。
      *
      * @param maxSize the number of elements the stream should be limited to
      * @return the new stream
@@ -292,12 +292,12 @@ public interface IntStream extends BaseStream<Integer, IntStream> {
      * with {@link #sequential()} may improve performance.
      *
      * @apiNote
-     * 虽然{@code skip()}通常是顺序流管道上的廉价操作，但在有序并行管道上可能非常昂贵，
+     * 虽然{@code skip()}通常是串行流管道上的廉价操作，但在有序并行管道上可能非常昂贵，
      * 特别是对于{@code n}的大值，因为{@code skip(n)}受到限制 不仅要跳过任何n个元素，
      * 还要跳过遇到顺序中的前n个元素。使用无序流源(例如{@link #generate(IntSupplier)})
      * 或使用{@link #unordered()}删除排序约束可能会导致并行管道中{@code skip()}的显着加速，
      * 如果你的情况允许的语义。如果需要与遇到顺序的一致性，并且您在并行管道中使用{@code skip()}
-     * 遇到性能或内存利用率较低，则使用{@link #sequential()}切换到顺序执行可能会提高性能。
+     * 遇到性能或内存利用率较低，则使用{@link #sequential()}切换到串行执行可能会提高性能。
      *
      * @param n the number of leading elements to skip
      * @return the new stream
@@ -374,7 +374,7 @@ public interface IntStream extends BaseStream<Integer, IntStream> {
      *
      * but is not constrained to execute sequentially.
      *
-     * 但不限于按顺序执行。
+     * 但不限于按串行执行。
      *
      * <p>The {@code identity} value must be an identity for the accumulator
      * function. This means that for all {@code x},
@@ -452,7 +452,7 @@ public interface IntStream extends BaseStream<Integer, IntStream> {
      *
      * but is not constrained to execute sequentially.
      *
-     * 但不受顺序执行的约束。
+     * 但不受串行执行的约束。
      *
      * <p>The {@code accumulator} function must be an
      * <a href="package-summary.html#Associativity">associative</a> function.

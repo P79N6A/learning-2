@@ -66,7 +66,7 @@ public interface LongStream extends BaseStream<Long, LongStream> {
      *
      * 返回由与此给定谓词匹配的此流的元素组成的流。
      *
-     * <p>This is an <a href="package-summary.html#StreamOps">intermediate
+     * <p>This is an <a href="package-sfummary.html#StreamOps">intermediate
      * operation</a>.
      *
      * 这是一个中间操作
