@@ -56,14 +56,14 @@ public class JDK8 {
 
 
         // stream api
-        final Collection<Streams.MyTask> tasks = Arrays.asList(
+        Collection<Streams.MyTask> tasks = Arrays.asList(
                 new Streams.MyTask(Streams.MyStatus.OPEN, 35),
                 new Streams.MyTask(Streams.MyStatus.OPEN, 15),
                 new Streams.MyTask(Streams.MyStatus.CLOSED, 50)
         );
 
         // 求open状态的和
-        final long totalPointsOfOpenTasks = tasks
+        long totalPointsOfOpenTasks = tasks
                 .stream()
                 .filter(myTask -> myTask.getMyStatus() == Streams.MyStatus.OPEN)
                 .mapToInt(Streams.MyTask::getPoints)
@@ -71,7 +71,7 @@ public class JDK8 {
         System.out.println("Total Open points: " + totalPointsOfOpenTasks);
 
         // 求和
-        final double totalPoints = tasks
+        double totalPoints = tasks
                 .stream()
                 .parallel()
 //                .map(myTask -> myTask.getPoints())
@@ -80,7 +80,7 @@ public class JDK8 {
         System.out.println("Total points: " + totalPoints);
 
         // map reduce
-        final Map<Streams.MyStatus, List<Streams.MyTask>> map = tasks
+        Map<Streams.MyStatus, List<Streams.MyTask>> map = tasks
                 .stream()
                 .collect(Collectors.groupingBy(Streams.MyTask::getMyStatus));
         System.out.println(map);
