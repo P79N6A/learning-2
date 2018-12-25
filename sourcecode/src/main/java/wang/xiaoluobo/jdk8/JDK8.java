@@ -32,7 +32,6 @@ public class JDK8 {
         });
         System.out.println();
 
-
         /**
          * 引用
          * 1. 引用的类型是构造器引用，语法是Class::new，或者更一般的形式：Class<T>::new。注意：这个构造器没有参数
@@ -151,6 +150,18 @@ public class JDK8 {
         Arrays.parallelSort(arrayOfLong);
         Arrays.stream(arrayOfLong).limit(10).forEach(i -> System.out.print(i + " "));
         System.out.println();
+
+
+        // thread
+        Thread t = new Thread(() -> {
+            System.out.println("-------------");
+            System.out.println("-------------");
+            System.out.println("-------------");
+        });
+        t.start();
+
+        Thread t1 = new Thread(() -> System.out.println("*************"));
+        t1.start();
     }
 
     public static class Car {
