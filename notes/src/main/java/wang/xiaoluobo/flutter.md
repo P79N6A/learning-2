@@ -1,4 +1,4 @@
-# flutter release 1.0
+# [flutter release 1.0](https://flutter.io/docs/get-started/install/macos)
 # Flutter开发环境搭建
 1. 安装Dart SDK   
 可以参考：http://www.dartlang.cc/docs/tutorials/get-started/  
