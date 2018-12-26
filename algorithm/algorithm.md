@@ -1,4 +1,4 @@
-### algorithm
+# [algorithm](https://leetcode.com/problemset/all/)
   常用算法、jdk源码算法实现等  
   [SwordForOffer](https://github.com/CyC2018/CS-Notes "剑指offer")
   
