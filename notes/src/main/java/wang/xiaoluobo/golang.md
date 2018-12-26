@@ -42,6 +42,13 @@ vet         report likely mistakes in packages
 
 #### [go in action](https://www.kancloud.cn/kancloud/the-way-to-go/72432)  
 [go in action](https://github.com/Unknwon/the-way-to-go_ZH_CN)
+- go工作区目录结构
+    ```text
+    src   引用的外部库
+    pkg   编译时，生成的对象文件
+    bin   编译后的程序
+    ```
+
 - 垃圾回收器
     ```text
     垃圾回收器Go拥有简单却高效的标记-清除回收器。
