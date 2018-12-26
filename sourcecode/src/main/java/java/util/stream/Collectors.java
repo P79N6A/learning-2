@@ -181,8 +181,8 @@ public final class Collectors {
      * new {@code Collection}, in encounter order.  The {@code Collection} is
      * created by the provided factory.
      *
-     * 返回一个{@code Collector}，该{@code Collector}按照遇到的顺序将输入元素累积到一个新的{@code集合}中。
-     * {@code集合}由提供的工厂创建。
+     * 返回一个{@code Collector}，该{@code Collector}按照遇到的顺序将输入元素累积到一个新的{@code Collection}中。
+     * {@code Collection}由提供的工厂创建。
      *
      * @param <T> the type of the input elements
      * @param <C> the type of the resulting {@code Collection}
@@ -204,7 +204,7 @@ public final class Collectors {
      * serializability, or thread-safety of the {@code List} returned; if more
      * control over the returned {@code List} is required, use {@link #toCollection(Supplier)}.
      *
-     * 返回一个{@code Collector}，该}将输入元素累积到一个新的{@code List}中。不保证返回的{@code List}的类型、
+     * 返回一个{@code Collector}，将输入元素累积到一个新的{@code List}中。不保证返回的{@code List}的类型、
      * 可变性、可串行性或线程安全性;如果需要对返回的{@code List}进行更多控制，请使用{@link #toCollection(Supplier)}。
      *
      * @param <T> the type of the input elements
@@ -225,7 +225,7 @@ public final class Collectors {
      * control over the returned {@code Set} is required, use
      * {@link #toCollection(Supplier)}.
      *
-     * 返回一个{@code Collector}，它将输入元素累积为一个新的{@code集合}。不保证返回的{@code Set}的类型、
+     * 返回一个{@code Collector}，它将输入元素累积为一个新的{@code Set}。不保证返回的{@code Set}的类型、
      * 可变性、可串行性或线程安全性;如果需要对返回的{@code Set}进行更多控制，请使用{@link #toCollection(Supplier)}。
      *
      * <p>This is an {@link Collector.Characteristics#UNORDERED unordered}
@@ -246,7 +246,7 @@ public final class Collectors {
      * Returns a {@code Collector} that concatenates the input elements into a
      * {@code String}, in encounter order.
      *
-     * 返回一个{@code Collector}，该{@code收集器}将输入元素按遇到顺序连接到{@code字符串}中。
+     * 返回一个{@code Collector}，该{@code Collector}将输入元素按遇到顺序连接到{@code String}中。
      *
      * @return a {@code Collector} that concatenates the input elements into a
      * {@code String}, in encounter order
@@ -262,7 +262,7 @@ public final class Collectors {
      * Returns a {@code Collector} that concatenates the input elements,
      * separated by the specified delimiter, in encounter order.
      *
-     * 返回一个{@code Collector}，该{@code Collector}按照遇到的顺序连接由指定分隔符分隔的输入元素。
+     * 返回一个{@code Collector}，该{@code Collector}按照相遇的顺序连接由指定分隔符分隔的输入元素。
      *
      * @param delimiter the delimiter to be used between each element
      * @return A {@code Collector} which concatenates CharSequence elements,
@@ -277,7 +277,7 @@ public final class Collectors {
      * separated by the specified delimiter, with the specified prefix and
      * suffix, in encounter order.
      *
-     * 返回一个{@code Collector}，它以相遇顺序连接由指定分隔符分隔的输入元素和指定的前缀和后缀。
+     * 返回一个{@code Collector}，以相遇顺序连接由指定分隔符分隔的输入元素和指定的前缀和后缀。
      *
      * @param delimiter the delimiter to be used between each element
      * @param  prefix the sequence of characters to be used at the beginning
@@ -689,7 +689,7 @@ public final class Collectors {
      *
      * @apiNote
      * {@code reducingby}或{@code partitioningBy}的下游的多级简化中使用的{@code reducing()}收集器最有用。
-     * 要对流执行简单的还原，可以使用{@link流#reduce(Object, BinaryOperator)}}。
+     * 要对流执行简单的还原，可以使用{@link Stream#reduce(Object, BinaryOperator)}}。
      *
      * @param <T> element type for the input and output of the reduction
      * @param identity the identity value for the reduction (also, the value
@@ -730,7 +730,7 @@ public final class Collectors {
      *
      * @apiNote
      * {@code reducingby}或{@code partitioningBy}的下游的多级简化中使用的{@code reducing()}收集器最有用。
-     * 要对流执行简单的还原，可以使用{@link流#reduce(BinaryOperator)}。
+     * 要对流执行简单的还原，可以使用{@link Stream#reduce(BinaryOperator)}。
      *
      * <p>For example, given a stream of {@code Person}, to calculate tallest
      * person in each city:
@@ -779,7 +779,7 @@ public final class Collectors {
      * of the elements before reduction.
      *
      * 返回一个{@code Collector}，它在指定的映射函数和{@code BinaryOperator}下执行输入元素的缩减。
-     * 这是{@link #reduce(Object, BinaryOperator)}的一般化，它允许在reduce之前对元素进行转换。
+     * 这是{@link #reducing(Object, BinaryOperator)}的一般化，它允许在reduce之前对元素进行转换。
      *
      * @apiNote
      * The {@code reducing()} collectors are most useful when used in a
@@ -829,7 +829,7 @@ public final class Collectors {
      * classification function, and returning the results in a {@code Map}.
      *
      * 返回一个{@code Collector}，它对类型为{@code T}的输入元素执行“group by”操作，
-     * 根据分类函数对元素进行分组，并以{@code映射}的形式返回结果。
+     * 根据分类函数对元素进行分组，并以{@code Map}的形式返回结果。
      *
      * <p>The classification function maps elements to some key type {@code K}.
      * The collector produces a {@code Map<K, List<T>>} whose keys are the
@@ -839,7 +839,7 @@ public final class Collectors {
      * function.
      *
      * 分类函数将元素映射到某个键类型{@code K}。收集器生成一个{@code Map<K, List<T>>}，
-     * 其键是将分类函数应用到输入元素所得到的值，其对应的值是{@code List}s，其中包含映射到分类函数下关联键的输入元素。
+     * 其键是将分类函数应用到输入元素所得到的值，其对应的值是{@code List}s，其中包含map到分类函数下关联键的输入元素。
      *
      * <p>There are no guarantees on the type, mutability, serializability, or
      * thread-safety of the {@code Map} or {@code List} objects returned.
@@ -900,7 +900,7 @@ public final class Collectors {
      * <p>There are no guarantees on the type, mutability,
      * serializability, or thread-safety of the {@code Map} returned.
      *
-     * 不能保证返回的{@code映射}的类型、可变性、可串行性或线程安全性。
+     * 不能保证返回的{@code Map}的类型、可变性、可串行性或线程安全性。
      *
      * <p>For example, to compute the set of last names of people in each city:
      * <pre>{@code
@@ -1053,7 +1053,7 @@ public final class Collectors {
      * of the {@code Map} or {@code List} objects returned, or of the
      * thread-safety of the {@code List} objects returned.
      *
-     * 不能保证返回的{@code映射}或{@code List}对象的类型、可变性或可串行性，也不能保证返回的{@code List}对象的线程安全性。
+     * 不能保证返回的{@code Map}或{@code List}对象的类型、可变性或可串行性，也不能保证返回的{@code List}对象的线程安全性。
      *
      * @implSpec
      * This produces a result similar to:
@@ -1224,12 +1224,12 @@ public final class Collectors {
      * to a {@code Predicate}, and organizes them into a
      * {@code Map<Boolean, List<T>>}.
      *
-     * 返回一个{@code Collector}，它根据{@code谓词}对输入元素进行分区，并将它们组织为{@code Map<Boolean, List<T>>}。
+     * 返回一个{@code Collector}，它根据{@code Predicate}对输入元素进行分区，并将它们组织为{@code Map<Boolean, List<T>>}。
      *
      * There are no guarantees on the type, mutability,
      * serializability, or thread-safety of the {@code Map} returned.
      *
-     * 不能保证返回的{@code映射}的类型、可变性、可串行性或线程安全性。
+     * 不能保证返回的{@code Map}的类型、可变性、可串行性或线程安全性。
      *
      * @param <T> the type of the input elements
      * @param predicate a predicate used for classifying input elements
@@ -1249,13 +1249,13 @@ public final class Collectors {
      * {@code Map<Boolean, D>} whose values are the result of the downstream
      * reduction.
      *
-     * 返回{@code Collector}，它根据{@code谓词}划分输入元素，根据另一个{@code Collector}减少每个分区中的值，
+     * 返回{@code Collector}，它根据{@code Predicate}划分输入元素，根据另一个{@code Collector}减少每个分区中的值，
      * 并将它们组织为{@code Map<Boolean, D>}，其值是下游减少的结果。
      *
      * <p>There are no guarantees on the type, mutability,
      * serializability, or thread-safety of the {@code Map} returned.
      *
-     * 不能保证返回的{@code映射}的类型、可变性、可串行性或线程安全性。
+     * 不能保证返回的{@code Map}的类型、可变性、可串行性或线程安全性。
      *
      * @param <T> the type of the input elements
      * @param <A> the intermediate accumulation type of the downstream collector
@@ -1297,7 +1297,7 @@ public final class Collectors {
      * {@code Map} whose keys and values are the result of applying the provided
      * mapping functions to the input elements.
      *
-     * 返回一个{@code Collector}，它将元素累积为一个{@code映射}，该映射}的键和值是将提供的映射函数应用到输入元素的结果。
+     * 返回一个{@code Collector}，它将元素累积为一个{@code Map}，该映射}的键和值是将提供的映射函数应用到输入元素的结果。
      *
      * <p>If the mapped keys contains duplicates (according to
      * {@link Object#equals(Object)}), an {@code IllegalStateException} is
@@ -1369,7 +1369,7 @@ public final class Collectors {
      * {@code Map} whose keys and values are the result of applying the provided
      * mapping functions to the input elements.
      *
-     * 返回一个{@code Collector}，它将元素累积为一个{@code映射}，该映射}的键和值是将提供的映射函数应用到输入元素的结果。
+     * 返回一个{@code Collector}，它将元素累积为一个{@code Map}，该映射}的键和值是将提供的映射函数应用到输入元素的结果。
      *
      * <p>If the mapped
      * keys contains duplicates (according to {@link Object#equals(Object)}),
@@ -1443,7 +1443,7 @@ public final class Collectors {
      * {@code Map} whose keys and values are the result of applying the provided
      * mapping functions to the input elements.
      *
-     * 返回一个{@code Collector}，它将元素累积为一个{@code映射}，该映射}的键和值是将提供的映射函数应用到输入元素的结果。
+     * 返回一个{@code Collector}，它将元素累积为一个{@code Map}，该映射}的键和值是将提供的映射函数应用到输入元素的结果。
      *
      * <p>If the mapped
      * keys contains duplicates (according to {@link Object#equals(Object)}),
@@ -1728,7 +1728,7 @@ public final class Collectors {
      * mapping function to each input element, and returns summary statistics
      * for the resulting values.
      *
-     * 返回一个{@code Collector}，它对每个输入元素应用一个产生{@code双}的映射函数，并返回结果值的汇总统计信息。
+     * 返回一个{@code Collector}，它对每个输入元素应用一个产生{@code double}的映射函数，并返回结果值的汇总统计信息。
      *
      * @param <T> the type of the input elements
      * @param mapper a mapping function to apply to each element
