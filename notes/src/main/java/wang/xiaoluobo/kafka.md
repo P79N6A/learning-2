@@ -147,14 +147,14 @@ Consumer挂掉或重新分配分区时会发生Consumer Rebalance
 2. KafkaController  
     KafkaController初始化ZookeeperLeaderElector对象，为ZookeeperLeaderElector设置两个回调方法，onControllerFailover和onControllerResignation
     onControllerFailover在选举leader成功后会回调，在onControllerFailover中进行leader依赖的模块初始化，包括向zookeeper上/controller_epoch节点上记录leader的选举次数，这个epoch数值在处理分布式脑裂的场景中很有用。
-    而onControllerResignation在当前broker不再成为leader（即当前leader退位后）时会回调。
+    而onControllerResignation在当前broker不再成为leader(即当前leader退位后)时会回调。
     KafkaController在启动后注册zookeeper的会话超时监听器，并尝试选举leader。
 
 3. SessionExpirationListener  
     当broker和zookeeper重新建立连接后，SessionExpirationListener中的handleNewSession会被调用，这时先关闭之前的leader相关模块，然后重新尝试选举成为leader。
     
 4. ZookeeperLeaderElector  
-    ZookeeperLeaderElector类实现leader选举的功能，但是它并不负责处理broker和zookeeper的会话超时（连接超时）的情况，而是认为调用者应该在会话恢复（连接重新建立）时进行重新选举。
+    ZookeeperLeaderElector类实现leader选举的功能，但是它并不负责处理broker和zookeeper的会话超时(连接超时)的情况，而是认为调用者应该在会话恢复(连接重新建立)时进行重新选举。
     
     ZookeeperLeaderElector的startup方法中调用elect方法选举leader
     

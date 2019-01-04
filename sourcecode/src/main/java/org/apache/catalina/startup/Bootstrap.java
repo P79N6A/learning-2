@@ -44,6 +44,10 @@ import java.util.regex.Pattern;
  * other classes they depend on, such as an XML parser) out of the system
  * class path and therefore not visible to application level classes.
  *
+ * Catalina的Bootstrap装载机。此应用程序构造一个类加载器，用于加载Catalina内部类(通过累积“catalina.home”下“server”目录中的所有JAR文件)，
+ * 并开始定期执行容器。这种迂回方法的目的是将Catalina内部类(以及它们所依赖的任何其他类，例如XML解析器)保留在系统类路径之外，
+ * 因此对应用程序级类不可见。
+ *
  * @author Craig R. McClanahan
  * @author Remy Maucherat
  */

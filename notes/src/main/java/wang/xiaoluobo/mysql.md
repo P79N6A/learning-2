@@ -23,7 +23,7 @@
     - 表更新和查询都相当的频繁，并且表锁定的机会比较大的情况指定数据引擎的创建； 
     - 如果你的数据执行大量的INSERT或UPDATE，出于性能方面的考虑，应该使用InnoDB表； 
     - DELETE FROM table时，InnoDB不会重新建立表，而是一行一行的 删除； 
-    - LOAD TABLE FROM MASTER操作对InnoDB是不起作用的，解决方法是首先把InnoDB表改成MyISAM表，导入数据后再改成InnoDB表，但是对于使用的额外的InnoDB特性（例如外键）的表不适用。
+    - LOAD TABLE FROM MASTER操作对InnoDB是不起作用的，解决方法是首先把InnoDB表改成MyISAM表，导入数据后再改成InnoDB表，但是对于使用的额外的InnoDB特性(例如外键)的表不适用。
     
 ## 二、InnoDB支持的四种事务隔离级别名称    
 - read uncommited: 读到未提交数据
