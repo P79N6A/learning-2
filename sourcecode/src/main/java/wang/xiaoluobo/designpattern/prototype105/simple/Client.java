@@ -1,4 +1,4 @@
-package wang.xiaoluobo.designpattern.prototype.simple;
+package wang.xiaoluobo.designpattern.prototype105.simple;
 
 public class Client {
     public static void main(String[] args) {

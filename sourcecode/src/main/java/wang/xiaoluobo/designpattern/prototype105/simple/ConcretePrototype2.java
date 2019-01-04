@@ -1,4 +1,4 @@
-package wang.xiaoluobo.designpattern.prototype.simple;
+package wang.xiaoluobo.designpattern.prototype105.simple;
 
 public class ConcretePrototype2 extends Prototype {
     public ConcretePrototype2(String id) {

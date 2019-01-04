@@ -1,4 +1,4 @@
-package wang.xiaoluobo.designpattern.prototype.simple;
+package wang.xiaoluobo.designpattern.prototype105.simple;
 
 /**
  * 简单原型模式

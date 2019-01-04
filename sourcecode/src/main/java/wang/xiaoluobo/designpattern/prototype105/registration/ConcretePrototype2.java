@@ -1,4 +1,4 @@
-package wang.xiaoluobo.designpattern.prototype.registration;
+package wang.xiaoluobo.designpattern.prototype105.registration;
 
 public class ConcretePrototype2 implements Prototype {
     private String name;

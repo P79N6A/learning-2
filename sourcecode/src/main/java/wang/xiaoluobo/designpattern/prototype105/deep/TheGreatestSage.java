@@ -1,4 +1,4 @@
-package wang.xiaoluobo.designpattern.prototype.deep;
+package wang.xiaoluobo.designpattern.prototype105.deep;
 
 import java.io.IOException;
 

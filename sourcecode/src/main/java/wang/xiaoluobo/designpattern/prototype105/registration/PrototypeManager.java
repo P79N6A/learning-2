@@ -1,4 +1,4 @@
-package wang.xiaoluobo.designpattern.prototype.registration;
+package wang.xiaoluobo.designpattern.prototype105.registration;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
