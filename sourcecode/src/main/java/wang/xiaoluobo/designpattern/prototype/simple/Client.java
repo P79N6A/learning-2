@@ -2,22 +2,22 @@ package wang.xiaoluobo.designpattern.prototype.simple;
 
 public class Client {
     public static void main(String[] args) {
-        ConcreteProtype1 protype1 = new ConcreteProtype1("Protype1");
-        ConcreteProtype1 protypeCopy1 = (ConcreteProtype1) protype1.clone();
-        System.out.println(protypeCopy1.getId());
-        System.out.println(protype1.toString());
-        System.out.println(protypeCopy1.toString());
+        ConcretePrototype1 prototype1 = new ConcretePrototype1("Protype1");
+        ConcretePrototype1 prototypeCopy1 = (ConcretePrototype1) prototype1.clone();
+        System.out.println(prototypeCopy1.getId());
+        System.out.println(prototype1.toString());
+        System.out.println(prototypeCopy1.toString());
 
-        ConcreteProtype2 protype2 = new ConcreteProtype2("Protype2");
-        ConcreteProtype2 protypeCopy2 = (ConcreteProtype2) protype2.clone();
-        System.out.println(protypeCopy2.getId());
-        System.out.println(protype2.toString());
-        System.out.println(protypeCopy2.toString());
+        ConcretePrototype2 prototype2 = new ConcretePrototype2("Protype2");
+        ConcretePrototype2 prototypeCopy2 = (ConcretePrototype2) prototype2.clone();
+        System.out.println(prototypeCopy2.getId());
+        System.out.println(prototype2.toString());
+        System.out.println(prototypeCopy2.toString());
 
-        ConcreteProtype1 protype3 = new ConcreteProtype1("Protype3");
-        ConcreteProtype1 protypeCopy3 = protype3;
-        System.out.println(protypeCopy3.getId());
-        System.out.println(protype3.toString());
-        System.out.println(protypeCopy3.toString());
+        ConcretePrototype1 prototype3 = new ConcretePrototype1("Protype3");
+        ConcretePrototype1 prototypeCopy3 = prototype3;
+        System.out.println(prototypeCopy3.getId());
+        System.out.println(prototype3.toString());
+        System.out.println(prototypeCopy3.toString());
     }
 }

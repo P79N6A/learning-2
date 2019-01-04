@@ -1,5 +1,8 @@
 package wang.xiaoluobo.designpattern.prototype.simple;
 
+/**
+ * 简单原型模式
+ */
 public abstract class Prototype {
     private String id;
 
