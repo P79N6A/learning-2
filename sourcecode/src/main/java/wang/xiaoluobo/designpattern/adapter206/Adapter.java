@@ -1,5 +1,8 @@
 package wang.xiaoluobo.designpattern.adapter206;
 
+/**
+ * 类适配器
+ */
 public class Adapter extends Source implements Targetable {
 
     @Override
@@ -7,4 +10,3 @@ public class Adapter extends Source implements Targetable {
         System.out.println("this is the targetable method!");
     }
 }
-
