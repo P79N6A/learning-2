@@ -19,8 +19,6 @@ CATALINA_PID=$CATALINA_HOME/catalina.pid
 JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.port=8100 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=true -Djava.rmi.server.hostname=114.215.131.39 -Dcom.sun.management.jmxremote.password.file=/data1/tomcat8888/conf/jmxremote.password -Dcom.sun.management.jmxremote.access.file=/data1/tomcat8888/conf/jmxremote.access"
 ```
 
-
-
 ## tomcat config
 ```xml
 <Executor
@@ -62,21 +60,4 @@ JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.port=8100 -Dcom.sun.managem
 <!-- ¹Ø±ÕtomcatÈÈ²¿Êð -->
 <!-- <Host name="localhost" appBase="webapps" unpackWARs="false" autoDeploy="false" reloadable="false"> -->
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
