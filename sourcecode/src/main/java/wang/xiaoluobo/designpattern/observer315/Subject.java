@@ -11,6 +11,8 @@ public interface Subject {
 
     /**
      * 删除观察者
+     *
+     * @param observer
      */
     void del(Observer observer);
 
