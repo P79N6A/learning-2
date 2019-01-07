@@ -58,6 +58,21 @@
 > scan 'member', {COLUMNS=> 'info:birthday'}
 - 除了列（COLUMNS）修饰词外，HBase还支持Limit（限制查询结果行数），STARTROW（ROWKEY起始行。会先根据这个key定位到region，再向后扫描）、STOPROW(结束行)、TIMERANGE（限定时间戳范围）、VERSIONS（版本数）、和FILTER（按条件过滤行）等。比如我们从Sariel这个rowkey开始，找下一个行的最新版本
 > scan 'member', {STARTROW => 'Sariel', LIMIT=>1, VERSIONS=>1}
+- Filter是一个非常强大的修饰词，可以设定一系列条件来进行过滤
+> scan 'member', {FILTER => "(ValueFilter (>=, 'binary:26'))"}
+- 引导如何使用表引用的命令
+> table_help
+- hbase用户详细信息
+> whoami
+- 表是否禁用
+> is_disabled 'member'
+- 表是否启用
+> is_enabled 'test'
+- 禁用以t开头的表
+> disable_all 't.*' 
+
+
+
 
 
 
@@ -206,10 +221,23 @@ ROW                                                       COLUMN+CELL
 1 row(s)
 Took 0.0436 seconds
 
+hbase(main):061:0> is_disabled 'member'
+false
+Took 0.0921 seconds
+=> 1
 
+hbase(main):068:0> is_enabled 'test'
+true
+Took 0.0136 seconds
+=> true
 
+hbase(main):069:0> disable_all 't.*'
+test
 
-
+Disable the above 1 tables (y/n)?
+y
+1 tables successfully disabled
+Took 4.6620 seconds
 
 ```
 
