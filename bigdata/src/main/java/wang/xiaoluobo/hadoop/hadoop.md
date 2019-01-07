@@ -73,10 +73,10 @@ Connection to bigdata01 closed.
 [root@bigdata01 opt]# chown -R hadoop:hadoop hadoop-2.8.4
 [hadoop@bigdata01 hadoop]$ vim /home/hadoop/.bash_profile
 export HADOOP_CONF_DIR=/mnt/opt/hadoop-2.8.4/etc/hadoop
-export PATH=$HADOOP_CONF_DIR/bin:$PATH
+export PATH=$PATH:$HADOOP_CONF_DIR/bin
 export HADOOP_USER_NAME=hadoop
 export HADOOP_HOME=/mnt/opt/hadoop-2.8.4
-export PATH=$HADOOP_HOME/bin:$PATH
+export PATH=$PATH:$HADOOP_HOME/bin
 [hadoop@bigdata01 bin]$ source /home/hadoop/.bash_profile
 
 # 创建数据与日志目录

@@ -3,7 +3,7 @@
 ##### 1. 配置环境变量
 ```text
 export MONGODB_HOME=/mnt/opt/mongodb-4.0.2
-export PATH=$MONGODB_HOME/bin:$PATH
+export PATH=$PATH:$MONGODB_HOME/bin
 ```
 
 ##### 2. 创建数据与日志目录
