@@ -25,7 +25,7 @@
     SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
     SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
     ```
-3. [web](http://127.0.0.1:16010)
+3. [web ui](http://127.0.0.1:16010)
 
 
 ### hbase command
