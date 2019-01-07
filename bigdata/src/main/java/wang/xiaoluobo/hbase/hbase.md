@@ -27,6 +27,7 @@
     ```
 3. [web](http://127.0.0.1:16010)
 
+
 ### hbase command
 - 获取某个命令详细信息
 > help 'list'
@@ -44,8 +45,14 @@
 > alter 'member', 'id'
 - 删除一个列族
 > alter 'member', {NAME => 'member_id', METHOD => 'delete'}
-- 添加数据
+- 添加数据(put ’<table name>’,’row1’,’<colfamily:colname>’,’<value>’)
 > put 'member', 'debugo', 'address:city', 'beijing'
+- 查询数据
+> get 'member', 'Elvis', 'info:age'
+- 删除数据
+> delete 'member', 'Elvis', 'info:age'
+- 删除指定rowkey数据
+> deleteall 'member', 'Elvis'
 - 统计表记录数
 > count 'member'
 - 查询rowkey(Sariel),列族(info)数据
@@ -64,20 +71,92 @@
 > table_help
 - hbase用户详细信息
 > whoami
+- 禁用表
+> disable 'test'
+- 启用表
+> enable 'test'
 - 表是否禁用
 > is_disabled 'member'
 - 表是否启用
 > is_enabled 'test'
 - 禁用以t开头的表
 > disable_all 't.*' 
+- 判断表是否存在
+> exists 'test'
+- 删除表(删表之前需要将表禁用disabled)
+> drop 'emp'
+- 删除以t开头的表
+> drop_all ‘t.*’
+- 截断表
+> truncate 'test'
 
 
+### hbase security
+- ####grant
+```text
+hbase(main):020:0> help 'grant'
+Grant users specific rights.
+Syntax: grant <user or @group>, <permissions> [, <table> [, <column family> [, <column qualifier>]]]
+Syntax: grant <user or @group>, <permissions>, <@namespace>
+
+permissions is either zero or more letters from the set "RWXCA".
+READ('R'), WRITE('W'), EXEC('X'), CREATE('C'), ADMIN('A')
+
+Note: Groups and users are granted access in the same way, but groups are prefixed with an '@'
+      character. Tables and namespaces are specified the same way, but namespaces are
+      prefixed with an '@' character.
+
+For example:
+
+    hbase> grant 'bobsmith', 'RWXCA'
+    hbase> grant '@admins', 'RWXCA'
+    hbase> grant 'bobsmith', 'RWXCA', '@ns1'
+    hbase> grant 'bobsmith', 'RW', 't1', 'f1', 'col1'
+    hbase> grant 'bobsmith', 'RW', 'ns1:t1', 'f1', 'col1'
+```
+
+- ####revoke
+```text
+hbase(main):021:0> help 'revoke'
+Revoke a user's access rights.
+Syntax: revoke <user or @group> [, <table> [, <column family> [, <column qualifier>]]]
+Syntax: revoke <user or @group>, <@namespace>
+
+Note: Groups and users access are revoked in the same way, but groups are prefixed with an '@'
+      character. Tables and namespaces are specified the same way, but namespaces are
+      prefixed with an '@' character.
+
+For example:
+
+    hbase> revoke 'bobsmith'
+    hbase> revoke '@admins'
+    hbase> revoke 'bobsmith', '@ns1'
+    hbase> revoke 'bobsmith', 't1', 'f1', 'col1'
+    hbase> revoke 'bobsmith', 'ns1:t1', 'f1', 'col1'
+```
+
+- ####user_permission
+```text
+hbase(main):019:0> help 'user_permission'
+Show all permissions for the particular user.
+Syntax : user_permission <table>
+
+Note: A namespace must always precede with '@' character.
+
+For example:
+
+    hbase> user_permission
+    hbase> user_permission '@ns1'
+    hbase> user_permission '@.*'
+    hbase> user_permission '@^[a-c].*'
+    hbase> user_permission 'table1'
+    hbase> user_permission 'namespace1:table1'
+    hbase> user_permission '.*'
+    hbase> user_permission '^[A-C].*'
+```
 
 
-
-
-
-
+### training
 ```text
 hbase(main):053:0> help 'list'
 List all user tables in hbase. Optional regular expression parameter could
@@ -238,6 +317,11 @@ Disable the above 1 tables (y/n)?
 y
 1 tables successfully disabled
 Took 4.6620 seconds
+
+hbase(main):001:0> exists 'test'
+Table test does exist
+Took 0.4137 seconds
+=> true
 
 ```
 
