@@ -2,7 +2,7 @@
 
 1. 配置hosts
 2. cd zookeeper-3.4.13/conf
-3. mv zoo.template.cfg zoo.cfg
+3. mv zoo.sample.cfg zoo.cfg
     ```
     dataDir=/mnt/data/zookeeper
     server.1=bigdata01:2888:3888
