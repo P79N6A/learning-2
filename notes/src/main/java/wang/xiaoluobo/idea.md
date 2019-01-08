@@ -1,6 +1,6 @@
 ### [idea plugin](https://plugins.jetbrains.com/)
 - idea2018.2.6破解  
-https://blog.csdn.net/halen001/article/details/81137092
+[idea 破解至2100年](https://blog.csdn.net/halen001/article/details/81137092)
 
 - [alibaba-java-coding-guidelines](https://plugins.jetbrains.com/plugin/10046-alibaba-java-coding-guidelines)
 
