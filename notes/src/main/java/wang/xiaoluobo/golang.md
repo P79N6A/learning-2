@@ -3,6 +3,8 @@
 
 [golang code](https://github.com/Dongzai1005/go-learning/blob/master/golang.md)
 
+[download golang](https://golang.org/dl/)
+
 #### 环境配置
 ```Bash
 $ vim .bash_profile
