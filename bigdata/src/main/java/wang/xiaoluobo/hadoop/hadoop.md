@@ -1,5 +1,5 @@
 # hadoop伪分布式部署(MacOS)
-## 1. 用户免密码授权
+## 1. 用户免密码授权(系统偏好设置->选择共享->远程登录)
 ```Bash
 dongzai1005@Dongzai1005-3:~/soft/hadoop-2.8.4$ ssh localhost
 The authenticity of host 'localhost (::1)' can't be established.
