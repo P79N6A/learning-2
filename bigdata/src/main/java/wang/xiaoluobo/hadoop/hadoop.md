@@ -43,7 +43,7 @@ export PATH=$PATH:$HADOOP_HOME/bin
 $ source ~/.bash_profile
 ```
 
-## 3. vim core-site.xml
+## 3. core-site.xml
 ```xml
 <configuration>
 	<property>
@@ -57,7 +57,8 @@ $ source ~/.bash_profile
     </property>
 </configuration>
 ```
-## 4. vim hdfs-site.xml
+
+## 4. hdfs-site.xml
 ```xml
 <configuration>
     <property>
@@ -74,6 +75,7 @@ $ source ~/.bash_profile
     </property>
 </configuration>
 ```
+
 ## 5. 格式化namenode
 > ./bin/hdfs namenode -format
 
