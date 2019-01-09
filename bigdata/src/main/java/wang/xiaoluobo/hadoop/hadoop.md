@@ -1,9 +1,94 @@
-### hadoop-yarn集群部署
+# hadoop伪分布式部署(MacOS)
+## 1. 用户免密码授权
+```Bash
+dongzai1005@Dongzai1005-3:~/soft/hadoop-2.8.4$ ssh localhost
+The authenticity of host 'localhost (::1)' can't be established.
+ECDSA key fingerprint is SHA256:fBEpYrPXMRQKMTGilRx4ky/Ysk+WP0lDEyrRqTBvx+8.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'localhost' (ECDSA) to the list of known hosts.
+Password:
+Last login: Tue Jan  8 14:16:04 2019
+dongzai1005@Dongzai1005-3:~$ ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
+Generating public/private rsa key pair.
+Your identification has been saved in /Users/dongzai1005/.ssh/id_rsa.
+Your public key has been saved in /Users/dongzai1005/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:PFvgUG92cGhhdvXIyL2a1Q/Z6Mzz9trEknaWiT2mzl0 dongzai1005@Dongzai1005-3.local
+The key's randomart image is:
++---[RSA 2048]----+
+|        . =oo..  |
+|       . +o= + o |
+|      . ..+ + + .|
+|       + + .   * |
+|        S .   * o|
+|         +   Bo++|
+|        .   o.O*E|
+|            ..+O+|
+|            .+.+=|
++----[SHA256]-----+
+dongzai1005@Dongzai1005-3:~$ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+dongzai1005@Dongzai1005-3:~$ chmod 0600 ~/.ssh/authorized_keys
+dongzai1005@Dongzai1005-3:~/soft/hadoop-2.8.4$ ssh localhost
+Last login: Wed Jan  9 10:43:06 2019 from ::1
+dongzai1005@Dongzai1005-3:~$ exit
+logout
+Connection to localhost closed.
+```
+
+## 2. 环境变量
+```Bash
+$ vim ~/.bash_profile
+export HADOOP_HOME=/Users/dongzai1005/soft/hadoop-2.8.4
+export PATH=$PATH:$HADOOP_HOME/bin
+$ source ~/.bash_profile
+```
+
+## 3. vim core-site.xml
+```xml
+<configuration>
+	<property>
+         <name>hadoop.tmp.dir</name>
+         <value>file:/Users/dongzai1005/soft/hadoop-2.8.4/tmp</value>
+         <description>Abase for other temporary directories.</description>
+    </property>
+    <property>
+         <name>fs.defaultFS</name>
+         <value>hdfs://127.0.0.1:9000</value>
+    </property>
+</configuration>
+```
+## 4. vim hdfs-site.xml
+```xml
+<configuration>
+    <property>
+         <name>dfs.replication</name>
+         <value>1</value>
+    </property>
+    <property>
+         <name>dfs.namenode.name.dir</name>
+         <value>file:/Users/dongzai1005/soft/hadoop-2.8.4/tmp/dfs/name</value>
+    </property>
+    <property>
+         <name>dfs.datanode.data.dir</name>
+         <value>file:/Users/dongzai1005/soft/hadoop-2.8.4/tmp/dfs/data</value>
+    </property>
+</configuration>
+```
+## 5. 格式化namenode
+> ./bin/hdfs namenode -format
+
+## 6. 启动dfs
+> ./sbin/start-dfs.sh
+
+## 7. [web ui](http://localhost:50070)
+
+
+# hadoop-yarn集群部署
 三个节点：bigdata01,bigdata02,bigdata03  
 namenode节点-bigdata01
 datanode节点-bigdata02,bigdata03
 
-##### 1. 创建用户和用户组(三台机器都需要配置)
+## 1. 创建用户和用户组(三台机器都需要配置)
 ```Bash
 [root@bigdata01 hadoop-2.8.4]# sudo visudo
 hadoop ALL=(ALL) NOPASSWD: ALL
@@ -14,7 +99,7 @@ hadoop ALL=(ALL) NOPASSWD: ALL
 [root@bigdata01 opt]# useradd -d /home/hadoop -g hadoop -m hadoop
 ```
 
-##### 2. 三台机器hadoop用户相互免密码授权
+## 2. 三台机器hadoop用户相互免密码授权
 ```Bash
 [root@bigdata01 opt]# su - hadoop
 [hadoop@bigdata01 ~]$ ls -a
@@ -68,7 +153,7 @@ logout
 Connection to bigdata01 closed.
 ```
 
-##### 3. 环境变量与目录(三台机器都需要配置)
+## 3. 环境变量与目录(三台机器都需要配置)
 ```Bash
 [root@bigdata01 opt]# chown -R hadoop:hadoop hadoop-2.8.4
 [hadoop@bigdata01 hadoop]$ vim /home/hadoop/.bash_profile
@@ -88,7 +173,7 @@ export PATH=$PATH:$HADOOP_HOME/bin
 [root@bigdata01 mnt]# chown -R hadoop:hadoop /mnt/log/hadoop/tmp
 ```
 
-##### 4. hadoop配置文件(三台机器都需要配置)
+## 4. hadoop配置文件(三台机器都需要配置)
 ```Bash
 [hadoop@bigdata01 hadoop]$ vim slaves
 bigdata02
@@ -106,7 +191,7 @@ bigdata03
 [hadoop@bigdata01 hadoop]$ vim mapred-site.xml
 ```
 
-##### 5. 格式化namenode(bigdata01执行)
+## 5. 格式化namenode(bigdata01执行)
 ```Bash
 只在bigdata01上执行
 [hadoop@bigdata01 hadoop-2.8.4]$ ./bin/hdfs namenode -format
@@ -184,7 +269,7 @@ SHUTDOWN_MSG: Shutting down NameNode at bigdata01/10.27.223.1
 ************************************************************/
 ```
 
-##### 6. 启动hdfs(bigdata01执行)
+## 6. 启动hdfs(bigdata01执行)
 ```Bash
 [hadoop@bigdata01 hadoop-2.8.4]$ ./sbin/start-dfs.sh
 18/09/06 14:58:33 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
@@ -212,7 +297,7 @@ Starting secondary namenodes [bigdata01]
 bigdata01: starting secondarynamenode, logging to /mnt/opt/hadoop-2.8.4/logs/hadoop-hadoop-secondarynamenode-bigdata01.out
 ```
 
-##### 7. 启动yarn(bigdata01执行)
+## 7. 启动yarn(bigdata01执行)
 ```Bash
 [hadoop@bigdata01 hadoop-2.8.4]$ ./sbin/start-yarn.sh
 starting yarn daemons
@@ -235,7 +320,7 @@ bigdata02: starting nodemanager, logging to /mnt/opt/hadoop-2.8.4/logs/yarn-hado
 bigdata03: starting nodemanager, logging to /mnt/opt/hadoop-2.8.4/logs/yarn-hadoop-nodemanager-bigdata03.out
 ```
 
-##### 8. 查看进程(三台机器都需要配置)
+## 8. 查看进程(三台机器都需要配置)
 ```Bash
 [hadoop@bigdata01 hadoop-2.8.4]$ jps
 26385 ResourceManager
@@ -254,7 +339,7 @@ bigdata03: starting nodemanager, logging to /mnt/opt/hadoop-2.8.4/logs/yarn-hado
 26799 Jps
 ```
 
-##### 9. 测试hadoop环境
+## 9. 测试hadoop环境
 ```Bash
 [hadoop@bigdata01 hadoop-2.8.4]$ ./bin/hadoop fs -mkdir -p /mnt/data/hadoop/wordcount/
 [hadoop@bigdata01 hadoop-2.8.4]$ ./bin/hadoop fs -copyFromLocal LICENSE.txt hdfs:///mnt/data/hadoop/wordcount/
@@ -263,7 +348,7 @@ Found 1 items
 -rw-r--r--   2 hadoop supergroup      99253 2018-09-10 10:58 /mnt/data/hadoop/wordcount/LICENSE.txt
 ```
 
-##### 10. 安装hadoop遇到的问题
+## 10. 安装hadoop遇到的问题
 - jdk
 ```Bash
 [hadoop@bigdata01 hadoop-2.8.4]$ ./sbin/start-dfs.sh
