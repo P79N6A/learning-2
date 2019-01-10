@@ -74,19 +74,18 @@ https://juejin.im/entry/5aa5d7746fb9a028cd44ba82
 # gc
 ![jvm05.png](images/jvm05.png)
 
-> GC主要分新生代GC和老年代GC
+## 一、GC主要分新生代GC和老年代GC
 1. 新生代GC：串行GC、并行GC、并行回收GC
 2. 老年代GC：串行GC、并行GC、CMS    
+3. G1比较特殊，同时支持新生代和老年代
 
-> G1比较特殊，同时支持新生代和老年代
-
-> GC在选择上，主要关注两点，吞吐量优先和暂停时间优先，
+## 二、选择GC主要关注两点，吞吐量优先和暂停时间优先，
 1. 吞吐量优先  
 采用server默认的并行GC(Parallel GC)方式(蓝色区域)
 2. 暂停时间优先  
 选用并发GC(CMS)方式(黄色区域)，常用场景：互联网、电商类
 
-> 常用GC开启方式
+## 三、常用GC开启方式
 ```text
 1. 暂停时间优先: 并行GC+CMS
 开启方式[ -XX:+UseConcMarkSweepGC -XX:+UseParNewGC ]
@@ -100,16 +99,39 @@ G1的目标是在维持高效率回收的同时，提供软实时中断特性
 常用场景：hadoop、elasticsearch
 ```
 
-> CMS(Concurrent Mark Sweep)收集器是一种以获取最短回收停顿时间为目标的收集器。
+## 四、CMS
+1. CMS(Concurrent Mark Sweep)收集器是一种以获取最短回收停顿时间为目标的收集器
+2. CMS垃圾回收步骤
 - 初始标记（CMS initial mark）
 - 并发标记（CMS concurrent mark）
 - 重新标记（CMS remark）
 - 并发清除（CMS concurrent sweep）
 
-> CMS和G1区别
+3. 优缺点
+优点: 并发收集、低停顿
+缺点: 产生大量空间碎片、并发阶段会降低吞吐量
+
+4. 参数控制：
+- -XX:+UseConcMarkSweepGC 使用CMS收集器
+- -XX:+UseCMSCompactAtFullCollection Full GC后，进行一次碎片整理；整理过程是独占的，会引起停顿时间变长
+- -XX:+CMSFullGCsBeforeCompaction 设置进行几次Full GC后，进行一次碎片整理
+- -XX:ParallelCMSThreads 设定CMS的线程数量（一般情况约等于可用CPU数量）
+
+## 五、G1
+1. 特点
+- 空间整合
+- 可预测停顿
+
+2. G1垃圾回收步骤
+    1. 标记阶段，首先初始标记(Initial-Mark),这个阶段是停顿的(Stop the World Event)，并且会触发一次普通Mintor GC。对应GC log:GC pause (young) (inital-mark)
+    2. Root Region Scanning，程序运行过程中会回收survivor区(存活到老年代)，这一过程必须在young GC之前完成。
+    3. Concurrent Marking，在整个堆中进行并发标记(和应用程序并发执行)，此过程可能被young GC中断。在并发标记阶段，若发现区域对象中的所有对象都是垃圾，那个这个区域会被立即回收(图中打X)。同时，并发标记过程中，会计算每个区域的对象活性(区域中存活对象的比例)。
+    4. Remark, 再标记，会有短暂停顿(STW)。再标记阶段是用来收集 并发标记阶段 产生新的垃圾(并发阶段和应用程序一同运行)；G1中采用了比CMS更快的初始快照算法:snapshot-at-the-beginning (SATB)。
+    5. Copy/Clean up，多线程清除失活对象，会有STW。G1将回收区域的存活对象拷贝到新区域，清除Remember Sets，并发清空回收区域并把它返回到空闲区域链表中。
+    6. 复制/清除过程后。回收区域的活性对象已经被集中回收到深蓝色和深绿色区域。
+
+## 六、CMS和G1区别
 ```text
-
-
 CMS堆 -> 年轻代老年代
 G1堆 -> 多个区 -> 每个区里(年轻代老年代)
 Cms 标记清理算法
