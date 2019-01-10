@@ -1,7 +1,7 @@
 package wang.xiaoluobo.leetcode;
 
 /**
- * https://leetcode.com/problems/palindrome-number/
+ * https://leetcode-cn.com/problems/palindrome-number/
  */
 public class Problem0009 {
 

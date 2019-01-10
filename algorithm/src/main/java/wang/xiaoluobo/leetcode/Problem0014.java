@@ -1,7 +1,7 @@
 package wang.xiaoluobo.leetcode;
 
 /**
- * https://leetcode.com/problems/longest-common-prefix/
+ * https://leetcode-cn.com/problems/longest-common-prefix/
  */
 public class Problem0014 {
 

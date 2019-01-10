@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * https://leetcode.com/problems/reverse-integer/
+ * https://leetcode-cn.com/problems/reverse-integer/
  */
 public class Problem0007 {
 

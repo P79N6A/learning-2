@@ -1,1 +1,1 @@
-# [leetcode](https://leetcode.com/)
+# [leetcode](https://leetcode-cn.com/)
