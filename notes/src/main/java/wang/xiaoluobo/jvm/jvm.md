@@ -1,7 +1,7 @@
 # jvm jdk7
-![jvm01.png](./images/jvm01.png)
+![jvm01.png](../images/jvm01.png)
 
-![jvm02.png](./images/jvm02.png)
+![jvm02.png](../images/jvm02.png)
 
 > JVM内存结构主要有三大块：堆内存、方法区和栈。
 1. 堆内存由年轻代和老年代组成，年轻代内存又被分成三部分，Eden空间、From Survivor空间、To Survivor空间。年轻代默认分配比例8:1:1
@@ -56,9 +56,9 @@
 
 
 # jvm jdk8
-![jvm03.png](images/jvm03.png)
+![jvm03.png](../images/jvm03.png)
 
-![jvm04.png](images/jvm04.png)
+![jvm04.png](../images/jvm04.png)
 
 > 元数据区内存不在JVM中，而是使用的本地内存，默认情况下受操作系统内存限制。调整元数据区内存大小的参数 -XX:MetaspaceSize -XX:MaxMetaspaceSize
 
@@ -71,7 +71,7 @@
 > -XX:NewRatio=3代表新生代和老年代的比例为1:3
 
 # gc
-![jvm05.png](images/jvm05.png)
+![jvm05.png](../images/jvm05.png)
 
 ### 一、GC主要分新生代GC和老年代GC
 1. 新生代GC：串行GC、并行GC、并行回收GC
