@@ -3,7 +3,7 @@
 
 ![jvm02.png](./images/jvm02.png)
 
->JVM内存结构主要有三大块：堆内存、方法区和栈。
+> JVM内存结构主要有三大块：堆内存、方法区和栈。
 1. 堆内存由年轻代和老年代组成，年轻代内存又被分成三部分，Eden空间、From Survivor空间、To Survivor空间。年轻代默认分配比例8:1:1
 2. 方法区存储类信息、常量、静态变量等数据，是线程共享的区域，Non-Heap(非堆)
 3. 栈分为java虚拟机栈和本地方法栈，主要用于方法的执行
@@ -78,7 +78,7 @@
 2. 老年代GC：串行GC、并行GC、CMS    
 3. G1比较特殊，同时支持新生代和老年代
 
-### 二、选择GC主要关注两点，吞吐量优先和暂停时间优先，
+### 二、吞吐量优先和暂停时间优先，
 1. 吞吐量优先  
 采用server默认的并行GC(Parallel GC)方式(蓝色区域)
 2. 暂停时间优先  
@@ -101,25 +101,25 @@ G1的目标是在维持高效率回收的同时，提供软实时中断特性
 ### 四、CMS
 1. CMS(Concurrent Mark Sweep)收集器是一种以获取最短回收停顿时间为目标的收集器
 2. CMS垃圾回收步骤
-- 初始标记（CMS initial mark）
-- 并发标记（CMS concurrent mark）
-- 重新标记（CMS remark）
-- 并发清除（CMS concurrent sweep）
+    - 初始标记（CMS initial mark）
+    - 并发标记（CMS concurrent mark）
+    - 重新标记（CMS remark）
+    - 并发清除（CMS concurrent sweep）
 
-3. 优缺点
-优点: 并发收集、低停顿
-缺点: 产生大量空间碎片、并发阶段会降低吞吐量
+3. 优缺点  
+   - 优点: 并发收集、低停顿
+   - 缺点: 产生大量空间碎片、并发阶段会降低吞吐量
 
 4. 参数控制：
-- -XX:+UseConcMarkSweepGC 使用CMS收集器
-- -XX:+UseCMSCompactAtFullCollection Full GC后，进行一次碎片整理；整理过程是独占的，会引起停顿时间变长
-- -XX:+CMSFullGCsBeforeCompaction 设置进行几次Full GC后，进行一次碎片整理
-- -XX:ParallelCMSThreads 设定CMS的线程数量（一般情况约等于可用CPU数量）
+    - -XX:+UseConcMarkSweepGC 使用CMS收集器
+    - -XX:+UseCMSCompactAtFullCollection Full GC后，进行一次碎片整理；整理过程是独占的，会引起停顿时间变长
+    - -XX:+CMSFullGCsBeforeCompaction 设置进行几次Full GC后，进行一次碎片整理
+    - -XX:ParallelCMSThreads 设定CMS的线程数量（一般情况约等于可用CPU数量）
 
 ### 五、G1
 1. 特点
-- 空间整合
-- 可预测停顿
+    - 空间整合
+    - 可预测停顿
 
 2. G1垃圾回收步骤
     1. 标记阶段，首先初始标记(Initial-Mark),这个阶段是停顿的(Stop the World Event)，并且会触发一次普通Mintor GC。对应GC log:GC pause (young) (inital-mark)
@@ -131,15 +131,15 @@ G1的目标是在维持高效率回收的同时，提供软实时中断特性
 
 ### 六、CMS和G1区别
 ```text
-CMS堆 -> 年轻代老年代
-G1堆 -> 多个区 -> 每个区里(年轻代老年代)
-Cms 标记清理算法
+CMS堆->年轻代老年代
+Cms标记清理算法
 
 G1 压缩复制算法，不产生碎片
+G1堆->多个区->每个区里(年轻代老年代)
 G1 时间停顿可设置，相关参数[ -XX:MaxGCPauseMillis=100 -XX:GCPauseIntervalMillis=200 ]
 ```
 
-# jvm调优
+# jvm调优工具
 ### command(jdk1.8)
 > JPS
 ```text
@@ -154,11 +154,13 @@ options:
 
 example:
 $ jps -ml
-17552
-17649 org.jetbrains.jps.cmdline.Launcher /Applications/IntelliJ IDEA.app/Contents/lib/lz4-java-1.3.jar:/Applications/IntelliJ IDEA.app/Contents/lib/javac2.jar:/Applications/IntelliJ IDEA.app/Contents/lib/jgoodies-forms.jar:/Applications/IntelliJ IDEA.app/Contents/lib/asm-all.jar:/Applications/IntelliJ IDEA.app/Contents/lib/commons-codec-1.9.jar:/Applications/IntelliJ IDEA.app/Contents/lib/guava-21.0.jar:/Applications/IntelliJ IDEA.app/Contents/lib/httpcore-4.4.5.jar:/Applications/IntelliJ IDEA.app/Contents/lib/jna-platform.jar:/Applications/IntelliJ IDEA.app/Contents/lib/oro-2.0.8.jar:/Applications/IntelliJ IDEA.app/Contents/lib/jps-model.jar:/Applications/IntelliJ IDEA.app/Contents/lib/util.jar:/Applications/IntelliJ IDEA.app/Contents/lib/platform-api.jar:/Applications/IntelliJ IDEA.app/Contents/lib/slf4j-api-1.7.10.jar:/Applications/IntelliJ IDEA.app/Contents/lib/aether-1.1.0-all.jar:/Applications/IntelliJ IDEA.app/Contents/lib/snappy-in-java-0.5.1.jar:/Applications/IntelliJ IDEA.app/Contents/lib/jna.jar:/Applica
-17638 org.jetbrains.plugins.scala.nailgun.NailgunRunner 3200 c2d8d43a-3d99-40cf-9147-2a08705604c6
-15961
-19244 sun.tools.jps.Jps -ml
+1056 org.apache.zookeeper.server.quorum.QuorumPeerMain /Users/dongzai1005/soft/zookeeper-3.4.13/bin/../conf/zoo.cfg
+2384 org.apache.hadoop.hdfs.server.namenode.SecondaryNameNode
+3588
+2277 org.apache.hadoop.hdfs.server.datanode.DataNode
+3655 org.jetbrains.idea.maven.server.RemoteMavenServer
+2186 org.apache.hadoop.hdfs.server.namenode.NameNode
+3884 sun.tools.jps.Jps -ml
 ```
 > jstat
 ```text
