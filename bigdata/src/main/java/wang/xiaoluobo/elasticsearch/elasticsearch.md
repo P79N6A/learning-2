@@ -16,6 +16,8 @@ path.logs: /mnt/log/elastic
 network.host: bigdata01
 bootstrap.memory_lock: false
 bootstrap.system_call_filter: false
+
+[elastic@bigdata01 config]$ nohup ./bin/elasticsearch &
 ```
 
 #### 2. 问题处理
@@ -80,7 +82,8 @@ http://es.benz.bingex.com/customer/doc/1?pretty
 
 #### 4. head插件
 ```Bash
-$ yum install git npm  
+$ yum -y install git npm  
+$ git clone git://github.com/mobz/elasticsearch-head.git
 $ npm install -g grunt-cli
 $ npm run start
 或者
@@ -90,4 +93,29 @@ $ ./grunt server
 
 #### 5. head web页面
 ![elasticsearch01](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/elasticsearch/images/elasticsearch01.png)    
+
 ![elasticsearch02](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/elasticsearch/images/elasticsearch02.png)    
+
+![elasticsearch03](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/elasticsearch/images/elasticsearch03.png)    
+
+![elasticsearch04](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/elasticsearch/images/elasticsearch04.png)    
+
+
+#### mac安装elasticsearch-head
+```Bash
+$ brew install node
+$ git clone git://github.com/mobz/elasticsearch-head.git
+$ cd elasticsearch-head
+$ npm install
+$ npm install grunt --save
+$ ./node_modules/grunt/bin/grunt server &
+$ vim elasticsearch.yml
+http.cors.enabled: true
+http.cors.allow-origin: "*"
+
+http://localhost:9100/
+
+```
+
+
+
