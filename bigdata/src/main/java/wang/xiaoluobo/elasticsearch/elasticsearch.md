@@ -116,6 +116,3 @@ http.cors.allow-origin: "*"
 http://localhost:9100/
 
 ```
-
-
-
