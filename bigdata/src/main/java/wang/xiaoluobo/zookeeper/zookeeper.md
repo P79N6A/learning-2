@@ -21,7 +21,7 @@ $ sudo ./bin/zkServer.sh status
 
 ![bigdata03](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/zookeeper/images/zk03.png)
 
-### zookeeper command
+### (zookeeper command)[http://zookeeper.apache.org/doc/current/zookeeperProgrammers.html]
 > connect zk client
 ```text
 $ ./bin/zkCli.sh -server 127.0.0.1:2181
@@ -105,7 +105,7 @@ numChildren = 3
 ```
 
 > 获取值
-```
+```text
 # 获取值
 [zk: localhost:2181(CONNECTED) 16] get /zk_test
 my_data
@@ -123,7 +123,7 @@ numChildren = 0
 ```
 
 > 设置值
-```
+```text
 # 设置值
 [zk: localhost:2181(CONNECTED) 18] set /zk_test junk
 cZxid = 0x1f9
@@ -154,7 +154,7 @@ numChildren = 0
 ```
 
 > 删除节点
-```
+```text
 # 删除节点(叶子节点)
 [zk: localhost:2181(CONNECTED) 20] delete /zk_test
 [zk: localhost:2181(CONNECTED) 21] ls /
@@ -172,3 +172,36 @@ Node not empty: /p
 [zk: localhost:2181(CONNECTED) 45] ls /
 [dubbo, zookeeper]
 ```
+
+> 查看节点状态
+```text
+[zk: localhost:2181(CONNECTED) 92] stat /p
+cZxid = 0x20a
+ctime = Mon Jan 14 16:01:33 CST 2019
+mZxid = 0x20a
+mtime = Mon Jan 14 16:01:33 CST 2019
+pZxid = 0x20b
+cversion = 1
+dataVersion = 0
+aclVersion = 0
+ephemeralOwner = 0x0
+dataLength = 0
+numChildren = 1
+```
+
+> history
+```text
+[zk: localhost:2181(CONNECTED) 93] history
+83 - create -s /a/b/c "abc"
+84 - ls2
+85 - ls2 /
+86 - ls /
+87 - ls /p
+88 - get /p
+89 - get /p/c
+90 - ls /
+91 - stat /
+92 - stat /p
+93 - history
+```
+
