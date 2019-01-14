@@ -35,5 +35,9 @@ kafka:
       timeout-ms: 31000
     max-poll-records: 100
 
+#logging:
+#  config: classpath:log4j2.xml
+
 logging:
-  config: classpath:log4j2.xml
+  level:
+    root: info

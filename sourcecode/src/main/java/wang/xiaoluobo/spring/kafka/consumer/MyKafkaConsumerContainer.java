@@ -1,6 +1,5 @@
 package wang.xiaoluobo.spring.kafka.consumer;
 
-import lombok.extern.log4j.Log4j2;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date 2017-07-03
  */
 @Component
-@Log4j2
 public class MyKafkaConsumerContainer implements DisposableBean {
 
     @Autowired
