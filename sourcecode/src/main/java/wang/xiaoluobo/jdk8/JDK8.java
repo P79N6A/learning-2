@@ -287,6 +287,10 @@ public class JDK8 {
 
         // toArray()
         System.out.println(JSON.toJSONString(Stream.of(1, 2, 3, 4, 5).toArray()));
+        System.out.println();
+
+        MyInterface myInterface = (s) -> System.out.println(s);
+        myInterface.test("myInterface");
     }
 
     public static class Car {
@@ -305,5 +309,9 @@ public class JDK8 {
         public void repair() {
             System.out.println("Repaired " + this.toString());
         }
+    }
+
+    interface MyInterface {
+        void test(String s);
     }
 }
