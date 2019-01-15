@@ -73,7 +73,6 @@ public class ExponentialBackoffRetry extends SleepingRetry {
     @Override
     protected int getSleepTimeMs(int retryCount, long elapsedTimeMs) {
         // copied from Hadoop's RetryPolicies.java
-        // 处理负数情况
         int sleepMs = baseSleepTimeMs * Math.max(1, random.nextInt(1 << (retryCount + 1)));
         if (sleepMs > maxSleepMs) {
             log.warn(String.format("Sleep extension too large (%d). Pinning to %d", sleepMs, maxSleepMs));
