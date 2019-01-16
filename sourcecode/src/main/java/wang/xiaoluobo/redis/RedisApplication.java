@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * redis template实现分布式锁
+ *
  * @author wangyd
  * @date 2018/8/16
  */
@@ -58,6 +59,20 @@ public class RedisApplication {
             System.out.println(redisTemplate.opsForValue().get("test"));
 
             Runtime.getRuntime().addShutdownHook(new Thread(() -> System.out.println("redis application shut down success.")));
+
+            /**
+             * 会调用钩子方法再退出
+             * 非零状态码表示异常终止
+             * 输出redis application shut down success.
+             */
+            System.exit(0);
+
+            /**
+             * 不会调用钩子方法，直接退出
+             *
+             * 不会输出redis application shut down success.
+             */
+//            Runtime.getRuntime().halt(0);
         } catch (Exception e) {
             e.printStackTrace();
         }
