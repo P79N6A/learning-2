@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.kafka.core.KafkaTemplate;
+import wang.xiaoluobo.redis.configuration.RedisConfig;
 
 import javax.annotation.PostConstruct;
 
@@ -18,6 +20,7 @@ import javax.annotation.PostConstruct;
 @SpringBootApplication
 @Log4j2
 @Configuration
+@Import(RedisConfig.class)
 public class KafkaProducerApplication {
 
     public static void main(String[] args) {

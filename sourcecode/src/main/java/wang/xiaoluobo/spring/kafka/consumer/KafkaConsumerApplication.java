@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import wang.xiaoluobo.redis.configuration.RedisConfig;
 
 import javax.annotation.PostConstruct;
 
@@ -16,6 +18,7 @@ import javax.annotation.PostConstruct;
 @SpringBootApplication
 @Configuration
 @Log4j2
+@Import(RedisConfig.class)
 public class KafkaConsumerApplication implements DisposableBean {
 
     public static void main(String[] args) {

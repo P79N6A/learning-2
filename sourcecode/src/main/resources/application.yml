@@ -35,6 +35,22 @@ kafka:
       timeout-ms: 31000
     max-poll-records: 100
 
+redis:
+  host: 127.0.0.1
+  port: 6379
+  database: 0
+  password:
+  timeout: 0
+  max-idle: 100
+  min-idle: 10
+  max-active: 1000
+  max-wait: 10000
+  test-on-borrow: true
+  test-on-return: true
+  if-use-sentinel: false
+  master: security
+  sentinel: 127.0.0.1:26379
+
 #logging:
 #  config: classpath:log4j2.xml
 
