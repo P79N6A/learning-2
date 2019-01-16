@@ -18,6 +18,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * zk client
  *
+ * 更多curator api可以参考 https://zjcscut.github.io/2018/12/16/zookeeper-curator-usage
+ *
  * @author wangyd
  * @date 2019/1/14
  */
