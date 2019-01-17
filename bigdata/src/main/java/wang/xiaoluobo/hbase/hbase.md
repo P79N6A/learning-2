@@ -45,7 +45,7 @@
 > alter 'member', 'id'
 - 删除一个列族
 > alter 'member', {NAME => 'member_id', METHOD => 'delete'}
-- 添加数据(put ’<table name>’,’row1’,’<colfamily:colname>’,’<value>’)
+- 添加数据
 > put 'member', 'debugo', 'address:city', 'beijing'
 - 查询数据
 > get 'member', 'Elvis', 'info:age'
@@ -92,7 +92,7 @@
 
 
 ### hbase security
-- ####grant
+- #### grant
 ```text
 hbase(main):020:0> help 'grant'
 Grant users specific rights.
@@ -115,7 +115,7 @@ For example:
     hbase> grant 'bobsmith', 'RW', 'ns1:t1', 'f1', 'col1'
 ```
 
-- ####revoke
+- #### revoke
 ```text
 hbase(main):021:0> help 'revoke'
 Revoke a user's access rights.
@@ -135,7 +135,7 @@ For example:
     hbase> revoke 'bobsmith', 'ns1:t1', 'f1', 'col1'
 ```
 
-- ####user_permission
+- #### user_permission
 ```text
 hbase(main):019:0> help 'user_permission'
 Show all permissions for the particular user.
@@ -657,3 +657,4 @@ hbase(main):048:0> enable 'scores'
 Took 0.7453 seconds
 ```
 
+### hbase集群部署
