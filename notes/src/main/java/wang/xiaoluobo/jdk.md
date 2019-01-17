@@ -23,7 +23,7 @@ jdk-1.7.0_79-fcs.x86_64
 export JAVA_HOME=/mnt/opt/jdk1.8.0_181
 export JRE_HOME=$JAVA_HOME/jre
 export CLASSPATH=.:$JAVA_HOME/lib:$JRE_HOME/lib
-export PATH=$JAVA_HOME/bin:$JRE_HOME/bin:$PATH
+export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
 [root@bigdata01 config]# source /etc/profile
 
 [root@bigdata01 config]# java -version
@@ -51,5 +51,4 @@ Java(TM) SE Runtime Environment (build 1.8.0_181-b13)
 Java HotSpot(TM) 64-Bit Server VM (build 25.181-b13, mixed mode)
 ```
 
-### jdk8
-https://www.jianshu.com/p/5b800057f2d8
+### [openjdk](https://openjdk.java.net/)
