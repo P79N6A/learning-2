@@ -1,6 +1,6 @@
 # [hbase](http://hbase.apache.org/book.html)
 
-### hbase配置
+### 一、hbase单机配置(version2.1.1)
 1. hbase环境变量
     ```Bash
     $ vim .bash_profile
@@ -28,7 +28,7 @@
 3. [web ui](http://127.0.0.1:16010)
 
 
-### hbase command
+### 二、hbase command
 - 获取某个命令详细信息
 > help 'list'
 - 查询服务器状态
@@ -156,7 +156,7 @@ For example:
 ```
 
 
-### training
+### 三、Training
 ```text
 hbase(main):053:0> help 'list'
 List all user tables in hbase. Optional regular expression parameter could
@@ -325,7 +325,12 @@ Took 0.4137 seconds
 
 ```
 
+### 四、hbase集群部署
+```bash
 
+```
+
+### 五、hbase单机部署(version1.3.1)
 ```Bash
 [root@bz39 data1]# wget http://apache.claz.org/hbase/1.3.1/hbase-1.3.1-bin.tar.gz
 [root@bz39 data1]# tar -zxvf hbase-1.3.1-bin.tar.gz
@@ -351,8 +356,6 @@ stopping hbase....................
 # HBase Web UI:
 # http://114.215.131.39:16010
 
-http://blog.pureisle.net/archives/1887.html
-http://debugo.com/hbase-shell-cmds/
 [root@bz39 bin]# ./hbase shell
 hbase(main):001:0> status
 1 active master, 0 backup masters, 1 servers, 0 dead, 2.0000 average load
@@ -532,8 +535,6 @@ Truncating 'scores' table (it may take a while):
 0 row(s) in 3.3770 seconds
 ```
 
-
-
 ```Bash
 $ ./bin/hbase shell
 2019-01-06 16:23:01,711 WARN  [main] util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
@@ -656,5 +657,3 @@ Took 1.2923 seconds
 hbase(main):048:0> enable 'scores'
 Took 0.7453 seconds
 ```
-
-### hbase集群部署
