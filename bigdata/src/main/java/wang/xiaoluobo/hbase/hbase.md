@@ -91,7 +91,7 @@
 > truncate 'test'
 
 
-### hbase security
+### 三、hbase security
 - #### grant
 ```text
 hbase(main):020:0> help 'grant'
@@ -156,7 +156,7 @@ For example:
 ```
 
 
-### 三、Training
+### 四、Training
 ```text
 hbase(main):053:0> help 'list'
 List all user tables in hbase. Optional regular expression parameter could
@@ -325,12 +325,114 @@ Took 0.4137 seconds
 
 ```
 
-### 四、hbase集群部署
-```bash
 
+### 五、[hbase集群部署(version2.1.2)](http://hbase.apache.org/book.html)
+##### 1. 集群环境
+| host | ip | node | 
+| :-------- | :--------------| :------------ |
+| bigdata01 | 172.16.18.13   | HMaster       |
+| bigdata02 | 172.16.18.14   | HRegionServer |
+| bigdata03 | 172.16.18.15   | HRegionServer |
+
+##### 1. 创建用户和用户组(三台机器都需要配置)
+```bash
+[root@hadoop01 mnt]# sudo visudo
+hadoop ALL=(ALL) NOPASSWD: ALL
+[root@hadoop01 mnt]# cat /etc/group | grep hadoop
+[root@hadoop01 mnt]# cat /etc/passwd | grep hadoop
+[root@hadoop01 mnt]# groupadd hadoop
+[root@hadoop01 mnt]# useradd -d /home/hadoop -g hadoop -m hadoop
+
+[hadoop@hadoop01 .ssh]$ touch hadoop02.pub hadoop03.pub
+[hadoop@hadoop01 .ssh]$ ls
+id_rsa  id_rsa.pub  hadoop02.pub  hadoop03.pub
+[hadoop@hadoop01 .ssh]$ vim hadoop02.pub
+[hadoop@hadoop01 .ssh]$ vim hadoop03.pub
+[hadoop@hadoop01 .ssh]$ ls
+id_rsa  id_rsa.pub  hadoop02.pub  hadoop03.pub
+[hadoop@hadoop01 .ssh]$ cat *.pub > authorized_keys
+[hadoop@hadoop01 .ssh]$ cat authorized_keys
+ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAvnSuG9uaUGs228CZ68B4FO1ZH07LtrUEMbKMGMtXB6//IHNHlDvsL1ACrTOAhnruhh9+D50Cano1CEsDUWPuPF8V0JUIS54SnbKRaq3qptgxQZbWITuf58JoCOrQiI8HRA9/hFkagGXcUt0jSKrV7FB4fsDjL85nj+hAnQD7d5LEYC45jRl75zn3+rv2JSvrGEnFLMFnsmI6n+b1vRy7mtoXv2quScdXQNwd3YqmiN2koRKFKdtBnOTwpB5FdHz1Fk9CD6un3I7BL3DaiXqnPoPqLmxq7cM4Boxyypb/pavshbDJJrOIaN7g3WjGKbCWoZe7yNJWLF5ulbAN02LNNw== hadoop@hadoop01
+ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAsrL3uTX9WvrcyRItmCCgSl+kSSk1qlSuAKxWSQ1H32T78ufihu9o+kXAU1CaY1DkxH4Z4yqG49GmfJeo7gkWhtNalHfU079yVBcg0hpIEUCIW41LR1h5Bqr4GhXsC61sID961plzH5OOC7HrPQqB8W46FMZ30SXLSvL/wuOq140MHoU6wa8ozQMmpm0merLYB9tfTxLsoEAZYi7LUn9xL7yByWKY6VwXw+iNOvTw5RwQNvT2pN3Dhk7SnxczV2HRG4qDIyr2tBNr1CCnt2xoJCyrtb70tAkDbUfmrnpKlloWOXko9d9e7X9T/93yNsIiBugTWa39xvn9xWPG8Z/G+w== hadoop@hadoop02
+ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAt99d94W99tsNNT0fywCMLJ40zKUN535Vj66Fgy+esUY/07mV0Oo5iUDPe6NK7gVLS6yXyfxnMHsBisheGU68IIUXVg6Sw6qOtX3kMaOmuYtT+tl9WodJ4JHEVOEZ2BHi1I7h6S4K5UX7iEj+DeTnV7KzAKurZkjN5j9vW7NPlM9CQlq2kQElWnGCe/nnJ4w+uZdn7UarkyXrVC0pqGsrLvodX8mWZcMdjvwnfNltsuFgQ66oH2SeBFgOBVOU+BNA8k+slcGKKtxm055za+b0ZSqnL3I71PN6MTwe8alvXY6msh/mYeahITYORYLUwvFgOxZSOX61jWX/H1sGtXSIAw== hadoop@hadoop03
+
+[hadoop@hadoop01 .ssh]$ chmod 600 ~/.ssh/authorized_keys
+
+[hadoop@hadoop01 .ssh]$ ssh hadoop03
 ```
 
-### 五、hbase单机部署(version1.3.1)
+##### 2. [zk集群](../zookeeper/zookeeper.md)
+
+##### 3. 环境变量
+```bash
+$ vim /home/hadoop/.bash_profile
+export HBASE_HOME=/mnt/opt/hbase-2.1.2
+export HBASE_CONF_DIR=$HBASE_HOME/conf
+export HBASE_CLASS_PATH=$HBASE_CONF_DIR
+export PATH=$PATH:$HBASE_HOME/bin
+$ source /home/hadoop/.bash_profile
+```
+
+##### 4. hbase config
+```text
+[hadoop@hadoop01 hbase-2.1.2]$ mkdir -p /mnt/data/hbase
+[hadoop@hadoop01 hbase-2.1.2]$ mkdir -p /mnt/data/hbase/zookeeper
+[hadoop@hadoop01 conf]$ vim hbase-site.xml
+<configuration>
+  <property>
+    <name>hbase.rootdir</name>
+    <value>/mnt/data/hbase</value>
+  </property>
+  <property> 
+    <name>hbase.cluster.distributed</name> 
+    <value>true</value>
+  </property>
+  <property>
+    <name>hbase.zookeeper.property.dataDir</name>
+    <value>/mnt/data/hbase</value>
+  </property>
+  <property>
+    <name>hbase.zookeeper.quorum</name>
+    <!--<value>172.16.18.13,172.16.18.14,172.16.18.15</value>-->
+    <value>hadoop01,hadoop02,hadoop03</value>
+  </property>
+  <property>
+    <name>hbase.zookeeper.property.dataDir</name>
+    <value>/mnt/data/hbase/zookeeper</value>
+  </property>
+  <property>
+    <name>hbase.unsafe.stream.capability.enforce</name>
+    <value>false</value>
+  </property>
+</configuration>
+
+
+[hadoop@hadoop01 conf]$ vim regionservers
+[hadoop@hadoop01 conf]$ cat regionservers
+hadoop02
+hadoop03
+```
+
+##### 5. 启动hbase
+```bash
+# hadoop01执行
+[hadoop@hadoop01 hbase-2.1.2]$ ./bin/start-hbase.sh
+```
+
+##### 6. hbase进程
+```bash
+[hadoop@hadoop01 hbase-2.1.2]$ jps
+7096 Jps
+6473 HMaster
+[hadoop@hadoop02 hbase-2.1.2]$ jps
+5348 HRegionServer
+5862 Jps
+[hadoop@hadoop03 hbase-2.1.2]$ jps
+5512 HRegionServer
+6041 Jps
+```
+
+### 六、hbase单机部署(version1.3.1)
 ```Bash
 [root@bz39 data1]# wget http://apache.claz.org/hbase/1.3.1/hbase-1.3.1-bin.tar.gz
 [root@bz39 data1]# tar -zxvf hbase-1.3.1-bin.tar.gz
