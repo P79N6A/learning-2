@@ -27,7 +27,7 @@ The key's randomart image is:
 |            .+.+=|
 +----[SHA256]-----+
 dongzai1005@Dongzai1005-3:~$ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
-dongzai1005@Dongzai1005-3:~$ chmod 0600 ~/.ssh/authorized_keys
+dongzai1005@Dongzai1005-3:~$ chmod 600 ~/.ssh/authorized_keys
 dongzai1005@Dongzai1005-3:~/soft/hadoop-2.8.4$ ssh localhost
 Last login: Wed Jan  9 10:43:06 2019 from ::1
 dongzai1005@Dongzai1005-3:~$ exit
