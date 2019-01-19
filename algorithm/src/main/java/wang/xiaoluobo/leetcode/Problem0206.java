@@ -20,11 +20,10 @@ public class Problem0206 {
         listNode3.next = listNode4;
         listNode4.next = listNode5;
 
-        problem0206.reverseList(listNode);
-
-        while (listNode != null) {
-            System.out.println(listNode.val);
-            listNode = listNode.next;
+        ListNode result = problem0206.reverseList(listNode);
+        while (result != null) {
+            System.out.println(result.val);
+            result = result.next;
         }
     }
 
