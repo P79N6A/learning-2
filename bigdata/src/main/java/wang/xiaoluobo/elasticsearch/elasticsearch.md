@@ -11,6 +11,8 @@
 [root@bigdata01 config]# chown -R elastic:elastic /mnt/log/elastic
 
 [elastic@bigdata01 config]$ vim elasticsearch.yml
+cluster.name: test
+node.name: node-1
 path.data: /mnt/data/elastic
 path.logs: /mnt/log/elastic
 network.host: bigdata01
