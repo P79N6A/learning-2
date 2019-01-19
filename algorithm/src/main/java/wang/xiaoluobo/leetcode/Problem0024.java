@@ -73,7 +73,7 @@ public class Problem0024 {
         return resHead;
     }
 
-    public static class ListNode {
+    private static class ListNode {
         int val;
         public ListNode next;
 
