@@ -106,13 +106,16 @@ $ ./grunt server
 $ brew install node
 $ git clone git://github.com/mobz/elasticsearch-head.git
 $ cd elasticsearch-head
+# 端口9100
+$ vim Gruntfile.js
+# 端口9200
+$ vim _site/app.js
 $ npm install
 $ npm install grunt --save
 $ ./node_modules/grunt/bin/grunt server &
 $ vim elasticsearch.yml
 http.cors.enabled: true
 http.cors.allow-origin: "*"
-
-http://localhost:9100/
-
 ```
+
+[web ui](http://localhost:9100/)

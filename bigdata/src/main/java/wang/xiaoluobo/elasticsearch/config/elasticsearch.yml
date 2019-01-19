@@ -61,6 +61,7 @@ network.host: bigdata01
 #
 http.port: 9200
 
+# 处理es连接不上的问题
 http.cors.enabled: true
 http.cors.allow-origin: "*"
 
