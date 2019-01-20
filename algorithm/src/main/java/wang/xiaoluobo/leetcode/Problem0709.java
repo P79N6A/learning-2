@@ -13,7 +13,7 @@ public class Problem0709 {
     }
 
     public String toLowerCase(String str) {
-        if (str == null || str == "") {
+        if (str == null || "".equals(str)) {
             return null;
         }
 
