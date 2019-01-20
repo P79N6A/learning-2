@@ -2,6 +2,9 @@ package wang.xiaoluobo.leetcode;
 
 import java.util.Arrays;
 
+/**
+ * https://leetcode-cn.com/problems/sort-array-by-parity/submissions/
+ */
 public class Problem0905 {
 
     public static void main(String[] args) {
