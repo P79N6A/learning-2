@@ -31,7 +31,7 @@ public class Problem0905 {
                 j--;
             }
 
-            if(i > j){
+            if(i >= j){
                 break;
             }
 
