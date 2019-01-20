@@ -2,6 +2,9 @@ package wang.xiaoluobo.leetcode;
 
 import java.util.Arrays;
 
+/**
+ * https://leetcode-cn.com/problems/flipping-an-image/
+ */
 public class Problem0832 {
 
     public static void main(String[] args) {
