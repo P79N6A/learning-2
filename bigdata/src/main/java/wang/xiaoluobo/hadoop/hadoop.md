@@ -418,7 +418,7 @@ Written by Roland McGrath and Ulrich Drepper.
 [root@bigdata01 opt]# cd glibc-2.14/
 [root@bigdata01 glibc-2.14]# tar -jxvf ../glibc-linuxthreads-2.5.tar.bz2
 [root@bigdata01 glibc2.14]# export CFLAGS="-g -O2"
-[root@bigdata01 glibc2.14]# ./configure --prefix=/usr --disable-profile --enable-add-ons --with-headers=/usr/include --with-binutils=/usr/bin --disable-sanity-checks
+[root@bigdata01 glibc2.14]# ./glibc-2.14/configure --prefix=/usr --disable-profile --enable-add-ons --with-headers=/usr/include --with-binutils=/usr/bin --disable-sanity-checks
 [root@bigdata01 glibc2.14]# make
 [root@bigdata01 glibc2.14]# make install
 CC="gcc -B/usr/bin/" /usr/bin/perl scripts/test-installation.pl /mnt/opt/glibc2.14/
