@@ -413,10 +413,46 @@ hadoop02
 hadoop03
 ```
 
+```text
+[hadoop@iss-half-ali-f-app-001-18-13 logs]$ jps
+27077 Jps
+26054 NameNode
+26263 SecondaryNameNode
+26427 ResourceManager
+26846 HMaster
+
+
+
+[hadoop@iss-half-ali-f-app-002-18-14 logs]$ jps
+17410 NodeManager
+17812 Jps
+17637 HRegionServer
+17292 DataNode
+
+
+
+[hadoop@iss-half-ali-f-app-003-18-15 logs]$ jps
+17780 NodeManager
+18181 Jps
+18007 HRegionServer
+17662 DataNode
+
+hbase(main):003:0> version
+2.1.2, r1dfc418f77801fbfb59a125756891b9100c1fc6d, Sun Dec 30 21:45:09 PST 2018
+Took 0.0004 seconds
+hbase(main):004:0> status
+1 active master, 0 backup masters, 2 servers, 0 dead, 0.0000 average load
+Took 0.1022 seconds
+```
+
 ##### 5. 启动hbase
 ```bash
 # hadoop01执行
 [hadoop@hadoop01 hbase-2.1.2]$ ./bin/start-hbase.sh
+
+[hadoop@iss-half-ali-f-app-002-18-14 hbase-2.1.2]$ ./bin/hbase-daemon.sh stop regionserver
+[hadoop@iss-half-ali-f-app-002-18-14 hbase-2.1.2]$ ./bin/hbase-daemon.sh start regionserver
+
 ```
 
 ##### 6. hbase进程
@@ -430,6 +466,19 @@ hadoop03
 [hadoop@hadoop03 hbase-2.1.2]$ jps
 5512 HRegionServer
 6041 Jps
+
+
+[hadoop@hadoop01 hbase-2.1.2]$ ps -ef|grep hbase
+hadoop    7494     1  0 Jan18 ?        00:00:00 bash /mnt/opt/hbase-2.1.2/bin/hbase-daemon.sh --config /mnt/opt/hbase-2.1.2/conf foreground_start master
+hadoop    7508  7494  0 Jan18 ?        00:12:00 /mnt/jdk8/bin/java -Dproc_master -XX:OnOutOfMemoryError=kill -9 %p -XX:+UseConcMarkSweepGC -Dhbase.log.dir=/mnt/opt/hbase-2.1.2/logs -Dhbase.log.file=hbase-hadoop-master-hadoop01.log -Dhbase.home.dir=/mnt/opt/hbase-2.1.2 -Dhbase.id.str=hadoop -Dhbase.root.logger=INFO,RFA -Dhbase.security.logger=INFO,RFAS org.apache.hadoop.hbase.master.HMaster start
+
+[hadoop@hadoop02 hbase-2.1.2]$ ps -ef|grep hbase
+hadoop    6000     1  0 Jan18 ?        00:00:00 bash /mnt/opt/hbase-2.1.2/bin/hbase-daemon.sh --config /mnt/opt/hbase-2.1.2/conf foreground_start regionserver
+hadoop    6014  6000  0 Jan18 ?        00:13:09 /usr/java/default/bin/java -Dproc_regionserver -XX:OnOutOfMemoryError=kill -9 %p -XX:+UseConcMarkSweepGC -Dhbase.log.dir=/mnt/opt/hbase-2.1.2/bin/../logs -Dhbase.log.file=hbase-hadoop-regionserver-hadoop02.log -Dhbase.home.dir=/mnt/opt/hbase-2.1.2/bin/.. -Dhbase.id.str=hadoop -Dhbase.root.logger=INFO,RFA -Dhbase.security.logger=INFO,RFAS org.apache.hadoop.hbase.regionserver.HRegionServer start
+
+[hadoop@hadoop03 hbase-2.1.2]$ ps -ef|grep hbase
+hadoop    6182     1  0 Jan18 ?        00:00:00 bash /mnt/opt/hbase-2.1.2/bin/hbase-daemon.sh --config /mnt/opt/hbase-2.1.2/conf foreground_start regionserver
+hadoop    6196  6182  0 Jan18 ?        00:13:51 /usr/java/default/bin/java -Dproc_regionserver -XX:OnOutOfMemoryError=kill -9 %p -XX:+UseConcMarkSweepGC -Dhbase.log.dir=/mnt/opt/hbase-2.1.2/bin/../logs -Dhbase.log.file=hbase-hadoop-regionserver-hadoop03.log -Dhbase.home.dir=/mnt/opt/hbase-2.1.2/bin/.. -Dhbase.id.str=hadoop -Dhbase.root.logger=INFO,RFA -Dhbase.security.logger=INFO,RFAS org.apache.hadoop.hbase.regionserver.HRegionServer start
 ```
 
 ### 六、hbase单机部署(version1.3.1)
@@ -759,3 +808,94 @@ Took 1.2923 seconds
 hbase(main):048:0> enable 'scores'
 Took 0.7453 seconds
 ```
+
+
+### 七、hbase安装问题处理
+1. WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable  
+
+    [参考hadoop](../hadoop/hadoop.md)
+    
+    # hbase报错
+    http://blog.cheyo.net/197.html
+    export HBASE_LIBRARY_PATH=$HBASE_LIBRARY_PATH:$HBASE_HOME/lib/native/Linux-amd64-64/:/usr/local/lib/
+
+    ```text
+        # http://blog.cheyo.net/197.html
+        [hadoop@iss-half-ali-f-app-001-18-13 hbase-2.1.2]$ ./bin/hbase --config ~/conf_hbase org.apache.hadoop.util.NativeLibraryChecker
+        2019-01-21 08:36:46,118 WARN  [main] util.NativeCodeLoader (NativeCodeLoader.java:<clinit>(62)) - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+        Native library checking:
+        hadoop:  false
+        zlib:    false
+        snappy:  false
+        lz4:     false
+        bzip2:   false
+        openssl: false
+        2019-01-21 08:36:46,335 INFO  [main] util.ExitUtil (ExitUtil.java:terminate(124)) - Exiting with status 1
+        
+     
+        [root@iss-half-ali-f-app-001-18-13 opt]# yum -y install snappy snappy-devel
+        [root@iss-half-ali-f-app-001-18-13 opt]# cp /usr/lib64/libsnapp* /usr/local/lib
+        [root@iss-half-ali-f-app-001-18-13 opt]# wget http://ftp.kddilabs.jp/infosystems/apache/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz
+     
+        
+        # maven环境配置
+        [root@iss-half-ali-f-app-001-18-13 opt]# vim /etc/profile
+        [root@iss-half-ali-f-app-001-18-13 opt]# source /etc/profile
+        [root@iss-half-ali-f-app-001-18-13 opt]# echo $MAVEN_HOME
+        /mnt/opt/maven-3.6.0
+        export MAVEN_HOME=/mnt/opt/maven-3.6.0
+        export PATH=$PATH:$MAVEN_HOME/bin
+    
+        [root@iss-half-ali-f-app-001-18-13 opt]# mkdir -p /mnt/opt/hadoop/lib/native
+        [root@iss-half-ali-f-app-001-18-13 opt]# chown -R hadoop.hadoop hadoop
+        
+        # 打包
+        [root@iss-half-ali-f-app-001-18-13 opt]# wget https://github.com/electrum/hadoop-snappy/archive/master.zip
+        [root@iss-half-ali-f-app-001-18-13 hadoop-snappy-master]# mvn clean package
+        [hadoop@iss-half-ali-f-app-002-18-14 hadoop-snappy-master]$ cd target/
+        [root@iss-half-ali-f-app-001-18-13 target]# tar -zxvf hadoop-snappy-0.0.1-SNAPSHOT.tar.gz
+        
+        [root@iss-half-ali-f-app-001-18-13 target]# cp hadoop-snappy-0.0.1-SNAPSHOT/lib/native/Linux-amd64-64/lib* /mnt/opt/hadoop/lib/native/
+        [root@iss-half-ali-f-app-001-18-13 target]# cp hadoop-snappy-0.0.1-SNAPSHOT/lib/hadoop-snappy-0.0.1-SNAPSHOT.jar /mnt/opt/hadoop/lib/
+        [hadoop@iss-half-ali-f-app-003-18-15 ~]$ vim .bash_profile
+        export LD_LIBRARY_PATH=$PATH:/mnt/opt/hadoop/lib/native/:/usr/local/lib/
+        [hadoop@iss-half-ali-f-app-003-18-15 ~]$ source .bash_profile
+       
+        # hadoop2.8.5
+        [hadoop@iss-half-ali-f-app-001-18-13 opt]$ cp /mnt/opt/hadoop/lib/native/lib* hadoop-2.8.5/lib/native/
+        [hadoop@iss-half-ali-f-app-001-18-13 opt]$ cp /mnt/opt/hadoop/lib/hadoop-snappy-0.0.1-SNAPSHOT.jar hadoop-2.8.5/lib/
+        [hadoop@iss-half-ali-f-app-001-18-13 hbase-2.1.2]$ mkdir -p lib/native/Linux-amd64-64
+        [hadoop@iss-half-ali-f-app-001-18-13 opt]$ cp -r hadoop-2.8.5/lib/native/* hbase-2.1.2/lib/native/Linux-amd64-64/
+     
+     
+        [hadoop@iss-half-ali-f-app-003-18-15 target]$ mkdir -p /mnt/opt/hbase-2.1.2/lib/native/Linux-amd64-64
+        [hadoop@iss-half-ali-f-app-001-18-13 target]$ cp hadoop-snappy-0.0.1-SNAPSHOT/lib/native/Linux-amd64-64/lib* /mnt/opt/hbase-2.1.2/lib/native/Linux-amd64-64/
+        [hadoop@iss-half-ali-f-app-001-18-13 target]$ cp hadoop-snappy-0.0.1-SNAPSHOT/lib/hadoop-snappy-0.0.1-SNAPSHOT.jar /mnt/opt/hbase-2.1.2/lib/
+        
+        
+     
+        # 重启hbase
+        [hadoop@iss-half-ali-f-app-001-18-13 hbase-2.1.2]$ ./bin/start-hbase.sh
+        running master, logging to /mnt/opt/hbase-2.1.2/logs/hbase-hadoop-master-iss-half-ali-f-app-001-18-13.out
+        iss-half-ali-f-app-003-18-15: running regionserver, logging to /mnt/opt/hbase-2.1.2/bin/../logs/hbase-hadoop-regionserver-iss-half-ali-f-app-003-18-15.out
+        iss-half-ali-f-app-002-18-14: running regionserver, logging to /mnt/opt/hbase-2.1.2/bin/../logs/hbase-hadoop-regionserver-iss-half-ali-f-app-002-18-14.out
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        Caused by: java.lang.ClassNotFoundException: org.apache.htrace.SamplerBuilder
+     
+       cp $HBASE_HOME/lib/client-facing-thirdparty/htrace-core-3.1.0-incubating.jar $HBASE_HOME/lib/
+     
+     
+  
+  org.apache.hadoop.security.AccessControlException: Permission denied: user=/mnt/opt/hadoop-2.8.4/etc/hadoop, access=WRITE, inode="/hbase":hadoop:supergroup:drwxr-xr-x
+  
+        ```
