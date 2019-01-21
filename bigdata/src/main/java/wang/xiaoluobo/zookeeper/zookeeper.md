@@ -9,10 +9,12 @@
     server.2=bigdata02:2888:3888
     server.3=bigdata03:2888:3888
     ```
-4. 通过iTerm2分屏同时启动zk server  
+4. myid配置(myid分别为1，2，3与zoo.cfg对应)  
+   /mnt/data/zookeeper/myid  
+5. 通过iTerm2分屏同时启动zk server  
 $ sudo ./bin/zkServer.sh start
 
-5. 查看zk server状态  
+6. 查看zk server状态  
 $ sudo ./bin/zkServer.sh status 
  
 ![bigdata01](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/zookeeper/images/zk01.png)
