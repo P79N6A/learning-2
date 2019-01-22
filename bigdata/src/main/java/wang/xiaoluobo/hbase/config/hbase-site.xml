@@ -21,27 +21,22 @@
  */
 -->
 <configuration>
-  <property>
-    <name>hbase.rootdir</name>
-    <value>/mnt/data/hbase</value>
-  </property>
 <!--
   <property>
-    <name></name>
-    <value></value>
+    <name>hbase.rootdir</name>
+    <value>file:///mnt/data/hbase</value>
   </property>
 -->
+  <property>
+    <name>hbase.rootdir</name>
+    <value>hdfs://iss-half-ali-f-app-001-18-13:9000/hbase</value>
+  </property>
   <property> 
     <name>hbase.cluster.distributed</name> 
     <value>true</value>
   </property>
   <property>
-    <name>hbase.zookeeper.property.dataDir</name>
-    <value>/mnt/data/hbase</value>
-  </property>
-  <property>
     <name>hbase.zookeeper.quorum</name>
-    <!--<value>172.16.18.13,172.16.18.14,172.16.18.15</value>-->
     <value>hadoop01,hadoop02,hadoop03</value>
   </property>
   <property>
@@ -49,7 +44,15 @@
     <value>/mnt/data/hbase/zookeeper</value>
   </property>
   <property>
-    <name>hbase.unsafe.stream.capability.enforce</name>
+    <name>zookeeper.session.timeout</name>
+    <value>120000</value>
+  </property>
+  <property>
+    <name>hbase.zookeeper.property.tickTime</name>
+    <value>6000</value>
+  </property>
+  <property>
+    <name>hbase.coprocessor.abortonerror</name>
     <value>false</value>
   </property>
 </configuration>

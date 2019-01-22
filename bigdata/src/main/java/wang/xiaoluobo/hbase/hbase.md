@@ -363,109 +363,113 @@ ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAt99d94W99tsNNT0fywCMLJ40zKUN535Vj66Fgy+esUY/
 
 ##### 2. [zk集群](../zookeeper/zookeeper.md)
 
-##### 3. 环境变量
+##### 3. [hadoop集群](../hadoop/hadoop.md)
+
+##### 4. 环境变量
 ```bash
 $ vim /home/hadoop/.bash_profile
 export HBASE_HOME=/mnt/opt/hbase-2.1.2
 export HBASE_CONF_DIR=$HBASE_HOME/conf
-export HBASE_CLASS_PATH=$HBASE_CONF_DIR
+export HBASE_CLASS_PATH=HADOOP_CONF_DIR
 export PATH=$PATH:$HBASE_HOME/bin
+
+export HADOOP_CONF_DIR=/mnt/opt/hadoop-2.8.4/etc/hadoop
+export PATH=$PATH:$HADOOP_CONF_DIR/bin
+export HADOOP_USER_NAME=hadoop
+export HADOOP_HOME=/mnt/opt/hadoop-2.8.4
+export PATH=$PATH:$HADOOP_HOME/bin
+
+export HBASE_LIBRARY_PATH=$HBASE_LIBRARY_PATH:$HBASE_HOME/lib/native/Linux-amd64-64/:/usr/local/lib/
 $ source /home/hadoop/.bash_profile
 ```
 
-##### 4. hbase config
-```text
-[hadoop@hadoop01 hbase-2.1.2]$ mkdir -p /mnt/data/hbase
-[hadoop@hadoop01 hbase-2.1.2]$ mkdir -p /mnt/data/hbase/zookeeper
-[hadoop@hadoop01 conf]$ vim hbase-site.xml
-<configuration>
-  <property>
-    <name>hbase.rootdir</name>
-    <value>/mnt/data/hbase</value>
-  </property>
-  <property> 
-    <name>hbase.cluster.distributed</name> 
-    <value>true</value>
-  </property>
-  <property>
-    <name>hbase.zookeeper.property.dataDir</name>
-    <value>/mnt/data/hbase</value>
-  </property>
-  <property>
-    <name>hbase.zookeeper.quorum</name>
-    <!--<value>172.16.18.13,172.16.18.14,172.16.18.15</value>-->
-    <value>hadoop01,hadoop02,hadoop03</value>
-  </property>
-  <property>
-    <name>hbase.zookeeper.property.dataDir</name>
-    <value>/mnt/data/hbase/zookeeper</value>
-  </property>
-  <property>
-    <name>hbase.unsafe.stream.capability.enforce</name>
-    <value>false</value>
-  </property>
-</configuration>
+##### 5. hbase config
+1. hbase-site.xml
+    ```text
+    [hadoop@hadoop01 hbase-2.1.2]$ mkdir -p /mnt/data/hbase
+    [hadoop@hadoop01 hbase-2.1.2]$ mkdir -p /mnt/data/hbase/zookeeper
+    [hadoop@hadoop01 conf]$ vim hbase-site.xml
+    <configuration>
+    <!--
+      <property>
+        <name>hbase.rootdir</name>
+        <value>file:///mnt/data/hbase</value>
+      </property>
+    -->
+      <property>
+        <name>hbase.rootdir</name>
+        <value>hdfs://hadoop01:9000/hbase</value>
+      </property>
+      <property> 
+        <name>hbase.cluster.distributed</name> 
+        <value>true</value>
+      </property>
+      <property>
+        <name>hbase.zookeeper.quorum</name>
+        <!--<value>172.16.18.13,172.16.18.14,172.16.18.15</value>-->
+        <value>hadoop01,hadoop02,hadoop03</value>
+      </property>
+      <property>
+        <name>hbase.zookeeper.property.dataDir</name>
+        <value>/mnt/data/hbase/zookeeper</value>
+      </property>
+      <property>
+        <name>zookeeper.session.timeout</name>
+        <value>120000</value>
+      </property>
+      <property>
+        <name>hbase.zookeeper.property.tickTime</name>
+        <value>6000</value>
+      </property>
+      <property>
+        <name>hbase.coprocessor.abortonerror</name>
+        <value>false</value>
+      </property>
+    </configuration>
+    ```
 
+2. regionservers
+    ```text
+    [hadoop@hadoop01 conf]$ vim regionservers
+    hadoop02
+    hadoop03
+    ```
+3. hbase-env.sh
+    ```text
+    export HBASE_MANAGES_ZK=false
+    
+    export HBASE_LIBRARY_PATH=$HBASE_LIBRARY_PATH:$HBASE_HOME/lib/native/Linux-amd64-64/:/usr/local/lib/
+    ```
 
-[hadoop@hadoop01 conf]$ vim regionservers
-[hadoop@hadoop01 conf]$ cat regionservers
-hadoop02
-hadoop03
-```
-
-```text
-[hadoop@iss-half-ali-f-app-001-18-13 logs]$ jps
-27077 Jps
-26054 NameNode
-26263 SecondaryNameNode
-26427 ResourceManager
-26846 HMaster
-
-
-
-[hadoop@iss-half-ali-f-app-002-18-14 logs]$ jps
-17410 NodeManager
-17812 Jps
-17637 HRegionServer
-17292 DataNode
-
-
-
-[hadoop@iss-half-ali-f-app-003-18-15 logs]$ jps
-17780 NodeManager
-18181 Jps
-18007 HRegionServer
-17662 DataNode
-
-hbase(main):003:0> version
-2.1.2, r1dfc418f77801fbfb59a125756891b9100c1fc6d, Sun Dec 30 21:45:09 PST 2018
-Took 0.0004 seconds
-hbase(main):004:0> status
-1 active master, 0 backup masters, 2 servers, 0 dead, 0.0000 average load
-Took 0.1022 seconds
-```
-
-##### 5. 启动hbase
+##### 6. 启动hbase
 ```bash
 # hadoop01执行
 [hadoop@hadoop01 hbase-2.1.2]$ ./bin/start-hbase.sh
 
-[hadoop@iss-half-ali-f-app-002-18-14 hbase-2.1.2]$ ./bin/hbase-daemon.sh stop regionserver
-[hadoop@iss-half-ali-f-app-002-18-14 hbase-2.1.2]$ ./bin/hbase-daemon.sh start regionserver
-
+# 单独关闭regionserver
+[hadoop@hadoop02 hbase-2.1.2]$ ./bin/hbase-daemon.sh stop regionserver
+[hadoop@hadoop02 hbase-2.1.2]$ ./bin/hbase-daemon.sh start regionserver
 ```
 
-##### 6. hbase进程
+##### 7. hbase进程
 ```bash
 [hadoop@hadoop01 hbase-2.1.2]$ jps
-7096 Jps
-6473 HMaster
+17056 Jps
+16144 HMaster
+26054 NameNode
+26263 SecondaryNameNode
+26427 ResourceManager
 [hadoop@hadoop02 hbase-2.1.2]$ jps
-5348 HRegionServer
-5862 Jps
+17056 Jps
+16144 HMaster
+26054 NameNode
+26263 SecondaryNameNode
+26427 ResourceManager
 [hadoop@hadoop03 hbase-2.1.2]$ jps
-5512 HRegionServer
-6041 Jps
+31553 HRegionServer
+17780 NodeManager
+17662 DataNode
+31934 Jps
 
 
 [hadoop@hadoop01 hbase-2.1.2]$ ps -ef|grep hbase
@@ -479,6 +483,39 @@ hadoop    6014  6000  0 Jan18 ?        00:13:09 /usr/java/default/bin/java -Dpro
 [hadoop@hadoop03 hbase-2.1.2]$ ps -ef|grep hbase
 hadoop    6182     1  0 Jan18 ?        00:00:00 bash /mnt/opt/hbase-2.1.2/bin/hbase-daemon.sh --config /mnt/opt/hbase-2.1.2/conf foreground_start regionserver
 hadoop    6196  6182  0 Jan18 ?        00:13:51 /usr/java/default/bin/java -Dproc_regionserver -XX:OnOutOfMemoryError=kill -9 %p -XX:+UseConcMarkSweepGC -Dhbase.log.dir=/mnt/opt/hbase-2.1.2/bin/../logs -Dhbase.log.file=hbase-hadoop-regionserver-hadoop03.log -Dhbase.home.dir=/mnt/opt/hbase-2.1.2/bin/.. -Dhbase.id.str=hadoop -Dhbase.root.logger=INFO,RFA -Dhbase.security.logger=INFO,RFAS org.apache.hadoop.hbase.regionserver.HRegionServer start
+```
+
+##### 8. hbase shell
+```text
+[hadoop@hadoop01 hbase-2.1.2]$ ./bin/hbase shell
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/mnt/opt/hadoop-2.8.4/share/hadoop/common/lib/slf4j-log4j12-1.7.10.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/mnt/opt/hbase-2.1.2/lib/client-facing-thirdparty/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+HBase Shell
+Use "help" to get list of supported commands.
+Use "exit" to quit this interactive shell.
+For Reference, please visit: http://hbase.apache.org/2.0/book.html#shell
+Version 2.1.2, r1dfc418f77801fbfb59a125756891b9100c1fc6d, Sun Dec 30 21:45:09 PST 2018
+Took 0.0033 seconds
+hbase(main):001:0> version
+2.1.2, r1dfc418f77801fbfb59a125756891b9100c1fc6d, Sun Dec 30 21:45:09 PST 2018
+Took 0.0006 seconds
+hbase(main):002:0> status
+1 active master, 0 backup masters, 2 servers, 0 dead, 1.5000 average load
+Took 0.6482 seconds
+hbase(main):003:0> create 'member', 'member_id', 'address', 'info'
+Created table member
+Took 0.7969 seconds
+=> Hbase::Table - member
+hbase(main):004:0> list
+TABLE
+member
+t
+2 row(s)
+Took 0.0246 seconds
+=> ["member", "t"]
 ```
 
 ### 六、hbase单机部署(version1.3.1)
@@ -821,7 +858,7 @@ Took 0.7453 seconds
 
     ```text
         # http://blog.cheyo.net/197.html
-        [hadoop@iss-half-ali-f-app-001-18-13 hbase-2.1.2]$ ./bin/hbase --config ~/conf_hbase org.apache.hadoop.util.NativeLibraryChecker
+        [hadoop@hadoop01 hbase-2.1.2]$ ./bin/hbase --config ~/conf_hbase org.apache.hadoop.util.NativeLibraryChecker
         2019-01-21 08:36:46,118 WARN  [main] util.NativeCodeLoader (NativeCodeLoader.java:<clinit>(62)) - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
         Native library checking:
         hadoop:  false
@@ -833,52 +870,54 @@ Took 0.7453 seconds
         2019-01-21 08:36:46,335 INFO  [main] util.ExitUtil (ExitUtil.java:terminate(124)) - Exiting with status 1
         
      
-        [root@iss-half-ali-f-app-001-18-13 opt]# yum -y install snappy snappy-devel
-        [root@iss-half-ali-f-app-001-18-13 opt]# cp /usr/lib64/libsnapp* /usr/local/lib
-        [root@iss-half-ali-f-app-001-18-13 opt]# wget http://ftp.kddilabs.jp/infosystems/apache/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz
+        [root@hadoop01 opt]# yum -y install snappy snappy-devel
+        [root@hadoop01 opt]# cp /usr/lib64/libsnapp* /usr/local/lib
+        [root@hadoop01 opt]# wget http://ftp.kddilabs.jp/infosystems/apache/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz
      
         
         # maven环境配置
-        [root@iss-half-ali-f-app-001-18-13 opt]# vim /etc/profile
-        [root@iss-half-ali-f-app-001-18-13 opt]# source /etc/profile
-        [root@iss-half-ali-f-app-001-18-13 opt]# echo $MAVEN_HOME
+        [root@hadoop01 opt]# vim /etc/profile
+        [root@hadoop01 opt]# source /etc/profile
+        [root@hadoop01 opt]# echo $MAVEN_HOME
         /mnt/opt/maven-3.6.0
         export MAVEN_HOME=/mnt/opt/maven-3.6.0
         export PATH=$PATH:$MAVEN_HOME/bin
     
-        [root@iss-half-ali-f-app-001-18-13 opt]# mkdir -p /mnt/opt/hadoop/lib/native
-        [root@iss-half-ali-f-app-001-18-13 opt]# chown -R hadoop.hadoop hadoop
+        [root@hadoop01 opt]# mkdir -p /mnt/opt/hadoop/lib/native
+        [root@hadoop01 opt]# chown -R hadoop.hadoop hadoop
         
         # 打包
-        [root@iss-half-ali-f-app-001-18-13 opt]# wget https://github.com/electrum/hadoop-snappy/archive/master.zip
-        [root@iss-half-ali-f-app-001-18-13 hadoop-snappy-master]# mvn clean package
-        [hadoop@iss-half-ali-f-app-002-18-14 hadoop-snappy-master]$ cd target/
-        [root@iss-half-ali-f-app-001-18-13 target]# tar -zxvf hadoop-snappy-0.0.1-SNAPSHOT.tar.gz
+        [root@hadoop01 opt]# wget https://github.com/electrum/hadoop-snappy/archive/master.zip
+        [root@hadoop01 hadoop-snappy-master]# mvn clean package
+        [hadoop@hadoop02 hadoop-snappy-master]$ cd target/
+        [root@hadoop01 target]# tar -zxvf hadoop-snappy-0.0.1-SNAPSHOT.tar.gz
         
-        [root@iss-half-ali-f-app-001-18-13 target]# cp hadoop-snappy-0.0.1-SNAPSHOT/lib/native/Linux-amd64-64/lib* /mnt/opt/hadoop/lib/native/
-        [root@iss-half-ali-f-app-001-18-13 target]# cp hadoop-snappy-0.0.1-SNAPSHOT/lib/hadoop-snappy-0.0.1-SNAPSHOT.jar /mnt/opt/hadoop/lib/
-        [hadoop@iss-half-ali-f-app-003-18-15 ~]$ vim .bash_profile
-        export LD_LIBRARY_PATH=$PATH:/mnt/opt/hadoop/lib/native/:/usr/local/lib/
-        [hadoop@iss-half-ali-f-app-003-18-15 ~]$ source .bash_profile
+        [root@hadoop01 target]# cp hadoop-snappy-0.0.1-SNAPSHOT/lib/native/Linux-amd64-64/lib* /mnt/opt/hadoop/lib/native/
+        [root@hadoop01 target]# cp hadoop-snappy-0.0.1-SNAPSHOT/lib/hadoop-snappy-0.0.1-SNAPSHOT.jar /mnt/opt/hadoop/lib/
+        
+        # 这行必须添加
+        [hadoop@hadoop03 ~]$ vim .bash_profile
+        export HBASE_LIBRARY_PATH=$HBASE_LIBRARY_PATH:$HBASE_HOME/lib/native/Linux-amd64-64/:/usr/local/lib/
+        [hadoop@hadoop03 ~]$ source .bash_profile
        
         # hadoop2.8.5
-        [hadoop@iss-half-ali-f-app-001-18-13 opt]$ cp /mnt/opt/hadoop/lib/native/lib* hadoop-2.8.5/lib/native/
-        [hadoop@iss-half-ali-f-app-001-18-13 opt]$ cp /mnt/opt/hadoop/lib/hadoop-snappy-0.0.1-SNAPSHOT.jar hadoop-2.8.5/lib/
-        [hadoop@iss-half-ali-f-app-001-18-13 hbase-2.1.2]$ mkdir -p lib/native/Linux-amd64-64
-        [hadoop@iss-half-ali-f-app-001-18-13 opt]$ cp -r hadoop-2.8.5/lib/native/* hbase-2.1.2/lib/native/Linux-amd64-64/
+        [hadoop@hadoop01 opt]$ cp /mnt/opt/hadoop/lib/native/lib* hadoop-2.8.5/lib/native/
+        [hadoop@hadoop01 opt]$ cp /mnt/opt/hadoop/lib/hadoop-snappy-0.0.1-SNAPSHOT.jar hadoop-2.8.5/lib/
+        [hadoop@hadoop01 hbase-2.1.2]$ mkdir -p lib/native/Linux-amd64-64
+        [hadoop@hadoop01 opt]$ cp -r hadoop-2.8.5/lib/native/* hbase-2.1.2/lib/native/Linux-amd64-64/
      
      
-        [hadoop@iss-half-ali-f-app-003-18-15 target]$ mkdir -p /mnt/opt/hbase-2.1.2/lib/native/Linux-amd64-64
-        [hadoop@iss-half-ali-f-app-001-18-13 target]$ cp hadoop-snappy-0.0.1-SNAPSHOT/lib/native/Linux-amd64-64/lib* /mnt/opt/hbase-2.1.2/lib/native/Linux-amd64-64/
-        [hadoop@iss-half-ali-f-app-001-18-13 target]$ cp hadoop-snappy-0.0.1-SNAPSHOT/lib/hadoop-snappy-0.0.1-SNAPSHOT.jar /mnt/opt/hbase-2.1.2/lib/
+        [hadoop@hadoop03 target]$ mkdir -p /mnt/opt/hbase-2.1.2/lib/native/Linux-amd64-64
+        [hadoop@hadoop01 target]$ cp hadoop-snappy-0.0.1-SNAPSHOT/lib/native/Linux-amd64-64/lib* /mnt/opt/hbase-2.1.2/lib/native/Linux-amd64-64/
+        [hadoop@hadoop01 target]$ cp hadoop-snappy-0.0.1-SNAPSHOT/lib/hadoop-snappy-0.0.1-SNAPSHOT.jar /mnt/opt/hbase-2.1.2/lib/
         
         
      
         # 重启hbase
-        [hadoop@iss-half-ali-f-app-001-18-13 hbase-2.1.2]$ ./bin/start-hbase.sh
-        running master, logging to /mnt/opt/hbase-2.1.2/logs/hbase-hadoop-master-iss-half-ali-f-app-001-18-13.out
-        iss-half-ali-f-app-003-18-15: running regionserver, logging to /mnt/opt/hbase-2.1.2/bin/../logs/hbase-hadoop-regionserver-iss-half-ali-f-app-003-18-15.out
-        iss-half-ali-f-app-002-18-14: running regionserver, logging to /mnt/opt/hbase-2.1.2/bin/../logs/hbase-hadoop-regionserver-iss-half-ali-f-app-002-18-14.out
+        [hadoop@hadoop01 hbase-2.1.2]$ ./bin/start-hbase.sh
+        running master, logging to /mnt/opt/hbase-2.1.2/logs/hbase-hadoop-master-hadoop01.out
+        hadoop03: running regionserver, logging to /mnt/opt/hbase-2.1.2/bin/../logs/hbase-hadoop-regionserver-hadoop03.out
+        hadoop02: running regionserver, logging to /mnt/opt/hbase-2.1.2/bin/../logs/hbase-hadoop-regionserver-hadoop02.out
     
     
     
@@ -893,9 +932,5 @@ Took 0.7453 seconds
         Caused by: java.lang.ClassNotFoundException: org.apache.htrace.SamplerBuilder
      
        cp $HBASE_HOME/lib/client-facing-thirdparty/htrace-core-3.1.0-incubating.jar $HBASE_HOME/lib/
-     
-     
-  
-  org.apache.hadoop.security.AccessControlException: Permission denied: user=/mnt/opt/hadoop-2.8.4/etc/hadoop, access=WRITE, inode="/hbase":hadoop:supergroup:drwxr-xr-x
   
         ```

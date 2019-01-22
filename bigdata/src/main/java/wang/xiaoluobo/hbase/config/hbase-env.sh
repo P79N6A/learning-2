@@ -123,7 +123,10 @@ export HBASE_OPTS="$HBASE_OPTS -XX:+UseConcMarkSweepGC"
 
 # Tell HBase whether it should manage it's own instance of ZooKeeper or not.
 # export HBASE_MANAGES_ZK=true
+# 使用独立zk集群
 export HBASE_MANAGES_ZK=false
+
+export HBASE_LIBRARY_PATH=$HBASE_LIBRARY_PATH:$HBASE_HOME/lib/native/Linux-amd64-64/:/usr/local/lib/
 
 # The default log rolling policy is RFA, where the log file is rolled as per the size defined for the 
 # RFA appender. Please refer to the log4j.properties file to see more details on this appender.
