@@ -361,9 +361,9 @@ ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAt99d94W99tsNNT0fywCMLJ40zKUN535Vj66Fgy+esUY/
 [hadoop@hadoop01 .ssh]$ ssh hadoop03
 ```
 
-##### 2. [zk集群](../zookeeper/zookeeper.md)
+##### 2. [zk3.4.13集群](../zookeeper/zookeeper.md)
 
-##### 3. [hadoop集群](../hadoop/hadoop.md)
+##### 3. [hadoop2.8.4集群](../hadoop/hadoop.md)
 
 ##### 4. 环境变量
 ```bash
