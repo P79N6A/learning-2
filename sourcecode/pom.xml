@@ -15,6 +15,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.apache.phoenix</groupId>
+            <artifactId>phoenix-core</artifactId>
+            <version>5.0.0-HBase-2.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>wang.xiaoluobo</groupId>
             <artifactId>redis-starter</artifactId>
             <exclusions>
@@ -304,21 +310,6 @@
                                 </transformer>
                             </transformers>
                         </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!--scala-->
-            <plugin>
-                <groupId>org.scala-tools</groupId>
-                <artifactId>maven-scala-plugin</artifactId>
-                <version>2.15.2</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>compile</goal>
-                            <goal>testCompile</goal>
-                        </goals>
                     </execution>
                 </executions>
             </plugin>
