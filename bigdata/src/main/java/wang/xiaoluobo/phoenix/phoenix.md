@@ -33,13 +33,9 @@
     
     # column_encoded_bytes=0 解决phoenix映射已存在HBase表，查询不到数据
     0: jdbc:phoenix:172.16.18.13:2181> create table "test"(
-    . . . . . . . . . . . . . . . . .>
     . . . . . . . . . . . . . . . . .>     pk VARCHAR PRIMARY KEY
-    . . . . . . . . . . . . . . . . .>
     . . . . . . . . . . . . . . . . .>     ,"i"."name" VARCHAR
-    . . . . . . . . . . . . . . . . .>
     . . . . . . . . . . . . . . . . .>     ,"i"."age" VARCHAR)
-    . . . . . . . . . . . . . . . . .>
     . . . . . . . . . . . . . . . . .>  column_encoded_bytes=0;
     No rows affected (0.756 seconds)
 
