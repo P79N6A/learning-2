@@ -2,6 +2,8 @@
 - Homebrew  
 https://www.jianshu.com/p/4e80b42823d5
 
+- [mac shell](https://www.jianshu.com/p/3291de46f3ff)
+
 - protobuf2.5.0  
 https://www.jianshu.com/p/ba136a04385c  
 protoc --java_out=./examples ./examples/addressbook.proto
@@ -15,11 +17,9 @@ brew install p7zip
 解压7z格式文件  
 7z e docker.7z  
 
-- mysql客户端  
-https://www.sequelpro.com/
+- [mysql客户端](https://www.sequelpro.com/)  
 
-- mongodb客户端  
-https://nosqlbooster.com/
+- [mongodb客户端](https://nosqlbooster.com/)
 
 - Gliffy Diagrams  
 chrome流程图插件
