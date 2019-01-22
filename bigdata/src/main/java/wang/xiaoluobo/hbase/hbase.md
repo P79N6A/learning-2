@@ -850,87 +850,59 @@ Took 0.7453 seconds
 ### 七、hbase安装问题处理
 1. WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable  
 
-    [参考hadoop](../hadoop/hadoop.md)
-    
-    # hbase报错
-    http://blog.cheyo.net/197.html
-    export HBASE_LIBRARY_PATH=$HBASE_LIBRARY_PATH:$HBASE_HOME/lib/native/Linux-amd64-64/:/usr/local/lib/
+    - [1) 参考hadoop处理](../hadoop/hadoop.md)
+    - [2) 安装snappy](http://blog.cheyo.net/197.html)
 
     ```text
-        # http://blog.cheyo.net/197.html
-        [hadoop@hadoop01 hbase-2.1.2]$ ./bin/hbase --config ~/conf_hbase org.apache.hadoop.util.NativeLibraryChecker
-        2019-01-21 08:36:46,118 WARN  [main] util.NativeCodeLoader (NativeCodeLoader.java:<clinit>(62)) - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
-        Native library checking:
-        hadoop:  false
-        zlib:    false
-        snappy:  false
-        lz4:     false
-        bzip2:   false
-        openssl: false
-        2019-01-21 08:36:46,335 INFO  [main] util.ExitUtil (ExitUtil.java:terminate(124)) - Exiting with status 1
-        
-     
-        [root@hadoop01 opt]# yum -y install snappy snappy-devel
-        [root@hadoop01 opt]# cp /usr/lib64/libsnapp* /usr/local/lib
-        [root@hadoop01 opt]# wget http://ftp.kddilabs.jp/infosystems/apache/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz
-     
-        
-        # maven环境配置
-        [root@hadoop01 opt]# vim /etc/profile
-        [root@hadoop01 opt]# source /etc/profile
-        [root@hadoop01 opt]# echo $MAVEN_HOME
-        /mnt/opt/maven-3.6.0
-        export MAVEN_HOME=/mnt/opt/maven-3.6.0
-        export PATH=$PATH:$MAVEN_HOME/bin
+    [hadoop@hadoop01 hbase-2.1.2]$ ./bin/hbase --config ~/conf_hbase org.apache.hadoop.util.NativeLibraryChecker
+    2019-01-21 08:36:46,118 WARN  [main] util.NativeCodeLoader (NativeCodeLoader.java:<clinit>(62)) - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+    Native library checking:
+    hadoop:  false
+    zlib:    false
+    snappy:  false
+    lz4:     false
+    bzip2:   false
+    openssl: false
+    2019-01-21 08:36:46,335 INFO  [main] util.ExitUtil (ExitUtil.java:terminate(124)) - Exiting with status 1
     
-        [root@hadoop01 opt]# mkdir -p /mnt/opt/hadoop/lib/native
-        [root@hadoop01 opt]# chown -R hadoop.hadoop hadoop
-        
-        # 打包
-        [root@hadoop01 opt]# wget https://github.com/electrum/hadoop-snappy/archive/master.zip
-        [root@hadoop01 hadoop-snappy-master]# mvn clean package
-        [hadoop@hadoop02 hadoop-snappy-master]$ cd target/
-        [root@hadoop01 target]# tar -zxvf hadoop-snappy-0.0.1-SNAPSHOT.tar.gz
-        
-        [root@hadoop01 target]# cp hadoop-snappy-0.0.1-SNAPSHOT/lib/native/Linux-amd64-64/lib* /mnt/opt/hadoop/lib/native/
-        [root@hadoop01 target]# cp hadoop-snappy-0.0.1-SNAPSHOT/lib/hadoop-snappy-0.0.1-SNAPSHOT.jar /mnt/opt/hadoop/lib/
-        
-        # 这行必须添加
-        [hadoop@hadoop03 ~]$ vim .bash_profile
-        export HBASE_LIBRARY_PATH=$HBASE_LIBRARY_PATH:$HBASE_HOME/lib/native/Linux-amd64-64/:/usr/local/lib/
-        [hadoop@hadoop03 ~]$ source .bash_profile
-       
-        # hadoop2.8.5
-        [hadoop@hadoop01 opt]$ cp /mnt/opt/hadoop/lib/native/lib* hadoop-2.8.5/lib/native/
-        [hadoop@hadoop01 opt]$ cp /mnt/opt/hadoop/lib/hadoop-snappy-0.0.1-SNAPSHOT.jar hadoop-2.8.5/lib/
-        [hadoop@hadoop01 hbase-2.1.2]$ mkdir -p lib/native/Linux-amd64-64
-        [hadoop@hadoop01 opt]$ cp -r hadoop-2.8.5/lib/native/* hbase-2.1.2/lib/native/Linux-amd64-64/
-     
-     
-        [hadoop@hadoop03 target]$ mkdir -p /mnt/opt/hbase-2.1.2/lib/native/Linux-amd64-64
-        [hadoop@hadoop01 target]$ cp hadoop-snappy-0.0.1-SNAPSHOT/lib/native/Linux-amd64-64/lib* /mnt/opt/hbase-2.1.2/lib/native/Linux-amd64-64/
-        [hadoop@hadoop01 target]$ cp hadoop-snappy-0.0.1-SNAPSHOT/lib/hadoop-snappy-0.0.1-SNAPSHOT.jar /mnt/opt/hbase-2.1.2/lib/
-        
-        
-     
-        # 重启hbase
-        [hadoop@hadoop01 hbase-2.1.2]$ ./bin/start-hbase.sh
-        running master, logging to /mnt/opt/hbase-2.1.2/logs/hbase-hadoop-master-hadoop01.out
-        hadoop03: running regionserver, logging to /mnt/opt/hbase-2.1.2/bin/../logs/hbase-hadoop-regionserver-hadoop03.out
-        hadoop02: running regionserver, logging to /mnt/opt/hbase-2.1.2/bin/../logs/hbase-hadoop-regionserver-hadoop02.out
+    # 安装snappy
+    [root@hadoop01 opt]# yum -y install snappy snappy-devel
+    [root@hadoop01 opt]# cp /usr/lib64/libsnapp* /usr/local/lib
     
+    # 配置maven
+    [root@hadoop01 opt]# wget http://ftp.kddilabs.jp/infosystems/apache/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz
+    [root@hadoop01 opt]# vim /etc/profile
+    [root@hadoop01 opt]# source /etc/profile
+    [root@hadoop01 opt]# echo $MAVEN_HOME
+    /mnt/opt/maven-3.6.0
+    export MAVEN_HOME=/mnt/opt/maven-3.6.0
+    export PATH=$PATH:$MAVEN_HOME/bin
+
+    # 打包
+    [root@hadoop01 opt]# wget https://github.com/electrum/hadoop-snappy/archive/master.zip
+    [root@hadoop01 hadoop-snappy-master]# mvn clean package
+    [hadoop@hadoop01 hadoop-snappy-master]$ cd target/
+    [hadoop@hadoop01 target]# tar -zxvf hadoop-snappy-0.0.1-SNAPSHOT.tar.gz
     
+    # 拷贝jar包
+    [hadoop@hadoop03 target]$ mkdir -p /mnt/opt/hbase-2.1.2/lib/native/Linux-amd64-64
+    [hadoop@hadoop01 target]$ cp hadoop-snappy-0.0.1-SNAPSHOT/lib/native/Linux-amd64-64/lib* /mnt/opt/hbase-2.1.2/lib/native/Linux-amd64-64/
+    [hadoop@hadoop01 target]$ cp hadoop-snappy-0.0.1-SNAPSHOT/lib/hadoop-snappy-0.0.1-SNAPSHOT.jar /mnt/opt/hbase-2.1.2/lib/
     
-    
-    
-    
-    
-    
-    
-    
-    
-        Caused by: java.lang.ClassNotFoundException: org.apache.htrace.SamplerBuilder
-     
-       cp $HBASE_HOME/lib/client-facing-thirdparty/htrace-core-3.1.0-incubating.jar $HBASE_HOME/lib/
-  
-        ```
+    # 配置环境变量
+    [hadoop@hadoop03 ~]$ vim .bash_profile
+    export HBASE_LIBRARY_PATH=$HBASE_LIBRARY_PATH:$HBASE_HOME/lib/native/Linux-amd64-64/:/usr/local/lib/
+    [hadoop@hadoop03 ~]$ source .bash_profile
+ 
+    # 重启hbase
+    [hadoop@hadoop01 hbase-2.1.2]$ ./bin/start-hbase.sh
+    running master, logging to /mnt/opt/hbase-2.1.2/logs/hbase-hadoop-master-hadoop01.out
+    hadoop03: running regionserver, logging to /mnt/opt/hbase-2.1.2/bin/../logs/hbase-hadoop-regionserver-hadoop03.out
+    hadoop02: running regionserver, logging to /mnt/opt/hbase-2.1.2/bin/../logs/hbase-hadoop-regionserver-hadoop02.out
+    ```
+
+2. Caused by: java.lang.ClassNotFoundException: org.apache.htrace.SamplerBuilder
+    ```bash
+    # 缺少jar包
+    $ cp $HBASE_HOME/lib/client-facing-thirdparty/htrace-core-3.1.0-incubating.jar $HBASE_HOME/lib/
+    ```
