@@ -51,8 +51,8 @@ public class Problem0922 {
     public int[] sortArrayByParityII1(int[] A) {
         int j = 1;
         for (int i = 0; i < A.length - 1; i += 2) {
-            if ((A[i] & 1) % 2 == 1) {
-                while ((A[j] & 1) == 0) {
+            if ((A[i] & 1) % 2 != 0) {
+                while ((A[j] & 1) != 0) {
                     j += 2;
                 }
 
