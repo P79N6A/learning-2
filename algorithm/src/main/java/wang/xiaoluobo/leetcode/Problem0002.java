@@ -1,8 +1,5 @@
 package wang.xiaoluobo.leetcode;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 /**
  * https://leetcode-cn.com/problems/add-two-numbers/
  *
@@ -58,18 +55,9 @@ public class Problem0002 {
             n = sum / 10;
         }
 
-        if(n > 0){
+        if (n > 0) {
             currNode.next = new ListNode(n);
         }
         return listNode.next;
-    }
-
-    public static class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode(int x) {
-            val = x;
-        }
     }
 }
