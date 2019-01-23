@@ -44,13 +44,4 @@ public class Problem0206 {
 
         return pre;
     }
-
-    private static class ListNode {
-        int val;
-        public ListNode next;
-
-        ListNode(int x) {
-            val = x;
-        }
-    }
 }
