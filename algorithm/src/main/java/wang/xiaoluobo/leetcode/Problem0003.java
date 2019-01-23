@@ -20,8 +20,8 @@ public class Problem0003 {
         System.out.println();
 
         System.out.println(problem0003.lengthOfLongestSubstring1("abcabcbb"));
-//        System.out.println(problem0003.lengthOfLongestSubstring1(" "));
-//        System.out.println(problem0003.lengthOfLongestSubstring1("dvdf"));
+        System.out.println(problem0003.lengthOfLongestSubstring1(" "));
+        System.out.println(problem0003.lengthOfLongestSubstring1("dvdf"));
         System.out.println(problem0003.lengthOfLongestSubstring1("pwwkewws"));
     }
 
