@@ -13,6 +13,7 @@ public class Problem0169 {
     public static void main(String[] args) {
         Problem0169 problem0169 = new Problem0169();
         System.out.println(problem0169.majorityElement(new int[]{2, 2, 1, 1, 1, 2, 2, 2, 2}));
+        System.out.println(problem0169.majorityElement(new int[]{6, 5, 5}));
     }
 
     /**
@@ -28,15 +29,14 @@ public class Problem0169 {
         }
 
         int count = 1, n = nums[0];
-        for (int i = 0; i < len; i++) {
-            if (count == 0) {
-                n = nums[i];
-            }
-
-            if (n != nums[i]) {
-                count--;
-            } else {
+        for (int i = 1; i < len; i++) {
+            if (n == nums[i]) {
                 count++;
+            } else {
+                count--;
+                if (count == 0) {
+                    n = nums[i + 1];
+                }
             }
         }
         return n;
