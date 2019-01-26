@@ -20,9 +20,10 @@ public class Problem0050 {
             return 1 / myPow(x, -n);
         }
 
-        if (x % 2 == 0) {
+        if (n % 2 == 1) {
             return x * myPow(x, n - 1);
         }
+
         return myPow(x * x, n / 2);
     }
 }
