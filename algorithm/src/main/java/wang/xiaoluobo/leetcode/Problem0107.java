@@ -1,7 +1,8 @@
 package wang.xiaoluobo.leetcode;
 
+import com.alibaba.fastjson.JSON;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class Problem0107 {
         t11.right = t14;
         t12.left = t15;
         t12.right = t16;
-        problem0107.levelOrderBottom(t1);
+        System.out.println(JSON.toJSONString(problem0107.levelOrderBottom(t1)));
     }
 
     private List<List<Integer>> list = new ArrayList<>();
