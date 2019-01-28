@@ -35,3 +35,29 @@
 - MyISAM支持表锁，InnoDB支持表锁和行锁，默认为行锁
 - 表级锁: 开销小，加锁快，不会出现死锁。锁定粒度大，发生锁冲突的概率最高，并发量最低
 - 行级锁: 开销大，加锁慢，会出现死锁。锁力度小，发生锁冲突的概率小，并发度最高
+
+
+## 四、mysql command
+```text
+mysql> show processlist;
++----+------+-----------------+------+---------+------+----------+------------------+
+| Id | User | Host            | db   | Command | Time | State    | Info             |
++----+------+-----------------+------+---------+------+----------+------------------+
+|  5 | root | localhost:57841 | test | Sleep   |   21 |          | NULL             |
+|  6 | root | localhost:57842 | NULL | Sleep   |   11 |          | NULL             |
+|  7 | root | localhost:57886 | NULL | Sleep   |   68 |          | NULL             |
+|  9 | root | localhost       | NULL | Query   |    0 | starting | show processlist |
++----+------+-----------------+------+---------+------+----------+------------------+
+4 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+
+```
