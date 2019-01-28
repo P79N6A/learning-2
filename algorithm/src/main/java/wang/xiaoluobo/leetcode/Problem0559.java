@@ -1,7 +1,6 @@
 package wang.xiaoluobo.leetcode;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * https://leetcode-cn.com/problems/maximum-depth-of-n-ary-tree/
@@ -25,25 +24,11 @@ public class Problem0559 {
         }
 
         int max = 1;
-        if(root.children != null) {
+        if (root.children != null) {
             for (Node node : root.children) {
                 max = Math.max(max, maxDepth(node) + 1);
             }
         }
         return max;
-    }
-
-    static class Node {
-        public int val;
-        public List<Node> children;
-
-        public Node() {
-
-        }
-
-        public Node(int _val, List<Node> _children) {
-            val = _val;
-            children = _children;
-        }
     }
 }
