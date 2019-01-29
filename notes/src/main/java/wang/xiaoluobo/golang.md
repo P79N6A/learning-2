@@ -40,6 +40,26 @@ version     print Go version
 vet         report likely mistakes in packages
 ``` 
 
+#### mac卸载go
+```bash
+wyd@wangyandong:~$ sudo rm -rf /usr/local/go
+wyd@wangyandong:~$ sudo rm -rf /usr/local/go
+wyd@wangyandong:~$ sudo rm -rf /etc/paths.d/go
+wyd@wangyandong:~$ vim ~/.bash_profile
+wyd@wangyandong:~$ pkgutil --pkgs | grep -i go
+com.googlecode.go
+wyd@wangyandong:~$ which go
+/usr/local/bin/go
+wyd@wangyandong:~$ cd /usr/local/bin/
+wyd@wangyandong:/usr/local/bin$ ll go
+lrwxr-xr-x  1 wyd  admin    26B Jan 29 14:46 go@ -> ../Cellar/go/1.10.3/bin/go
+wyd@wangyandong:/usr/local/bin$ rm -rf go
+wyd@wangyandong:/usr/local/bin$ cd ../Cellar/go
+wyd@wangyandong:/usr/local/Cellar$ rm -rf go
+wyd@wangyandong:~$ go version
+go version go1.11.5 darwin/amd64
+```
+
 #### qor
 [solution](https://github.com/qor/qor-example/issues/155)  
 ![qor01](https://github.com/Dongzai1005/learning/blob/master/notes/src/main/java/wang/xiaoluobo/images/qor01.png)
