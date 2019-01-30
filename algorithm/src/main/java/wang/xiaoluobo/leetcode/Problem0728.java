@@ -21,11 +21,10 @@ public class Problem0728 {
     public List<Integer> selfDividingNumbers(int left, int right) {
         List<Integer> list = new ArrayList<>();
         for (int i = left; i <= right; i++) {
-            int m = 10, k = 1;
             int n = i;
             boolean flag = true;
             while (n != 0) {
-                int mod = n % m;
+                int mod = n % 10;
                 if(mod == 0 || i % mod != 0){
                     flag = false;
                     break;
