@@ -1,8 +1,8 @@
 # dig
-```Bash
+```bash
 $ yum -y install bind-utils
 
-wyd@wangyandong:~$ dig api.map.baidu.com
+$ dig api.map.baidu.com
 
 ; <<>> DiG 9.10.6 <<>> api.map.baidu.com
 ;; global options: +cmd
