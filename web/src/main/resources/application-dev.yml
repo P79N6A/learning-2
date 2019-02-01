@@ -1,0 +1,28 @@
+logging:
+  level:
+    root: info
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: web
+    password: web
+    url: jdbc:mysql://localhost:3306/web?characterEncoding=utf8&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
+
+org:
+  quartz:
+    dataSource:
+      myDS:
+        driver: com.mysql.jdbc.Driver
+        URL: jdbc:mysql://localhost:3306/web_job?characterEncoding=utf8&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
+        user: web_job
+        password: web_job
+        maxConnections: 5
+    jobStore:
+      class: org.quartz.impl.jdbcjobstore.JobStoreTX
+      dataSource: myDS
+      driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+      isClustered: true
+    scheduler:
+      instanceId: AUTO
+      instanceName: clusteredScheduler

@@ -3,6 +3,7 @@ package wang.xiaoluobo.web;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @author wangyd
@@ -10,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 @MapperScan("wang.xiaoluobo.web.mapper")
+@EnableScheduling
 public class WebApplication {
 
     public static void main(String[] args) {

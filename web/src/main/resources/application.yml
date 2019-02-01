@@ -3,16 +3,14 @@ server:
   tomcat:
     uri-encoding: UTF-8
 
-spring:
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    username: web
-    password: web
-    url: jdbc:mysql://localhost:3306/web?characterEncoding=utf8&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
-
 mybatis:
-  mapperLocations: classpath:mapper/*.xml
+  mapper-locations: classpath:mapper/*.xml
 
-logging:
-  level:
-    root: info
+spring:
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  profiles:
+    active: '@activatedProperties@'
