@@ -113,8 +113,8 @@
         2. 通过构造方法构建HMaster类(c.newInstance(conf))
         3. 启动master线程，并添加到主线程中
         4. HMaster#run()
-            1. 创建JettyServer
-            2. 启动可用Master管理者
+            1. 创建JettyServer，调用私有方法 putUpJettyServer()
+            2. 启动可用Master管理者，startActiveMasterManager(infoPort)
 
 
 
