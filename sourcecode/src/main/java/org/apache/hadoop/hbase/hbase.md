@@ -102,7 +102,7 @@
     fi
     ```
 
-2. hbase java源码
+2. HMaster java源码
     1. HMaster#main()
     2. 初始化类 HMasterCommandLine
     3. 调用HMasterCommandLine父类方法doMain()，构建HBase的 Configuration 类，并添加资源hbase-default.xml和hbase-site.xml
@@ -117,9 +117,24 @@
             2. 启动可用Master管理者，startActiveMasterManager(infoPort)
 
 
+### HRegionServer
+1. shell 调用关系(参考 HMaster)
 
-
-
+2. HRegionServer java源码
+    1. HRegionServer#main()
+    2. 初始化类 HRegionServerCommandLine
+    3. 调用HMasterCommandLine父类方法doMain()，构建HBase的 Configuration 类，并添加资源hbase-default.xml和hbase-site.xml
+    4. ToolRunner#run()，解析配置信息，并执行 HRegionServerCommandLine#run()
+    5. HRegionServerCommandLine#run()
+        1. preRegistrationInitialization()
+    
+    
+    
+    
+    
+    
+    
+    
 hbase-hadoop-regionserver-hadoop02.log
 hbase-hadoop-regionserver-hadoop03.log
 
