@@ -133,7 +133,7 @@
                 3. 如果当前节点不是 HMaster，则从 zk 读取 ClusterId
                 4. 等待 HMaster 启动完成，并与 HMaster 建立 rpc 通信(创建类RegionServerProcedureManagerHost)
             2. setupClusterConnection()
-                1. createClusterConnection()
+                1. createClusterConnection()    TODO
                 2. 初始化类MetaTableLocator
             3. 创建与 HMaster rpc client
         
