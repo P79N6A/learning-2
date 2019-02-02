@@ -123,11 +123,20 @@
 2. HRegionServer java源码
     1. HRegionServer#main()
     2. 初始化类 HRegionServerCommandLine
-    3. 调用HMasterCommandLine父类方法doMain()，构建HBase的 Configuration 类，并添加资源hbase-default.xml和hbase-site.xml
+    3. 调用 HRegionServerCommandLine 父类方法doMain()，构建HBase的 Configuration 类，并添加资源hbase-default.xml和hbase-site.xml
     4. ToolRunner#run()，解析配置信息，并执行 HRegionServerCommandLine#run()
     5. HRegionServerCommandLine#run()
-        1. preRegistrationInitialization()
-    
+        1. preRegistrationInitialization() 初始化 zk path 信息
+            1. initializeZooKeeper()
+                1. 循环等待检查 MasterAddressTracker，直至不为空
+                2. 循环等待检查 ClusterStatusTracker，直至不为空
+                3. 如果当前节点不是 HMaster，则从 zk 读取 ClusterId
+                4. 等待 HMaster 启动完成，并与 HMaster 建立 rpc 通信(创建类RegionServerProcedureManagerHost)
+            2. setupClusterConnection()
+                1. createClusterConnection()
+                2. 初始化类MetaTableLocator
+            3. 创建与 HMaster rpc client
+        
     
     
     
