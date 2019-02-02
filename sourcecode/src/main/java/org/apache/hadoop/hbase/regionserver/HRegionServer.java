@@ -266,7 +266,9 @@ public class HRegionServer extends HasThread implements
     protected InfoServer infoServer;
     private JvmPauseMonitor pauseMonitor;
 
-    /** region server process name */
+    /**
+     * region server process name
+     */
     public static final String REGIONSERVER = "regionserver";
 
     MetricsRegionServer metricsRegionServer;
@@ -325,10 +327,14 @@ public class HRegionServer extends HasThread implements
     // Cache configuration for mob
     final MobCacheConfig mobCacheConfig;
 
-    /** The health check chore. */
+    /**
+     * The health check chore.
+     */
     private HealthCheckChore healthCheckChore;
 
-    /** The nonce manager chore. */
+    /**
+     * The nonce manager chore.
+     */
     private ScheduledChore nonceManagerChore;
 
     private Map<String, com.google.protobuf.Service> coprocessorServiceHandlers = Maps.newHashMap();
@@ -391,8 +397,8 @@ public class HRegionServer extends HasThread implements
      * result). Nonces are also recovered from WAL during, recovery; however, the caveats (from
      * HBASE-3787) are:
      * - WAL recovery is optimized, and under high load we won't read nearly nonce-timeout worth
-     *   of past records. If we don't read the records, we don't read and recover the nonces.
-     *   Some WALs within nonce-timeout at recovery may not even be present due to rolling/cleanup.
+     * of past records. If we don't read the records, we don't read and recover the nonces.
+     * Some WALs within nonce-timeout at recovery may not even be present due to rolling/cleanup.
      * - There's no WAL recovery during normal region move, so nonces will not be transfered.
      * We can have separate additional "Nonce WAL". It will just contain bunch of numbers and
      * won't be flushed on main path - because WAL itself also contains nonces, if we only flush
@@ -602,6 +608,11 @@ public class HRegionServer extends HasThread implements
         return nelgc;
     }
 
+    /**
+     * 初始化 zk wal path
+     *
+     * @throws IOException
+     */
     private void initializeFileSystem() throws IOException {
         // Get fs instance used by this RS.  Do we use checksum verification in the hbase? If hbase
         // checksum verification enabled, then automatically switch off hdfs checksum verification.
@@ -690,6 +701,7 @@ public class HRegionServer extends HasThread implements
      * Create a 'smarter' Connection, one that is capable of by-passing RPC if the request is to
      * the local server; i.e. a short-circuit Connection. Safe to use going to local or remote
      * server. Create this instance in a method can be intercepted and mocked in tests.
+     *
      * @throws IOException
      */
     @VisibleForTesting
@@ -704,12 +716,14 @@ public class HRegionServer extends HasThread implements
         // Create a cluster connection that when appropriate, can short-circuit and go directly to the
         // local server if the request is to the local server bypassing RPC. Can be used for both local
         // and remote invocations.
+        // 创建一个群集连接，在适当的情况下，如果请求是绕过RPC的本地服务器，则可以短路并直接转到本地服务器。可用于本地和远程调用。
         return ConnectionUtils.createShortCircuitConnection(conf, null, userProvider.getCurrent(),
                 serverName, rpcServices, rpcServices);
     }
 
     /**
      * Run test on configured codecs to make sure supporting libs are in place.
+     *
      * @param c
      * @throws IOException
      */
@@ -731,6 +745,7 @@ public class HRegionServer extends HasThread implements
 
     /**
      * Setup our cluster connection if not already initialized.
+     *
      * @throws IOException
      */
     protected synchronized void setupClusterConnection() throws IOException {
@@ -744,7 +759,7 @@ public class HRegionServer extends HasThread implements
      * All initialization needed before we go register with Master.<br>
      * Do bare minimum. Do bulk of initializations AFTER we've connected to the Master.<br>
      * In here we just put up the RpcServer, setup Connection, and ZooKeeper.
-     *
+     * <p>
      * 向Master注册之前需要进行所有初始化。
      * 尽量减少在连接到Master之后进行大量初始化。
      * 在这里只是建立了RpcServer，设置Connection和ZooKeeper。
@@ -821,8 +836,9 @@ public class HRegionServer extends HasThread implements
     /**
      * Utilty method to wait indefinitely on a znode availability while checking
      * if the region server is shut down
+     *
      * @param tracker znode tracker to use
-     * @throws IOException any IO exception, plus if the RS is stopped
+     * @throws IOException          any IO exception, plus if the RS is stopped
      * @throws InterruptedException
      */
     private void blockAndCheckIfStopped(ZKNodeTracker tracker)
@@ -857,6 +873,7 @@ public class HRegionServer extends HasThread implements
 
         try {
             if (!isStopped() && !isAborted()) {
+                // 钩子
                 ShutdownHook.install(conf, fs, this, Thread.currentThread());
                 // Initialize the RegionServerCoprocessorHost now that our ephemeral
                 // node was created, in case any coprocessors want to use ZooKeeper
@@ -867,6 +884,7 @@ public class HRegionServer extends HasThread implements
             // clusterup flag is down or hdfs went wacky. Once registered successfully, go ahead and start
             // up all Services. Use RetryCounter to get backoff in case Master is struggling to come up.
             LOG.debug("About to register with Master.");
+            // 加入重试，因为此时 HMaster 有可能并没有启动完成
             RetryCounterFactory rcf = new RetryCounterFactory(Integer.MAX_VALUE,
                     this.sleeper.getPeriod(), 1000 * 60 * 5);
             RetryCounter rc = rcf.create();
@@ -1194,7 +1212,7 @@ public class HRegionServer extends HasThread implements
      * Converts a pair of {@link RegionInfo} and {@code long} into a {@link RegionSpaceUse}
      * protobuf message.
      *
-     * @param regionInfo The RegionInfo
+     * @param regionInfo  The RegionInfo
      * @param sizeInBytes The size in bytes of the Region
      * @return The protocol buffer
      */
@@ -1372,6 +1390,8 @@ public class HRegionServer extends HasThread implements
     /*
      * Run init. Sets up wal and starts up all server threads.
      *
+     * 处理与 HMaster 通信应答
+     *
      * @param c Extra configuration.
      */
     protected void handleReportForDutyResponse(final RegionServerStartupResponse c)
@@ -1418,6 +1438,7 @@ public class HRegionServer extends HasThread implements
 
             if (updateRootDir) {
                 // initialize file system by the config fs.defaultFS and hbase.rootdir from master
+                // 通过config fs.defaultFS和master中的hbase.rootdir初始化文件系统
                 initializeFileSystem();
             }
 
@@ -1497,6 +1518,12 @@ public class HRegionServer extends HasThread implements
         }
     }
 
+    /**
+     * 写入当前节点信息到 zk
+     *
+     * @throws KeeperException
+     * @throws IOException
+     */
     private void createMyEphemeralNode() throws KeeperException, IOException {
         RegionServerInfo.Builder rsInfo = RegionServerInfo.newBuilder();
         rsInfo.setInfoPort(infoServer != null ? infoServer.getPort() : -1);
@@ -1739,6 +1766,7 @@ public class HRegionServer extends HasThread implements
 
     /**
      * Start up replication source and sink handlers.
+     *
      * @throws IOException
      */
     private void startReplicationService() throws IOException {
@@ -1938,6 +1966,7 @@ public class HRegionServer extends HasThread implements
 
     /**
      * Puts up the webui.
+     *
      * @return Returns final port -- maybe different from what we started with.
      * @throws IOException
      */
@@ -2052,9 +2081,10 @@ public class HRegionServer extends HasThread implements
 
     /**
      * Stops the regionserver.
-     * @param msg Status message
+     *
+     * @param msg   Status message
      * @param force True if this is a regionserver abort
-     * @param user The user executing the stop request, or null if no user is associated
+     * @param user  The user executing the stop request, or null if no user is associated
      */
     public void stop(final String msg, final boolean force, final User user) {
         if (!this.stopped) {
@@ -2260,10 +2290,8 @@ public class HRegionServer extends HasThread implements
      * it is using and without notifying the master. Used unit testing and on
      * catastrophic events such as HDFS is yanked out from under hbase or we OOME.
      *
-     * @param reason
-     *          the reason we are aborting
-     * @param cause
-     *          the exception that caused the abort, or null
+     * @param reason the reason we are aborting
+     * @param cause  the exception that caused the abort, or null
      */
     @Override
     public void abort(String reason, Throwable cause) {
@@ -2415,6 +2443,7 @@ public class HRegionServer extends HasThread implements
      * Get the current master from ZooKeeper and open the RPC connection to it. To get a fresh
      * connection, the current rssStub must be null. Method will block until a master is available.
      * You can break from this block by requesting the server stop.
+     *
      * @param refresh If true then master address will be read from ZK, otherwise use cached data
      * @return master + port, or null if server has been stopped
      */
@@ -2501,6 +2530,8 @@ public class HRegionServer extends HasThread implements
      * @return A Map of key/value configurations we got from the Master else
      * null if we failed to register.
      * @throws IOException
+     *
+     * 向 HMaster 上报心跳
      */
     private RegionServerStartupResponse reportForDuty() throws IOException {
         if (this.masterless) return RegionServerStartupResponse.getDefaultInstance();
@@ -2524,6 +2555,7 @@ public class HRegionServer extends HasThread implements
             request.setPort(port);
             request.setServerStartCode(this.startcode);
             request.setServerCurrentTime(now);
+            // protobuf 封装的通信协议，与 HMaster 进行 rpc 通信
             result = this.rssStub.regionServerStartup(null, request.build());
         } catch (ServiceException se) {
             IOException ioe = ProtobufUtil.getRemoteException(se);
@@ -2581,6 +2613,7 @@ public class HRegionServer extends HasThread implements
 
     /**
      * Close meta region if we carry it
+     *
      * @param abort Whether we're running an abort.
      */
     void closeMetaTableRegions(final boolean abort) {
@@ -2604,6 +2637,7 @@ public class HRegionServer extends HasThread implements
      * Schedule closes on all user regions.
      * Should be safe calling multiple times because it wont' close regions
      * that are already closed or that are closing.
+     *
      * @param abort Whether we're running an abort.
      */
     void closeUserRegions(final boolean abort) {
@@ -2621,7 +2655,9 @@ public class HRegionServer extends HasThread implements
         }
     }
 
-    /** @return the info server */
+    /**
+     * @return the info server
+     */
     public InfoServer getInfoServer() {
         return infoServer;
     }
@@ -2640,7 +2676,6 @@ public class HRegionServer extends HasThread implements
     }
 
     /**
-     *
      * @return the configuration
      */
     @Override
@@ -2648,7 +2683,9 @@ public class HRegionServer extends HasThread implements
         return conf;
     }
 
-    /** @return the write lock for the server */
+    /**
+     * @return the write lock for the server
+     */
     ReentrantReadWriteLock.WriteLock getWriteLock() {
         return lock.writeLock();
     }
@@ -2679,8 +2716,8 @@ public class HRegionServer extends HasThread implements
 
     /**
      * @return A new Map of online regions sorted by region off-heap size with the first entry being
-     *   the biggest.  If two regions are the same size, then the last one found wins; i.e. this
-     *   method may NOT return all regions.
+     * the biggest.  If two regions are the same size, then the last one found wins; i.e. this
+     * method may NOT return all regions.
      */
     SortedMap<Long, HRegion> getCopyOfOnlineRegionsSortedByOffHeapSize() {
         // we'll sort the regions in reverse
@@ -2700,8 +2737,8 @@ public class HRegionServer extends HasThread implements
 
     /**
      * @return A new Map of online regions sorted by region heap size with the first entry being the
-     *   biggest.  If two regions are the same size, then the last one found wins; i.e. this method
-     *   may NOT return all regions.
+     * biggest.  If two regions are the same size, then the last one found wins; i.e. this method
+     * may NOT return all regions.
      */
     SortedMap<Long, HRegion> getCopyOfOnlineRegionsSortedByOnHeapSize() {
         // we'll sort the regions in reverse
@@ -2726,7 +2763,9 @@ public class HRegionServer extends HasThread implements
         return this.startcode;
     }
 
-    /** @return reference to FlushRequester */
+    /**
+     * @return reference to FlushRequester
+     */
     @Override
     public FlushRequester getFlushRequester() {
         return this.cacheFlusher;
@@ -2951,6 +2990,7 @@ public class HRegionServer extends HasThread implements
      * closed during a disable, etc., it will not be included in the returned list.
      * So, the returned list may not necessarily be ALL regions in this table, its
      * all the ONLINE regions in the table.
+     *
      * @param tableName
      * @return Online regions from <code>tableName</code>
      */
@@ -2981,6 +3021,7 @@ public class HRegionServer extends HasThread implements
     /**
      * Gets the online tables in this RS.
      * This method looks at the in-memory onlineRegions.
+     *
      * @return all the online tables in this RS
      */
     public Set<TableName> getOnlineTables() {
@@ -3020,6 +3061,7 @@ public class HRegionServer extends HasThread implements
 
     /**
      * Try to close the region, logs a warning on failure but continues.
+     *
      * @param region Region to close
      */
     private void closeRegionIgnoreErrors(RegionInfo region, final boolean abort) {
@@ -3043,11 +3085,11 @@ public class HRegionServer extends HasThread implements
      * coprocessors are not called in this case. A NotServingRegionException exception is thrown.
      * </p>
      * <p>
-     *   If a close was in progress, this new request will be ignored, and an exception thrown.
+     * If a close was in progress, this new request will be ignored, and an exception thrown.
      * </p>
      *
      * @param encodedName Region to close
-     * @param abort True if we are aborting
+     * @param abort       True if we are aborting
      * @return True if closed a region.
      * @throws NotServingRegionException if the region is not online
      */
@@ -3150,7 +3192,7 @@ public class HRegionServer extends HasThread implements
 
     /**
      * @return HRegion for the passed binary <code>regionName</code> or null if
-     *         named region is not member of the online regions.
+     * named region is not member of the online regions.
      */
     public HRegion getOnlineRegion(final byte[] regionName) {
         String encodedRegionName = RegionInfo.encodeRegionName(regionName);
@@ -3186,8 +3228,7 @@ public class HRegionServer extends HasThread implements
     /**
      * Protected Utility method for safely obtaining an HRegion handle.
      *
-     * @param regionName
-     *          Name of online {@link HRegion} to return
+     * @param regionName Name of online {@link HRegion} to return
      * @return {@link HRegion} for <code>regionName</code>
      * @throws NotServingRegionException
      */
@@ -3297,6 +3338,7 @@ public class HRegionServer extends HasThread implements
     /**
      * Return the favored nodes for a region given its encoded name. Look at the
      * comment around {@link #regionFavoredNodesMap} on why it is InetSocketAddress[]
+     *
      * @param encodedRegionName
      * @return array of favored locations
      */
@@ -3572,6 +3614,7 @@ public class HRegionServer extends HasThread implements
 
     /**
      * For testing
+     *
      * @return whether all wal roll request finished for this regionserver
      */
     @VisibleForTesting

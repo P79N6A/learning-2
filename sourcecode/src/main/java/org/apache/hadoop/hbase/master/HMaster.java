@@ -480,7 +480,7 @@ public class HMaster extends HRegionServer implements MasterServices {
             if (!conf.getBoolean("hbase.testing.nocluster", false)) {
                 Threads.setDaemonThreadRunning(new Thread(() -> {
                     try {
-                        // 启动jetty server
+                        // 启动jetty server(Info Server)，响应 web 页面请求
                         int infoPort = putUpJettyServer();
                         // 向zk写数据
                         startActiveMasterManager(infoPort);
