@@ -707,6 +707,7 @@ public class HRegionServer extends HasThread implements
     @VisibleForTesting
     protected ClusterConnection createClusterConnection() throws IOException {
         Configuration conf = this.conf;
+        // 从配置文件读取 zk 配置
         if (conf.get(HConstants.CLIENT_ZOOKEEPER_QUORUM) != null) {
             // Use server ZK cluster for server-issued connections, so we clone
             // the conf and unset the client ZK related properties
@@ -750,7 +751,9 @@ public class HRegionServer extends HasThread implements
      */
     protected synchronized void setupClusterConnection() throws IOException {
         if (clusterConnection == null) {
+            // 创建集群节点间的连接
             clusterConnection = createClusterConnection();
+            // 创建 meta table locator，此类可直接向 zk 中进行读写
             metaTableLocator = new MetaTableLocator();
         }
     }
@@ -796,10 +799,12 @@ public class HRegionServer extends HasThread implements
         // Create the master address tracker, register with zk, and start it.  Then
         // block until a master is available.  No point in starting up if no master
         // running.
+        // 创建 master 地址跟踪器，注册 zk，然后启动它。然后阻止直到 master 可用。如果没有 master 启动，没有任何启动。
         blockAndCheckIfStopped(this.masterAddressTracker);
 
         // Wait on cluster being up.  Master will set this flag up in zookeeper
         // when ready.
+        // 等待集群运行。准备好后，Master 会在 zookeeper 中设置此标志。
         blockAndCheckIfStopped(this.clusterStatusTracker);
 
         // If we are HMaster then the cluster id should have already been set.
@@ -877,6 +882,7 @@ public class HRegionServer extends HasThread implements
                 ShutdownHook.install(conf, fs, this, Thread.currentThread());
                 // Initialize the RegionServerCoprocessorHost now that our ephemeral
                 // node was created, in case any coprocessors want to use ZooKeeper
+                // 初始化 RegionServerCoprocessorHost 的临时节点已经创建，以防任何协处理器想要使用ZooKeeper
                 this.rsHost = new RegionServerCoprocessorHost(this, this.conf);
             }
 
@@ -919,6 +925,7 @@ public class HRegionServer extends HasThread implements
             long lastMsg = System.currentTimeMillis();
             long oldRequestCount = -1;
             // The main run loop.
+            // 重试至连接 master 成功
             while (!isStopped() && isHealthy()) {
                 if (!isClusterUp()) {
                     if (isOnlineRegionsEmpty()) {

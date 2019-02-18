@@ -126,24 +126,18 @@
     3. 调用 HRegionServerCommandLine 父类方法doMain()，构建HBase的 Configuration 类，并添加资源hbase-default.xml和hbase-site.xml
     4. ToolRunner#run()，解析配置信息，并执行 HRegionServerCommandLine#run()
     5. HRegionServerCommandLine#run()
-        1. preRegistrationInitialization() 初始化 zk path 信息
+        1. HRegionServer#preRegistrationInitialization() 初始化 zk path 信息
             1. initializeZooKeeper()
                 1. 循环等待检查 MasterAddressTracker，直至不为空
                 2. 循环等待检查 ClusterStatusTracker，直至不为空
                 3. 如果当前节点不是 HMaster，则从 zk 读取 ClusterId
                 4. 等待 HMaster 启动完成，并与 HMaster 建立 rpc 通信(创建类RegionServerProcedureManagerHost)
             2. setupClusterConnection()
-                1. createClusterConnection()    TODO
+                1. createClusterConnection()
+                    1. 创建短路本地连接的 RPC 连接，ClusterConnection#createShortCircuitConnection()
                 2. 初始化类MetaTableLocator
             3. 创建与 HMaster rpc client
         
-    
-    
-    
-    
-    
-    
-    
 hbase-hadoop-regionserver-hadoop02.log
 hbase-hadoop-regionserver-hadoop03.log
 
