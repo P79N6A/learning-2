@@ -137,24 +137,3 @@
                     1. 创建短路本地连接的 RPC 连接，ClusterConnection#createShortCircuitConnection()
                 2. 初始化类MetaTableLocator
             3. 创建与 HMaster rpc client
-        
-hbase-hadoop-regionserver-hadoop02.log
-hbase-hadoop-regionserver-hadoop03.log
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
