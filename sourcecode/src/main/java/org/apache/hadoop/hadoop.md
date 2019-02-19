@@ -2,29 +2,67 @@
 
 ## [hdfs 启动流程](http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html)
 ### NameNode
-org.apache.hadoop.hdfs.server.namenode.NameNode
-```bash
-"$HADOOP_PREFIX/sbin/hadoop-daemons.sh" \
-  --config "$HADOOP_CONF_DIR" \
-  --hostnames "$NAMENODES" \
-  --script "$bin/hdfs" start namenode $nameStartOpt
-```
+1. NameNode shell
+    ```bash
+    # ./sbin/start-dfs.sh
+    "$HADOOP_PREFIX/sbin/hadoop-daemons.sh" \
+      --config "$HADOOP_CONF_DIR" \
+      --hostnames "$NAMENODES" \
+      --script "$bin/hdfs" start namenode $nameStartOpt
+    ```
+    
+    ```bash
+    # ./sbin/hadoop-daemons.sh
+    exec "$bin/slaves.sh" --config $HADOOP_CONF_DIR cd "$HADOOP_PREFIX" \; "$bin/hadoop-daemon.sh" --config $HADOOP_CONF_DIR "$@"
+    ```
 
-NameNode#main() --> NameNode#createNameNode() --> DefaultMetricsSystem.initialize() --> new MetricsSystemImpl() --> new NameNode()
+    ```bash
+    # ./bin/hdfs
+    if [ "$COMMAND" = "namenode" ] ; then
+      CLASS='org.apache.hadoop.hdfs.server.namenode.NameNode'
+      HADOOP_OPTS="$HADOOP_OPTS $HADOOP_NAMENODE_OPTS"
+    fi
+    exec "$JAVA" -Dproc_$COMMAND $JAVA_HEAP_MAX $HADOOP_OPTS $CLASS "$@"
+    ```
+    
+2. NameNode java源码
+    1. NameNode#main()
+    2. NameNode#createNameNode()
+    3. 初始化采集系统 DefaultMetricsSystem#initialize()
+    4. MetricsSystemImpl#init()
+    5. 创建 NameNode 对象
 
 
 ### DataNode
-```bash
-if [ -n "$HADOOP_SECURE_DN_USER" ]; then
-  echo \
-    "Attempting to start secure cluster, skipping datanodes. " \
-    "Run start-secure-dns.sh as root to complete startup."
-else
-  "$HADOOP_PREFIX/sbin/hadoop-daemons.sh" \
-    --config "$HADOOP_CONF_DIR" \
-    --script "$bin/hdfs" start datanode $dataStartOpt
-fi
-```
+1. DataNode shell
+    ```bash
+    # ./sbin/start-dfs.sh
+    if [ -n "$HADOOP_SECURE_DN_USER" ]; then
+      echo \
+        "Attempting to start secure cluster, skipping datanodes. " \
+        "Run start-secure-dns.sh as root to complete startup."
+    else
+      "$HADOOP_PREFIX/sbin/hadoop-daemons.sh" \
+        --config "$HADOOP_CONF_DIR" \
+        --script "$bin/hdfs" start datanode $dataStartOpt
+    fi
+    ```
+    
+    ```bash
+    # ./sbin/hadoop-daemons.sh
+    exec "$bin/slaves.sh" --config $HADOOP_CONF_DIR cd "$HADOOP_PREFIX" \; "$bin/hadoop-daemon.sh" --config $HADOOP_CONF_DIR "$@"
+    ```
+    
+    ```bash
+    # ./bin/hdfs
+    if [ "$COMMAND" = "namenode" ] ; then
+      CLASS='org.apache.hadoop.hdfs.server.namenode.NameNode'
+      HADOOP_OPTS="$HADOOP_OPTS $HADOOP_NAMENODE_OPTS"
+    fi
+    exec "$JAVA" -Dproc_$COMMAND $JAVA_HEAP_MAX $HADOOP_OPTS $CLASS "$@"
+    ```
+
+2. DataNode java源码
 
 ### Secondary NameNode
 ```bash
@@ -40,6 +78,19 @@ if [ -n "$SECONDARY_NAMENODES" ]; then
 fi
 ```
 
+```bash
+# ./sbin/hadoop-daemons.sh
+exec "$bin/slaves.sh" --config $HADOOP_CONF_DIR cd "$HADOOP_PREFIX" \; "$bin/hadoop-daemon.sh" --config $HADOOP_CONF_DIR "$@"
+```
+
+```bash
+# ./bin/hdfs
+if [ "$COMMAND" = "namenode" ] ; then
+  CLASS='org.apache.hadoop.hdfs.server.namenode.NameNode'
+  HADOOP_OPTS="$HADOOP_OPTS $HADOOP_NAMENODE_OPTS"
+fi
+exec "$JAVA" -Dproc_$COMMAND $JAVA_HEAP_MAX $HADOOP_OPTS $CLASS "$@"
+```
 
 ```bash
 # start resourceManager
