@@ -187,6 +187,7 @@ import static org.apache.hadoop.util.ToolRunner.confirmPrompt;
 @InterfaceAudience.Private
 public class NameNode implements NameNodeStatusMXBean {
   static{
+    // 初始化 HdfsConfiguration，执行其 static 代码块，加载资源到内存
     HdfsConfiguration.init();
   }
 
@@ -1552,6 +1553,7 @@ public class NameNode implements NameNodeStatusMXBean {
     if (conf == null)
       conf = new HdfsConfiguration();
     // Parse out some generic args into Configuration.
+    // 解析通用配置
     GenericOptionsParser hParser = new GenericOptionsParser(conf, argv);
     argv = hParser.getRemainingArgs();
     // Parse the rest, NN specific args.
@@ -1622,6 +1624,7 @@ public class NameNode implements NameNodeStatusMXBean {
         return null;
       }
       default: {
+        // 初始化
         DefaultMetricsSystem.initialize("NameNode");
         return new NameNode(conf);
       }
@@ -1691,9 +1694,11 @@ public class NameNode implements NameNodeStatusMXBean {
     }
 
     try {
+      // 打印启动/关闭 log
       StringUtils.startupShutdownMessage(NameNode.class, argv, LOG);
       NameNode namenode = createNameNode(argv, null);
       if (namenode != null) {
+        // 加入main 线程运行
         namenode.join();
       }
     } catch (Throwable e) {
