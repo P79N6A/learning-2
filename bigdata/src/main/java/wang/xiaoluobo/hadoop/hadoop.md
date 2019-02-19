@@ -450,7 +450,7 @@ drwxr-xr-x   - hadoop supergroup          0 2018-09-06 17:55 /user
 ```
 
 ##### 11. hadoop命令行
-- hdfs
+- [hdfs](http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/FileSystemShell.html)
 ```Bash
 [hadoop@bigdata01 bin]$ ./hdfs dfs -help
 Usage: hadoop fs [generic options]
