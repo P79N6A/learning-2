@@ -77,7 +77,7 @@ class NamespaceImpl {
                                 new Callable<Object>() {
                                     @Override
                                     public Object call() throws Exception {
-                                        ZKPaths.mkdirs(zookeeperClient.getZooKeeper(), ZKPaths.makePath("/", namespace), true, client.getAclProvider(), true);
+                                        ZKPaths.mkdirs(zookeeperClient.getZooKeeper(), ZKPaths.makePath("/", namespace), true, client.getAclProvider());
                                         return null;
                                     }
                                 }
