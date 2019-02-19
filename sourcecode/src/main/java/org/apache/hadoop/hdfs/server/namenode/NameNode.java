@@ -430,6 +430,7 @@ public class NameNode implements NameNodeStatusMXBean {
    * is overriden.
    */
   public void setClientNamenodeAddress(Configuration conf) {
+    // 从配置文件获取，hdfs://hadoop01:9000
     String nnAddr = conf.get(FS_DEFAULT_NAME_KEY);
     if (nnAddr == null) {
       // default fs is not set.
@@ -668,10 +669,13 @@ public class NameNode implements NameNodeStatusMXBean {
   
   /**
    * Initialize name-node.
+   *
+   * 初始化 NameNode
    * 
    * @param conf the configuration
    */
   protected void initialize(Configuration conf) throws IOException {
+    // 没有配置
     if (conf.get(HADOOP_USER_GROUP_METRICS_PERCENTILES_INTERVALS) == null) {
       String intervals = conf.get(DFS_METRICS_PERCENTILES_INTERVALS_KEY);
       if (intervals != null) {
@@ -683,6 +687,7 @@ public class NameNode implements NameNodeStatusMXBean {
     UserGroupInformation.setConfiguration(conf);
     loginAsNameNodeUser(conf);
 
+    // NameNode 信息采集
     NameNode.initMetrics(conf, this.getRole());
     StartupProgressMetrics.register(startupProgress);
 
@@ -896,8 +901,12 @@ public class NameNode implements NameNodeStatusMXBean {
     this.conf = conf;
     this.role = role;
     setClientNamenodeAddress(conf);
+
+    // 没有配置, null
     String nsId = getNameServiceId(conf);
+    // 没有配置, null
     String namenodeId = HAUtil.getNameNodeId(conf, nsId);
+    // 没有配置, false
     this.haEnabled = HAUtil.isHAEnabled(conf, nsId);
     state = createHAState(getStartupOption(conf));
     this.allowStaleStandbyReads = HAUtil.shouldAllowStandbyReads(conf);
@@ -931,6 +940,11 @@ public class NameNode implements NameNodeStatusMXBean {
     }
   }
 
+  /**
+   * 不配置 NameNode HA 默认返回 ActiveState
+   * @param startOpt
+   * @return
+   */
   protected HAState createHAState(StartupOption startOpt) {
     if (!haEnabled || startOpt == StartupOption.UPGRADE 
         || startOpt == StartupOption.UPGRADEONLY) {
@@ -1488,6 +1502,11 @@ public class NameNode implements NameNodeStatusMXBean {
     conf.set(DFS_NAMENODE_STARTUP_KEY, opt.name());
   }
 
+  /**
+   * 默认返回 -regular
+   * @param conf
+   * @return
+   */
   public static StartupOption getStartupOption(Configuration conf) {
     return StartupOption.valueOf(conf.get(DFS_NAMENODE_STARTUP_KEY,
                                           StartupOption.REGULAR.toString()));
@@ -1641,7 +1660,11 @@ public class NameNode implements NameNodeStatusMXBean {
    * to key, to set up the generic configuration. Once this is done, only
    * generic version of the configuration is read in rest of the code, for
    * backward compatibility and simpler code changes.
-   * 
+   *
+   * 为一组namenode和secondary namenode/backup/checkpointer设置配置，这些配置在逻辑名称服务ID下分组。特定于它们的配置键的后缀设置为已配置的nameserviceId。
+   *
+   * 此方法将格式为key.nameserviceId的特定键的值复制到key，以设置通用配置。完成此操作后，只有在其余代码中读取配置的通用版本，以实现向后兼容性和更简单的代码更改。
+   *
    * @param conf
    *          Configuration object to lookup specific key and to set the value
    *          to the key passed. Note the conf object is modified

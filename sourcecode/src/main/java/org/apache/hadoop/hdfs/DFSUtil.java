@@ -1019,7 +1019,12 @@ public class DFSUtil {
    * determines the nameservice Id by matching the local node's address with the
    * configured addresses. When a match is found, it returns the nameservice Id
    * from the corresponding configuration key.
-   * 
+   *
+   * 通过将{@code addressKey}与本地节点的地址相匹配来获取nameservice Id。
+   *
+   * 如果未专门配置{@link DFSConfigKeys＃DFS_NAMESERVICE_ID}，并且配置了多个名称服务Id，
+   * 则此方法通过将本地节点的地址与配置的地址匹配来确定名称服务Id。找到匹配项后，它将从相应的配置键返回nameservice Id。
+   *
    * @param conf Configuration
    * @param addressKey configuration key to get the address.
    * @return nameservice Id on success, null if federation is not configured.
@@ -1035,7 +1040,7 @@ public class DFSUtil {
       return nsIds.toArray(new String[1])[0];
     }
     String nnId = conf.get(DFS_HA_NAMENODE_ID_KEY);
-    
+
     return getSuffixIDs(conf, addressKey, null, nnId, LOCAL_ADDRESS_MATCHER)[0];
   }
   

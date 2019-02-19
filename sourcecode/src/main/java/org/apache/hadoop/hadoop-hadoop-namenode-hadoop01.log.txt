@@ -17,6 +17,7 @@ STARTUP_MSG:   java = 1.8.0_112
 2019-01-21 15:28:49,068 INFO org.apache.hadoop.metrics2.impl.MetricsSystemImpl: NameNode metrics system started
 2019-01-21 15:28:49,088 INFO org.apache.hadoop.hdfs.server.namenode.NameNode: fs.defaultFS is hdfs://hadoop01:9000
 2019-01-21 15:28:49,091 INFO org.apache.hadoop.hdfs.server.namenode.NameNode: Clients are to use hadoop01:9000 to access this namenode/service.
+
 2019-01-21 15:28:49,329 INFO org.apache.hadoop.util.JvmPauseMonitor: Starting JVM pause monitor
 2019-01-21 15:28:49,345 INFO org.apache.hadoop.hdfs.DFSUtil: Starting Web-server for hdfs at: http://0.0.0.0:50070
 2019-01-21 15:28:49,397 INFO org.mortbay.log: Logging to org.slf4j.impl.Log4jLoggerAdapter(org.mortbay.log) via org.mortbay.log.Slf4jLog
