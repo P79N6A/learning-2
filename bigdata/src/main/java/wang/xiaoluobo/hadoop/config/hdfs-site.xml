@@ -17,18 +17,22 @@
 <!-- Put site-specific property overrides in this file. -->
 
 <configuration>
+    <!--secondary namenode-->
     <property>
       <name>dfs.namenode.secondary.http-address</name>
       <value>bigdata01:50090</value>
     </property>
+    <!--hdfs 复本数量-->
     <property>
       <name>dfs.replication</name>
       <value>2</value>
     </property>
+    <!--hdfs namenode 存储目录-->
     <property>
       <name>dfs.namenode.name.dir</name>
       <value>file:/mnt/data/hadoop/hdfs/name</value>
     </property>
+    <!--hdfs datanode 存储目录-->
     <property>
       <name>dfs.datanode.data.dir</name>
       <value>file:/mnt/data/hadoop/hdfs/data</value>

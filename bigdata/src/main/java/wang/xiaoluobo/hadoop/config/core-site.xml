@@ -17,6 +17,7 @@
 <!-- Put site-specific property overrides in this file. -->
 
 <configuration>
+    <!--默认的 dfs 访问地址-->
      <property>
          <name>fs.defaultFS</name>
          <value>hdfs://bigdata01:9000</value>
