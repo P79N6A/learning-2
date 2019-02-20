@@ -689,18 +689,22 @@ public class NameNode implements NameNodeStatusMXBean {
 
     // NameNode 信息采集
     NameNode.initMetrics(conf, this.getRole());
+    // 注册需要采集的信息
     StartupProgressMetrics.register(startupProgress);
 
+    // jvm pause monitor
     pauseMonitor = new JvmPauseMonitor(conf);
     pauseMonitor.start();
     metrics.getJvmMetrics().setPauseMonitor(pauseMonitor);
 
+    // NameNode 启动 http server(jetty server), port 50070
     if (NamenodeRole.NAMENODE == role) {
       startHttpServer(conf);
     }
 
     loadNamesystem(conf);
 
+    // 创建 rpc server
     rpcServer = createRpcServer(conf);
     if (clientNamenodeAddress == null) {
       // This is expected for MiniDFSCluster. Set it now using 
@@ -904,19 +908,20 @@ public class NameNode implements NameNodeStatusMXBean {
     setClientNamenodeAddress(conf);
 
     // 没有配置, null
-
-    // TODO
-    // TODO
-    // TODO
     String nsId = getNameServiceId(conf);
     // 没有配置, null
     String namenodeId = HAUtil.getNameNodeId(conf, nsId);
     // 没有配置, false
     this.haEnabled = HAUtil.isHAEnabled(conf, nsId);
+
+    // ACTIVE_STATE
     state = createHAState(getStartupOption(conf));
     this.allowStaleStandbyReads = HAUtil.shouldAllowStandbyReads(conf);
+
+    // 创建 NameNode HA Context
     this.haContext = createHAContext();
     try {
+      // 向 Configuration 中添加通用 keys
       initializeGenericKeys(conf, nsId, namenodeId);
       initialize(conf);
       try {
@@ -1672,9 +1677,11 @@ public class NameNode implements NameNodeStatusMXBean {
    * generic version of the configuration is read in rest of the code, for
    * backward compatibility and simpler code changes.
    *
-   * 为一组namenode和secondary namenode/backup/checkpointer设置配置，这些配置在逻辑名称服务ID下分组。特定于它们的配置键的后缀设置为已配置的nameserviceId。
+   * 为一组namenode和secondary namenode/backup/checkpointer设置配置，这些配置在逻辑名称服务ID下分组。
+   * 特定于它们的配置键的后缀设置为已配置的nameserviceId。
    *
-   * 此方法将格式为key.nameserviceId的特定键的值复制到key，以设置通用配置。完成此操作后，只有在其余代码中读取配置的通用版本，以实现向后兼容性和更简单的代码更改。
+   * 此方法将格式为key.nameserviceId的特定键的值复制到key，以设置通用配置。完成此操作后，
+   * 只有在其余代码中读取配置的通用版本，以实现向后兼容性和更简单的代码更改。
    *
    * @param conf
    *          Configuration object to lookup specific key and to set the value

@@ -155,6 +155,8 @@ import static org.apache.hadoop.util.Time.now;
  * FSNamesystem does the actual bookkeeping work for the
  * DataNode.
  *
+ * FSNamesystem为DataNode执行实际的簿记工作。
+ *
  * It tracks several important tables.
  *
  * 1)  valid fsname --> blocklist  (kept on disk, logged)
@@ -525,6 +527,8 @@ public class FSNamesystem implements Namesystem, FSNamesystemMBean,
   /**
    * Instantiates an FSNamesystem loaded from the image and edits
    * directories specified in the passed Configuration.
+   *
+   * 实例化从映像加载的FSNamesystem并编辑在传递的Configuration中指定的目录。
    *
    * @param conf the Configuration which specifies the storage directories
    *             from which to load
