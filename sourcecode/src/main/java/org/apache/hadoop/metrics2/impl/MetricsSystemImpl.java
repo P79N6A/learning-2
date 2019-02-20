@@ -619,6 +619,10 @@ public class MetricsSystemImpl extends MetricsSystem implements MetricsSource {
         return sources.get(name);
     }
 
+    /**
+     * 默认 InitMode.NORMAL 模式
+     * @return
+     */
     private InitMode initMode() {
         LOG.debug("from system property: "+ System.getProperty(MS_INIT_MODE_KEY));
         LOG.debug("from environment variable: "+ System.getenv(MS_INIT_MODE_KEY));

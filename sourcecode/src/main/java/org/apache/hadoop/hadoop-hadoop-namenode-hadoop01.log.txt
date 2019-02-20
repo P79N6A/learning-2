@@ -15,6 +15,7 @@ STARTUP_MSG:   java = 1.8.0_112
 2019-01-21 15:28:48,965 INFO org.apache.hadoop.metrics2.impl.MetricsConfig: loaded properties from hadoop-metrics2.properties
 2019-01-21 15:28:49,068 INFO org.apache.hadoop.metrics2.impl.MetricsSystemImpl: Scheduled Metric snapshot period at 10 second(s).
 2019-01-21 15:28:49,068 INFO org.apache.hadoop.metrics2.impl.MetricsSystemImpl: NameNode metrics system started
+
 2019-01-21 15:28:49,088 INFO org.apache.hadoop.hdfs.server.namenode.NameNode: fs.defaultFS is hdfs://hadoop01:9000
 2019-01-21 15:28:49,091 INFO org.apache.hadoop.hdfs.server.namenode.NameNode: Clients are to use hadoop01:9000 to access this namenode/service.
 

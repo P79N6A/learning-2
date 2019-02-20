@@ -671,7 +671,7 @@ public class NameNode implements NameNodeStatusMXBean {
    * Initialize name-node.
    *
    * 初始化 NameNode
-   * 
+   *
    * @param conf the configuration
    */
   protected void initialize(Configuration conf) throws IOException {
@@ -900,9 +900,14 @@ public class NameNode implements NameNodeStatusMXBean {
         new TracerConfigurationManager(NAMENODE_HTRACE_PREFIX, conf);
     this.conf = conf;
     this.role = role;
+    // 提供 NameNode 服务，hdfs://hadoop01:9000
     setClientNamenodeAddress(conf);
 
     // 没有配置, null
+
+    // TODO
+    // TODO
+    // TODO
     String nsId = getNameServiceId(conf);
     // 没有配置, null
     String namenodeId = HAUtil.getNameNodeId(conf, nsId);
@@ -1078,7 +1083,9 @@ public class NameNode implements NameNodeStatusMXBean {
    * Verify that configured directories exist, then
    * Interactively confirm that formatting is desired 
    * for each existing directory and format them.
-   * 
+   *
+   * 验证配置的目录是否存在，然后以交互方式确认每个现有目录都需要格式化并格式化它们。
+   *
    * @param conf configuration to use
    * @param force if true, format regardless of whether dirs exist
    * @return true if formatting was aborted, false otherwise
@@ -1371,7 +1378,9 @@ public class NameNode implements NameNodeStatusMXBean {
     StartupOption startOpt = StartupOption.REGULAR;
     for(int i=0; i < argsLen; i++) {
       String cmd = args[i];
+      // 格式化 NameNode 时执行
       if (StartupOption.FORMAT.getName().equalsIgnoreCase(cmd)) {
+        // 赋值
         startOpt = StartupOption.FORMAT;
         for (i = i + 1; i < argsLen; i++) {
           if (args[i].equalsIgnoreCase(StartupOption.CLUSTERID.getName())) {
@@ -1581,9 +1590,11 @@ public class NameNode implements NameNodeStatusMXBean {
       printUsage(System.err);
       return null;
     }
+    // Configuration添加启动项参数
     setStartupOption(conf, startOpt);
 
     switch (startOpt) {
+      // 格式化 NameNode 时执行
       case FORMAT: {
         boolean aborted = format(conf, startOpt.getForceFormat(),
             startOpt.getInteractiveFormat());
@@ -1643,7 +1654,7 @@ public class NameNode implements NameNodeStatusMXBean {
         return null;
       }
       default: {
-        // 初始化
+        // 初始化信息采集
         DefaultMetricsSystem.initialize("NameNode");
         return new NameNode(conf);
       }
