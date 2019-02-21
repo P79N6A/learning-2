@@ -27,3 +27,5 @@ done
 
 echo "open-api stop success"
 ```
+
+> kill -9 `ps -ef | grep open-api | grep -v grep | awk '{print $2}'`
