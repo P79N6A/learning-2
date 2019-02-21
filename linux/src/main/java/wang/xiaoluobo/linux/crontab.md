@@ -26,4 +26,4 @@ do
 done
 
 echo "open-api stop success"
-```$
+```
