@@ -1,19 +1,22 @@
 ### bigdata
   大数据安装及使用，及问题处理等
   
-- [zookeeper](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/zookeeper/zookeeper.md)
-- [hadoop](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/hadoop/hadoop.md)
-- [flink](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/flink/flink.md)
+- [zookeeper](./src/main/java/wang/xiaoluobo/zookeeper/zookeeper.md)
+- [hadoop](./src/main/java/wang/xiaoluobo/hadoop/hadoop.md)
+- [flink](./src/main/java/wang/xiaoluobo/flink/flink.md)
 - rabbitmq
-- [kafka](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/kafka/kafka.md)
-- [kafka-manager](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/kafka/kafka-manager.md)
-- redis
-- [mongodb](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/mongodb/mongodb.md)
-- [mysql](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/mysql/mysql.md)
-- [hive](https://github.com/Dongzai1005/learning/blob/master/bigdata/src/main/java/wang/xiaoluobo/hive/hive.md)
-- hbase
-- flume
-- ELK
+- [kafka](./src/main/java/wang/xiaoluobo/kafka/kafka.md)
+- [kafka-manager](./src/main/java/wang/xiaoluobo/kafka/kafka-manager.md)
+- [redis](./src/main/java/wang/xiaoluobo/redis/redis.md)
+- [mongodb](./src/main/java/wang/xiaoluobo/mongodb/mongodb.md)
+- [mysql](./src/main/java/wang/xiaoluobo/mysql/mysql.md)
+- [hive](./src/main/java/wang/xiaoluobo/hive/hive.md)
+- [hbase](./src/main/java/wang/xiaoluobo/hbase/hbase.md)
+- [flume](./src/main/java/wang/xiaoluobo/flume/flume.md)
 - Jstorm
 - spark
-
+- [elasticsearch](./src/main/java/wang/xiaoluobo/elasticsearch/elasticsearch.md)
+- [phoenix](./src/main/java/wang/xiaoluobo/phoenix/phoenix.md)
+- [tomcat](./src/main/java/wang/xiaoluobo/tomcat/tomcat.md)
+- [kibana](./src/main/java/wang/xiaoluobo/kibana/kibana.md)
+- [logstash](./src/main/java/wang/xiaoluobo/logstash/logstash.md)
