@@ -732,6 +732,7 @@ public class StandardWrapper extends ContainerBase
 
                             // Note: We don't know if the Servlet implements
                             // SingleThreadModel until we have loaded it.
+                            // 加载 Servlet
                             instance = loadServlet();
                             newInstance = true;
                             if (!singleThreadModel) {

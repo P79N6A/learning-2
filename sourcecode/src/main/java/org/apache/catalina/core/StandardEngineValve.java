@@ -48,17 +48,17 @@ final class StandardEngineValve extends ValveBase {
      * based on the requested server name.  If no matching Host can
      * be found, return an appropriate HTTP error.
      *
-     * @param request Request to be processed
+     * @param request  Request to be processed
      * @param response Response to be produced
-     *
-     * @exception IOException if an input/output error occurred
-     * @exception ServletException if a servlet error occurred
+     * @throws IOException      if an input/output error occurred
+     * @throws ServletException if a servlet error occurred
      */
     @Override
     public final void invoke(Request request, Response response)
-        throws IOException, ServletException {
+            throws IOException, ServletException {
 
         // Select the Host to be used for this Request
+        // 选出和该 request 相关的 Host，在 MappingData 中保存了请求和容器(Host, Context, Wrapper)之间的映射
         Host host = request.getHost();
         if (host == null) {
             // HTTP 0.9 or HTTP 1.0 request without a host when no default host
@@ -70,6 +70,7 @@ final class StandardEngineValve extends ValveBase {
         }
 
         // Ask this Host to process this request
+        // host.getPipeline() 得到 Host 对应的管道 Pipeline，将 request 和 response 对象交给Host的阀去处理
         host.getPipeline().getFirst().invoke(request, response);
     }
 }

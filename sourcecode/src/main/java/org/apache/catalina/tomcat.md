@@ -49,3 +49,13 @@
 4. Wrapper: 表示单个servlet定义(如果servlet本身实现SingleThreadModel，则可以支持多个servlet实例)。
 
 > Connector -> StandardEngine -> ContainerBase -> StandardEngineValue -> Request -> StandardHost -> StandardHostValue  
+
+### JNDI(Java naming and directory interface(Java命名和目录接口))
+1. JNDI 目的是为了解藕，为了开发更加容易维护，容易扩展，容易部署的应用。 
+2. JNDI 是一个sun提出的一个 j2ee 规范，具体的实现是各个 j2ee 容器提供商，sun 要求 j2ee 容器必须有 JNDI 功能。 
+3. JNDI 在 j2ee 系统中的角色是交换机，是J2EE组件在运行时间接地查找其他组件、资源或服务的通用机制。 
+4. JNDI 是通过资源的名字来查找的，资源的名字在整个 j2ee 应用/容器中是唯一的。 
+
+
+
+

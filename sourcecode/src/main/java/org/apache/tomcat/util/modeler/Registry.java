@@ -52,6 +52,8 @@ import java.util.Map;
  * IMPORTANT: public methods not marked with @since x.x are experimental or
  * internal. Should not be used.
  *
+ * MBeans 注册中心，Registry 本身也是 MBean
+ *
  * @author Craig R. McClanahan
  * @author Costin Manolache
  */

@@ -119,6 +119,7 @@ final class StandardHostValve extends ValveBase {
         boolean asyncAtStart = request.isAsync();
 
         try {
+            // 设置 StandardHostValve 的类加载器
             context.bind(Globals.IS_SECURITY_ENABLED, MY_CLASSLOADER);
 
             if (!asyncAtStart && !context.fireRequestInitEvent(request.getRequest())) {

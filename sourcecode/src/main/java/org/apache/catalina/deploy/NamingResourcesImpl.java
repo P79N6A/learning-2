@@ -41,6 +41,8 @@ import java.util.*;
  * Holds and manages the naming resources defined in the J2EE Enterprise
  * Naming Context and their associated JNDI context.
  *
+ * 保存和管理J2EE企业命名上下文中定义的命名资源及其关联的JNDI上下文。
+ *
  * @author Remy Maucherat
  */
 public class NamingResourcesImpl extends LifecycleMBeanBase

@@ -20,6 +20,7 @@ package org.apache.catalina.startup;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.LifecycleState;
 import org.apache.catalina.Server;
+import org.apache.catalina.core.StandardServer;
 import org.apache.catalina.security.SecurityConfig;
 import org.apache.catalina.util.LifecycleBase;
 import org.apache.juli.ClassLoaderLogManager;
@@ -625,8 +626,7 @@ public class Catalina {
         }
 
         /**
-         * getServer() -> StandardServer
-         * 调用父类 init 方法({@link LifecycleBase#init()})
+         * getServer() -> {@link StandardServer}
          */
         getServer().setCatalina(this);
         getServer().setCatalinaHome(Bootstrap.getCatalinaHomeFile());
@@ -637,6 +637,10 @@ public class Catalina {
 
         // Start the new server
         try {
+            /**
+             * getServer() -> {@link StandardServer}
+             * 调用父类 init 方法({@link LifecycleBase#init()}) -> {@link StandardServer#initInternal()}
+             */
             getServer().init();
         } catch (LifecycleException e) {
             if (Boolean.getBoolean("org.apache.catalina.startup.EXIT_ON_INIT_FAILURE")) {
@@ -646,6 +650,7 @@ public class Catalina {
             }
         }
 
+        // 打印初始化时间
         long t2 = System.nanoTime();
         if (log.isInfoEnabled()) {
             log.info("Initialization processed in " + ((t2 - t1) / 1000000) + " ms");
