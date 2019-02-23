@@ -20,6 +20,7 @@
         <module>mongodb-starter</module>
         <module>mybatis-generator</module>
         <module>web</module>
+        <module>web-war</module>
     </modules>
 
     <properties>
