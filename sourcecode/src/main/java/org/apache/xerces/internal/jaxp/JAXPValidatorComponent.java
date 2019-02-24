@@ -24,7 +24,6 @@ import com.sun.org.apache.xerces.internal.dom.DOMInputImpl;
 import com.sun.org.apache.xerces.internal.impl.Constants;
 import com.sun.org.apache.xerces.internal.impl.XMLErrorReporter;
 import com.sun.org.apache.xerces.internal.impl.xs.opti.DefaultXMLDocumentHandler;
-import com.sun.org.apache.xerces.internal.jaxp.TeeXMLDocumentFilterImpl;
 import com.sun.org.apache.xerces.internal.util.*;
 import com.sun.org.apache.xerces.internal.xni.*;
 import com.sun.org.apache.xerces.internal.xni.parser.*;
