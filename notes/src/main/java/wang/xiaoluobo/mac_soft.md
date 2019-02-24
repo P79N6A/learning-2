@@ -45,15 +45,8 @@ dongzai1005@localhost:~$ scala -version
 Scala code runner version 2.12.8 -- Copyright 2002-2018, LAMP/EPFL and Lightbend, Inc.
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
+- mac 清理缓存
+1. sudo purge
+2. sudo rm -rf /private/var/log/*
+3. rm -rf ~/Library/Caches/*
+4. rm -rf /private/var/tmp/*
