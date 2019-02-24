@@ -102,8 +102,8 @@ public class Connector extends LifecycleMBeanBase  {
         try {
             /**
              *
-             * {@link Tomcat#getConnector()} Http11AprProtocol
-             * {@link Connector} Http11NioProtocol
+             * {@link Tomcat#getConnector()} {@link org.apache.coyote.http11.Http11AprProtocol}
+             * {@link Connector} {@link org.apache.coyote.http11.Http11NioProtocol}
              */
             Class<?> clazz = Class.forName(protocolHandlerClassName);
             p = (ProtocolHandler) clazz.getConstructor().newInstance();
@@ -491,6 +491,8 @@ public class Connector extends LifecycleMBeanBase  {
     /**
      * Set list of HTTP methods which should allow body parameter
      * parsing. This defaults to <code>POST</code>.
+     *
+     * 设置应允许正文参数解析的 HTTP 方法列表。默认为POST
      *
      * @param methods Comma separated list of HTTP method names
      */

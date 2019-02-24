@@ -53,6 +53,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Implementation of a request processor which delegates the processing to a
  * Coyote processor.
  *
+ * 请求处理器的实现，该处理器将处理委托给Coyote处理器。
+ *
  * @author Craig R. McClanahan
  * @author Remy Maucherat
  */

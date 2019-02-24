@@ -504,6 +504,9 @@ public class StandardService extends LifecycleMBeanBase implements Service {
 
         super.initInternal();
 
+        /**
+         * {@link StandardEngine#initInternal()}
+         */
         if (engine != null) {
             engine.init();
         }
@@ -517,9 +520,14 @@ public class StandardService extends LifecycleMBeanBase implements Service {
         }
 
         // Initialize mapper listener
+        // new MapperListener(StandardService)
         mapperListener.init();
 
         // Initialize our defined Connectors
+        /**
+         * {@link Connector} -> Connector("HTTP/1.1) 8080
+         * {@link Connector} -> Connector("AJP/1.3) 8009
+         */
         synchronized (connectorsLock) {
             for (Connector connector : connectors) {
                 connector.init();

@@ -126,7 +126,9 @@ public class Catalina {
     // ----------------------------------------------------------- Constructors
 
     public Catalina() {
+        // 设置目录权限
         setSecurityProtection();
+        // do nothing
         ExceptionUtils.preload();
     }
 
@@ -538,7 +540,11 @@ public class Catalina {
         // Before digester - it may be needed
         initNaming();
 
-        // Create and execute our Digester
+        /**
+         * Create and execute our Digester
+         *
+         * 创建 {@link Digester}，用于解析 tomcat 配置文件
+         */
         Digester digester = createStartDigester();
 
         InputSource inputSource = null;
@@ -546,6 +552,7 @@ public class Catalina {
         File file = null;
         try {
             try {
+                // 绝对路径加载 conf/server.xml
                 file = configFile();
                 inputStream = new FileInputStream(file);
                 inputSource = new InputSource(file.toURI().toURL().toString());
@@ -554,8 +561,10 @@ public class Catalina {
                     log.debug(sm.getString("catalina.configFail", file), e);
                 }
             }
+
             if (inputStream == null) {
                 try {
+                    // 相对路径加载 conf/server.xml
                     inputStream = getClass().getClassLoader()
                             .getResourceAsStream(getConfigFile());
                     inputSource = new InputSource
@@ -571,6 +580,7 @@ public class Catalina {
 
             // This should be included in catalina.jar
             // Alternative: don't bother with xml, just create it manually.
+            // catalina.jar jar 包中加载 server-embed.xml
             if (inputStream == null) {
                 try {
                     inputStream = getClass().getClassLoader()
@@ -586,7 +596,7 @@ public class Catalina {
                 }
             }
 
-
+            // 加载 tomcat 配置文件失败，tomcat 启动失败
             if (inputStream == null || inputSource == null) {
                 if (file == null) {
                     log.warn(sm.getString("catalina.configFail",
@@ -605,7 +615,7 @@ public class Catalina {
                 inputSource.setByteStream(inputStream);
                 // Catalina
                 digester.push(this);
-                // 初始化 StandardServer
+                // 将 conf/server.xml 初始化为 StandardServer
                 digester.parse(inputSource);
             } catch (SAXParseException spe) {
                 log.warn("Catalina.start using " + getConfigFile() + ": " +
@@ -626,7 +636,7 @@ public class Catalina {
         }
 
         /**
-         * getServer() -> {@link StandardServer}
+         * getServer() -> {@link StandardServer}， {@link org.apache.catalina.core.StandardService}
          */
         getServer().setCatalina(this);
         getServer().setCatalinaHome(Bootstrap.getCatalinaHomeFile());

@@ -859,6 +859,7 @@ public abstract class ContainerBase extends LifecycleMBeanBase
 
     @Override
     protected void initInternal() throws LifecycleException {
+        // 配置线程池线程数
         reconfigureStartStopExecutor(getStartStopThreadsInternal());
         super.initInternal();
     }
@@ -907,7 +908,7 @@ public abstract class ContainerBase extends LifecycleMBeanBase
         if (cluster instanceof Lifecycle) {
             ((Lifecycle) cluster).start();
         }
-        Realm realm = getRealmInternal();
+        Realm realm = getRealmInternal();   // LockOutRealm
         if (realm instanceof Lifecycle) {
             ((Lifecycle) realm).start();
         }

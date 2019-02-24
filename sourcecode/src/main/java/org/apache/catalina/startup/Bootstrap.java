@@ -135,7 +135,7 @@ public final class Bootstrap {
 
     /**
      * Daemon reference.
-     *
+     * <p>
      * Catalina
      */
     private Object catalinaDaemon = null;
@@ -446,7 +446,7 @@ public final class Bootstrap {
 
     /**
      * Set flag.
-     *
+     * <p>
      * 设置 await 为 true，使 daemon 阻塞
      *
      * @param await <code>true</code> if the daemon should block

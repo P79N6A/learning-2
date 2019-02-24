@@ -1522,6 +1522,10 @@ public class HostConfig implements LifecycleListener {
 
     public void beforeStart() {
         if (host.getCreateDirs()) {
+            /**
+             * 1. /Users/dongzai1005/ws/learning/webapps
+             * 2. /Users/dongzai1005/ws/learning/conf/Catalina/localhost
+             */
             File[] dirs = new File[] {host.getAppBaseFile(),host.getConfigBaseFile()};
             for (int i=0; i<dirs.length; i++) {
                 if (!dirs[i].mkdirs() && !dirs[i].isDirectory()) {

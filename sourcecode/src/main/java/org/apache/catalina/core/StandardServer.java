@@ -120,6 +120,7 @@ public final class StandardServer extends LifecycleMBeanBase implements Server {
 
     /**
      * The set of Services associated with this Server.
+     * 只有一个长度，存储 StandardServer
      */
     private Service services[] = new Service[0];
     private final Object servicesLock = new Object();
@@ -801,6 +802,8 @@ public final class StandardServer extends LifecycleMBeanBase implements Server {
         // Note although the cache is global, if there are multiple Servers
         // present in the JVM (may happen when embedding) then the same cache
         // will be registered under multiple names
+        // 注册全局字符串缓存
+        // 注意虽然缓存是全局的，但如果JVM中存在多个服务器(嵌入时可能会发生)，则同一缓存将以多个名称注册
         onameStringCache = register(new StringCache(), "type=StringCache");
 
         // Register the MBeanFactory
@@ -808,11 +811,16 @@ public final class StandardServer extends LifecycleMBeanBase implements Server {
         factory.setContainer(this);
         onameMBeanFactory = register(factory, "type=MBeanFactory");
 
-        // Register the naming resources
+        /**
+         * Register the naming resources
+         * 对应 server.xml GlobalNamingResources->Resource 标签
+         * {@link NamingResourcesImpl#init()} -> {@link NamingResourcesImpl#initInternal()}
+         */
         globalNamingResources.init();
 
         // Populate the extension validator with JARs from common and shared
         // class loaders
+        // 使用通用和共享类加载器的 JAR 填充扩展验证程序
         if (getCatalina() != null) {
             ClassLoader cl = getCatalina().getParentClassLoader();
             // Walk the class loader hierarchy. Stop at the system class loader.
@@ -842,6 +850,7 @@ public final class StandardServer extends LifecycleMBeanBase implements Server {
 
         // Initialize our defined Services
         /**
+         * services 只包含一个 StandardService
          * {@link LifecycleBase#init()} -> {@link StandardService#initInternal()}
          */
         for (int i = 0; i < services.length; i++) {
