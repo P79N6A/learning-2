@@ -29,6 +29,10 @@ import java.util.concurrent.Executor;
  * Adapter is the main interface to be implemented by a coyote servlet
  * container.
  *
+ * 摘要协议实现，包括线程等。处理器是单线程的，特定于基于流的协议，不适合像JNI这样的Jk协议。
+ * 这是由 coyote connetor 实现的主要接口。适配器是由coyote servlet容器实现的主要接口。
+ * @see org.apache.coyote
+ *
  * @author Remy Maucherat
  * @author Costin Manolache
  * @see Adapter
