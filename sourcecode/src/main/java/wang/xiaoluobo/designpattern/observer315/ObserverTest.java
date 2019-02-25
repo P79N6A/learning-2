@@ -1,5 +1,8 @@
 package wang.xiaoluobo.designpattern.observer315;
 
+/**
+ * 观察者
+ */
 public class ObserverTest {
 
     public static void main(String[] args) {
