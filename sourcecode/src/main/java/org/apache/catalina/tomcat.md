@@ -57,7 +57,7 @@
         3. 设置 HTTP 解析方法
         4. AbstractHttp11Protocol#init() -> AbstractProtocol#init()
         5. AbstractEndpoint#init()
-4. tomcat start
+4. tomcat start(调用 [Lifecycle](Lifecycle.java) 实现类 1. startInternal() 2. start())
     1. Catalina#start()
     2. StandardServer#startInternal()
     3. NamingResourcesImpl#startInternal()
@@ -69,6 +69,11 @@
         -> MapperListener#registerHost() -> StandardService#start() -> Connector#startInternal()(8080/8009) -> ProtocolHandler.start() -> AbstractProtocol#start()(守护线程)
         -> 添加钩子回调 -> halt main 线程 -> tomcat 启动完成
     
+### 3. 启动 tomcat
+1. 拷贝 tomcat/conf 与 tomcat/webapps 到 learning 目录下
+2. 启动 [Bootstrap](./startup/Bootstrap.java) main() 方法
+3. [web ui](http://localhost:8080/)
+
 
 ## Tomcat Modules
 ###  一、 Connector
