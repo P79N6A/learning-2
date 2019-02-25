@@ -1419,7 +1419,9 @@ public class Digester extends DefaultHandler2 {
      */
     public Object parse(InputSource input) throws IOException, SAXException {
         configure();
-
+        /**
+         * {@link #parse(InputStream)}
+         */
         getXMLReader().parse(input);
         return root;
     }
@@ -1438,7 +1440,7 @@ public class Digester extends DefaultHandler2 {
         configure();
         InputSource is = new InputSource(input);
         /**
-         * {@link SAXParserImpl.JAXPSAXParser#parse(InputSource, HandlerBase)}
+         * {@link SAXParserImpl.JAXPSAXParser#parse(InputSource)}
          */
         getXMLReader().parse(is);
         return root;
