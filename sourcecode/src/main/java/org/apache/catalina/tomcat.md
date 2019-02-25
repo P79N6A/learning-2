@@ -77,18 +77,41 @@
 3. [web ui](http://localhost:8080/)
 
 ### 4. tomcat 处理 http 请求流程
-1. [Acceptor](../tomcat/util/net/Acceptor.java) run() -> socket = endpoint.serverSocketAccept();
-2. NioEndpoint#setSocketOptions() -> 获取 NioChannel -> 注册 channel
-3. Poller#register(NioChannel) -> addEvent(PollerEvent) -> run() -> events() -> processKey(SelectionKey sk, NioSocketWrapper attachment)
-4. AbstactEndpoint#processSocket(SocketWrapperBase<S> socketWrapper, SocketEvent event, boolean dispatch) -> new SocketProcessor(socketWrapper, event)
-5. SocketProcessor#doRun() -> state = getHandler().process(socketWrapper, event) -> AbstractProtocol.ConnectionHandler#process()
-6. AbstractProcessorLight#process(SocketWrapperBase<?> socketWrapper, SocketEvent status) -> AbstractProcessor.dispatch(SocketEvent status)
-7. 接6 AbstractProcessorLight#process(SocketWrapperBase<?> socketWrapper, SocketEvent status) -> 1. state = service(socketWrapper); 2. state = asyncPostProcess();
-8. Http11Processor#service(SocketWrapperBase<?> socketWrapper)
-9. Http11InputBuffer#parseRequestLine(boolean keptAlive, int connectionTimeout, int keepAliveTimeout) -> getAdapter().service(request, response) 
-10. CoyoteAdapter#service(org.apache.coyote.Request req, org.apache.coyote.Response res) -> connector.getService().getContainer().getPipeline().getFirst().invoke(request, response);
-    connector.getService().getContainer().getPipeline().getFirst().invoke(request, response);
-    Connector->StandarService->StandardEngine->StandardPipeline->getFirst().invoke(request, response)
+1. [Acceptor](../tomcat/util/net/Acceptor.java)
+    1. http 请求处理入口为 Acceptor#run() 方法
+    2. serverSocketAccept() 获取 SocketChannel
+    3. NioEndpoint#setSocketOptions() 设置 Socket 连接配置
+2. [NioEndpoint](../tomcat/util/net/NioEndpoint.java)
+    1. 获取 [NioChannel](../tomcat/util/net/NioChannel.java)
+    2. [Poller](../tomcat/util/net/NioEndpoint.java#Poller)#register(channel) 注册 NioChannel
+        1. 创建 [NioSocketWrapper](../tomcat/util/net/NioEndpoint.java#NioSocketWrapper)，即 tomcat worker 线程
+        2. 添加 [PollerEvent](../tomcat/util/net/NioEndpoint.java#PollerEvent) 事件，用于 Poller 线程事件流转
+        3. Poller#run()
+        4. PollerEvent#run()
+        5. Poller#processKey(SelectionKey, NioSocketWrapper)
+        6. [AbstractEndpoint](../tomcat/util/net/AbstractEndpoint.java)#processSocket(SocketWrapperBase<S>, SocketEvent, boolean)
+        7. 创建 [SocketProcessor](../tomcat/util/net/NioEndpoint.java#SocketProcessor) new SocketProcessor(socketWrapper, event)
+3. SocketProcessor#doRun()(SocketProcessorBase#run()调用)
+    1. TCP 握手
+    2. getHandler().process(socketWrapper, event)， getHandler() -> AbstractProtocol 子类
+    3. [AbstractProtocol](../coyote/AbstractProtocol.java#ConnectionHandler)#process(SocketWrapperBase<S>, SocketEvent)
+6. [AbstractProcessorLight](../coyote/AbstractProcessorLight.java)#process(SocketWrapperBase<?>, SocketEvent)
+    1. [AbstractProcessor](../coyote/AbstractProcessor.java)#dispatch(SocketEvent status)
+    2. Http11Processor#service(SocketWrapperBase<?>)
+7. [Http11Processor](../coyote/http11/Http11Processor.java)#service(SocketWrapperBase<?>)
+    1. [Http11InputBuffer](../coyote/http11/Http11InputBuffer.java)#parseRequestLine(boolean, int, int) 解析 http request header
+    2. CoyoteAdapter#service(Request, Response)
+8. [CoyoteAdapter](./connector/CoyoteAdapter.java)#service(Request, Response)
+    1. connector.getService().getContainer().getPipeline().getFirst().invoke(Request, Response)
+    2. Connector->StandardService->StandardEngine->StandardPipeline->Valve.invoke(Request, Response)
+    3. Valve 实现类调用顺序(责任链设计模式)
+        1. [StandardEngineValve](./core/StandardEngineValve.java)#invoke(Request, Response)
+        2. [StandardHostValve](./core/StandardHostValve.java)#invoke(Request, Response)
+        3. [StandardContextValve](./core/StandardContextValve.java)#invoke(Request, Response)
+        4. [StandardWrapperValve](./core/StandardWrapperValve.java)#invoke(Request, Response)
+    4. [ApplicationFilterFactory](./core/ApplicationFilterFactory.java)#createFilterChain(request, wrapper, servlet);
+    5. [ApplicationFilterChain](./core/ApplicationFilterChain.java)#doFilter(ServletRequest, ServletResponse)
+    6. ApplicationFilterChain#internalDoFilter(ServletRequest, ServletResponse)
 
 ## Tomcat Modules
 ###  一、 Connector
