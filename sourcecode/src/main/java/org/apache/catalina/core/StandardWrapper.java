@@ -41,6 +41,8 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * an individual servlet definition.  No child Containers are allowed, and
  * the parent Container must be a Context.
  *
+ * Wrapper接口的标准实现，表示单个servlet定义。不允许子容器，父容器必须是上下文。
+ *
  * @author Craig R. McClanahan
  * @author Remy Maucherat
  */

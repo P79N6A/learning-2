@@ -40,6 +40,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Valve that implements the default basic behavior for the
  * <code>StandardWrapper</code> container implementation.
  *
+ * Valve，实现StandardWrapper容器实现的默认基本行为。
+ *
  * @author Craig R. McClanahan
  */
 final class StandardWrapperValve

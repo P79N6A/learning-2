@@ -29,6 +29,10 @@ import org.apache.tomcat.util.res.StringManager;
  * implement the <code>Lifecycle</code> interface to provide configuration
  * management and lifecycle support.
  *
+ * 用于Valve接口实现的便捷基类。
+ *
+ * 子类必须实现invoke()方法以提供所需的功能，并且可以实现Lifecycle接口以提供配置管理和生命周期支持。
+ *
  * @author Craig R. McClanahan
  */
 public abstract class ValveBase extends LifecycleMBeanBase implements Contained, Valve {

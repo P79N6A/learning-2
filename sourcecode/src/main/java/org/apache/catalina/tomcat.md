@@ -24,7 +24,7 @@
           2\>\&1 \&\& echo \$! \>\"$catalina_pid_file\" \; \} $catalina_out_command "&"
     ```
     
-### 2. java 源码
+### 2. tomcat 源码分析
 1. [Bootstrap](./startup/Bootstrap.java)
     1. Bootstrap#main()
     2. static 代码块(初始化 tomcat 运行环境)
@@ -53,7 +53,7 @@
         1. StandardEngine#initInternal()
         2. 初始化 Realm
         3. 初始化线程池
-    5. [Connector](./connector/Connector.java)
+    5. [Connector](./connector/Connector.java "用于处理 http 请求")
         1. Connector#initInternal()
         2. 设置 [ProtocolHandler](../coyote/ProtocolHandler.java) 回调，处理 request 请求
         3. 设置 HTTP 解析方法
@@ -72,10 +72,23 @@
         -> 添加钩子回调 -> halt main 线程 -> tomcat 启动完成
     
 ### 3. 启动 tomcat
-1. 拷贝 tomcat/conf 与 tomcat/webapps 到 learning 目录下
+1. 拷贝目录 tomcat/conf 与 tomcat/webapps 到 learning 目录下
 2. 启动 [Bootstrap](./startup/Bootstrap.java) main() 方法
 3. [web ui](http://localhost:8080/)
 
+### 4. tomcat 处理 http 请求流程
+1. [Acceptor](../tomcat/util/net/Acceptor.java) run() -> socket = endpoint.serverSocketAccept();
+2. NioEndpoint#setSocketOptions() -> 获取 NioChannel -> 注册 channel
+3. Poller#register(NioChannel) -> addEvent(PollerEvent) -> run() -> events() -> processKey(SelectionKey sk, NioSocketWrapper attachment)
+4. AbstactEndpoint#processSocket(SocketWrapperBase<S> socketWrapper, SocketEvent event, boolean dispatch) -> new SocketProcessor(socketWrapper, event)
+5. SocketProcessor#doRun() -> state = getHandler().process(socketWrapper, event) -> AbstractProtocol.ConnectionHandler#process()
+6. AbstractProcessorLight#process(SocketWrapperBase<?> socketWrapper, SocketEvent status) -> AbstractProcessor.dispatch(SocketEvent status)
+7. 接6 AbstractProcessorLight#process(SocketWrapperBase<?> socketWrapper, SocketEvent status) -> 1. state = service(socketWrapper); 2. state = asyncPostProcess();
+8. Http11Processor#service(SocketWrapperBase<?> socketWrapper)
+9. Http11InputBuffer#parseRequestLine(boolean keptAlive, int connectionTimeout, int keepAliveTimeout) -> getAdapter().service(request, response) 
+10. CoyoteAdapter#service(org.apache.coyote.Request req, org.apache.coyote.Response res) -> connector.getService().getContainer().getPipeline().getFirst().invoke(request, response);
+    connector.getService().getContainer().getPipeline().getFirst().invoke(request, response);
+    Connector->StandarService->StandardEngine->StandardPipeline->getFirst().invoke(request, response)
 
 ## Tomcat Modules
 ###  一、 Connector
