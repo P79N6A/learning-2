@@ -22,6 +22,11 @@ package org.apache.catalina;
  * may implement this interface (as well as the appropriate interface(s) for
  * the functionality they support) in order to provide a consistent mechanism
  * to start and stop the component.
+ *
+ * 组件生命周期方法的通用接口。Catalina组件可以实现此接口(以及它们支持的功能的适当接口)，以便提供启动和停止组件的一致机制。
+ *
+ * 观察者设计模式实现
+ *
  * <br>
  * The valid state transitions for components that support {@link Lifecycle}
  * are:
@@ -84,6 +89,7 @@ public interface Lifecycle {
 
 
     // ----------------------------------------------------- Manifest Constants
+    // 以下几种状态，控制 tomcat 启动/关闭流程的流转
 
 
     /**

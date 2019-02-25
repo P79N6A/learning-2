@@ -256,7 +256,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
             nioChannels = new SynchronizedStack<>(SynchronizedStack.DEFAULT_SIZE,
                     socketProperties.getBufferPool());
 
-            // Create worker collection
+            // Create worker collection 创建 worker 线程池
             if ( getExecutor() == null ) {
                 createExecutor();
             }
@@ -272,6 +272,9 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
                 Thread pollerThread = new Thread(pollers[i], getName() + "-ClientPoller-"+i);
                 pollerThread.setPriority(threadPriority);
                 pollerThread.setDaemon(true);
+                /**
+                 * @see Poller#run()
+                 */
                 pollerThread.start();
             }
 

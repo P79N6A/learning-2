@@ -110,6 +110,8 @@ public abstract class LifecycleBase implements Lifecycle {
     /**
      * Allow sub classes to fire {@link Lifecycle} events.
      *
+     * 通知每个 LifecycleListener
+     *
      * @param type  Event type
      * @param data  Data associated with event.
      */

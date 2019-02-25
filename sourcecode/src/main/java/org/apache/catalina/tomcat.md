@@ -1,6 +1,8 @@
-# tomcat version 9.0.12
+# [tomcat version 9.0.12](http://tomcat.apache.org/tomcat-9.0-doc/index.html)
 ## tomcat 架构体系
-![tomcat01 官网没有架构图...](../images/tomcat01.png)
+![tomcat01 官网没有架构图...](../images/tomcat01.png "tomcat 架构图")
+
+![tomcat02 tomcat 启动/关闭流程 lifecycle.java](../images/tomcat02.png "tomcat 启动/关闭流程")
 
 ## Tomcat
 ### 1. shell 调用关系

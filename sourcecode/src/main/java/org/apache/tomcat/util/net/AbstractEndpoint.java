@@ -804,8 +804,12 @@ public abstract class AbstractEndpoint<S,U> {
     }
 
 
+    /**
+     * 创建线程池
+     */
     public void createExecutor() {
         internalExecutor = true;
+        // queue max size is Integer.MAX_VALUE
         TaskQueue taskqueue = new TaskQueue();
         TaskThreadFactory tf = new TaskThreadFactory(getName() + "-exec-", daemon, getThreadPriority());
         executor = new ThreadPoolExecutor(getMinSpareThreads(), getMaxThreads(), 60, TimeUnit.SECONDS,taskqueue, tf);
@@ -1101,6 +1105,9 @@ public abstract class AbstractEndpoint<S,U> {
     }
 
 
+    /**
+     * 启动 Acceptor 线程
+     */
     protected final void startAcceptorThreads() {
         int count = getAcceptorThreadCount();
         acceptors = new ArrayList<>(count);
@@ -1113,6 +1120,9 @@ public abstract class AbstractEndpoint<S,U> {
             Thread t = new Thread(acceptor, threadName);
             t.setPriority(getAcceptorThreadPriority());
             t.setDaemon(getDaemon());
+            /**
+             * @see Acceptor#run()
+             */
             t.start();
         }
     }
