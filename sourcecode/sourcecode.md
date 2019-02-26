@@ -1,5 +1,7 @@
 # 源码分析
-  
+spring boot 项目不能正常启动，日志框架冲突...
+有的开源项目依赖 log4j，有的依赖 logback... 
+
 - jdk8  
 - [zookeeper](./src/main/java/org/apache/zookeeper/zookeeper.md)
 - spring kafka
