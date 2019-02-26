@@ -29,9 +29,6 @@ public class RedisApplication {
         SpringApplication.run(RedisApplication.class, args);
     }
 
-    /**
-     * redis template分布式锁
-     */
     @PostConstruct
     public void init() {
         try {
