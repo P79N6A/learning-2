@@ -43,7 +43,6 @@ vet         report likely mistakes in packages
 #### mac卸载go
 ```bash
 wyd@wangyandong:~$ sudo rm -rf /usr/local/go
-wyd@wangyandong:~$ sudo rm -rf /usr/local/go
 wyd@wangyandong:~$ sudo rm -rf /etc/paths.d/go
 wyd@wangyandong:~$ vim ~/.bash_profile
 wyd@wangyandong:~$ pkgutil --pkgs | grep -i go
@@ -58,6 +57,9 @@ wyd@wangyandong:/usr/local/bin$ cd ../Cellar/go
 wyd@wangyandong:/usr/local/Cellar$ rm -rf go
 wyd@wangyandong:~$ go version
 go version go1.11.5 darwin/amd64
+
+wyd@wangyandong:~/go$ go version
+go version go1.12 darwin/amd64
 ```
 
 #### qor
