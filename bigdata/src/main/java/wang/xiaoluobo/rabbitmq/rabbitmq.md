@@ -107,8 +107,20 @@ hadoop01,hadoop02,hadoop03
         [root@hadoop02 rabbitmq]# cp .erlang.cookie ~/
         [root@hadoop03 rabbitmq]# cp .erlang.cookie ~/
         ```
-    
-    2. 节点 hadoop02 和 hadoop03 加入到 hadoop01
+        
+    2. rabbitmq 用户
+        ```bash
+        # 创建管理用户
+        $ rabbitmqctl add_user admin admin
+        # 设置用户权限
+        $ rabbitmqctl set_permissions -p / admin ".*" ".*" ".*"
+        # 设置用户角色
+        $ rabbitmqctl set_user_tags admin administrator
+        # 查看用户列表
+        $ rabbitmqctl list_users
+        ```
+        
+    3. 节点 hadoop02 和 hadoop03 加入到 hadoop01
         ```bash
         # hadoop02 加入 hadoop01节点
         [root@hadoop02 rabbitmq]# /etc/init.d/rabbitmq-server start
