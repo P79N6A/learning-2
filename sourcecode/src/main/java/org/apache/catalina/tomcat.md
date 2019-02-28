@@ -89,7 +89,7 @@
         3. Poller#run()
         4. PollerEvent#run()
         5. Poller#processKey(SelectionKey, NioSocketWrapper)
-        6. [AbstractEndpoint](../tomcat/util/net/AbstractEndpoint.java)#processSocket(SocketWrapperBase<S>, SocketEvent, boolean)
+        6. [AbstractEndpoint](../tomcat/util/net/AbstractEndpoint.java)#processSocket(SocketWrapperBase, SocketEvent, boolean)
         7. 创建 [SocketProcessor](../tomcat/util/net/NioEndpoint.java#SocketProcessor) new SocketProcessor(socketWrapper, event)
 3. SocketProcessor#doRun()(SocketProcessorBase#run()调用)
     1. TCP 握手
