@@ -94,11 +94,11 @@
 3. SocketProcessor#doRun()(SocketProcessorBase#run()调用)
     1. TCP 握手
     2. getHandler().process(socketWrapper, event)， getHandler() -> AbstractProtocol 子类
-    3. [AbstractProtocol](../coyote/AbstractProtocol.java#ConnectionHandler)#process(SocketWrapperBase<S>, SocketEvent)
-6. [AbstractProcessorLight](../coyote/AbstractProcessorLight.java)#process(SocketWrapperBase<?>, SocketEvent)
+    3. [AbstractProtocol](../coyote/AbstractProtocol.java#ConnectionHandler)#process(SocketWrapperBase, SocketEvent)
+6. [AbstractProcessorLight](../coyote/AbstractProcessorLight.java)#process(SocketWrapperBase, SocketEvent)
     1. [AbstractProcessor](../coyote/AbstractProcessor.java)#dispatch(SocketEvent status)
-    2. Http11Processor#service(SocketWrapperBase<?>)
-7. [Http11Processor](../coyote/http11/Http11Processor.java)#service(SocketWrapperBase<?>)
+    2. Http11Processor#service(SocketWrapperBase)
+7. [Http11Processor](../coyote/http11/Http11Processor.java)#service(SocketWrapperBase)
     1. [Http11InputBuffer](../coyote/http11/Http11InputBuffer.java)#parseRequestLine(boolean, int, int) 解析 http request header
     2. CoyoteAdapter#service(Request, Response)
 8. [CoyoteAdapter](./connector/CoyoteAdapter.java)#service(Request, Response)
