@@ -222,4 +222,3 @@ hadoop01,hadoop02,hadoop03
 ## 安装遇到的问题
 1. ERROR: node with name "rabbit" already running on "hadoop02"
 > kill 掉 rabbitmq 所有进程，重启 rabbitmq
-          
