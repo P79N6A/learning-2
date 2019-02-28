@@ -4,7 +4,7 @@
 - [zookeeper](./src/main/java/wang/xiaoluobo/zookeeper/zookeeper.md)
 - [hadoop](./src/main/java/wang/xiaoluobo/hadoop/hadoop.md)
 - [flink](./src/main/java/wang/xiaoluobo/flink/flink.md)
-- rabbitmq
+- [rabbitmq](./src/main/java/wang/xiaoluobo/rabbitmq/rabbitmq.md)
 - [kafka](./src/main/java/wang/xiaoluobo/kafka/kafka.md)
 - [kafka-manager](./src/main/java/wang/xiaoluobo/kafka/kafka-manager.md)
 - [redis](./src/main/java/wang/xiaoluobo/redis/redis.md)
@@ -20,3 +20,4 @@
 - [tomcat](./src/main/java/wang/xiaoluobo/tomcat/tomcat.md)
 - [kibana](./src/main/java/wang/xiaoluobo/kibana/kibana.md)
 - [logstash](./src/main/java/wang/xiaoluobo/logstash/logstash.md)
+- [rocketmq](./src/main/java/wang/xiaoluobo/rocketmq/rocketmq.md)
