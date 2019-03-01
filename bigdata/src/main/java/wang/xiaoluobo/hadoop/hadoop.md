@@ -350,7 +350,28 @@ Found 1 items
 -rw-r--r--   2 hadoop supergroup      99253 2018-09-10 10:58 /mnt/data/hadoop/wordcount/LICENSE.txt
 ```
 
-## 10. 安装hadoop遇到的问题
+## 10. 停止 hadoop 集群
+```bash
+[hadoop@hadoop01 hadoop-2.8.4]$ ./sbin/stop-yarn.sh
+stopping yarn daemons
+stopping resourcemanager
+hadoop03: stopping nodemanager
+hadoop02: stopping nodemanager
+hadoop03: nodemanager did not stop gracefully after 5 seconds: killing with kill -9
+hadoop02: nodemanager did not stop gracefully after 5 seconds: killing with kill -9
+no proxyserver to stop
+[hadoop@hadoop01 hadoop-2.8.4]$ ./sbin/stop-dfs.sh
+Stopping namenodes on [hadoop01]
+hadoop01: stopping namenode
+hadoop02: stopping datanode
+hadoop03: stopping datanode
+Stopping secondary namenodes [hadoop01]
+hadoop01: stopping secondarynamenode
+[hadoop@hadoop01 hadoop-2.8.4]$ jps
+1362 Jps
+```
+
+## 11. 安装hadoop遇到的问题
 - jdk
 ```Bash
 [hadoop@bigdata01 hadoop-2.8.4]$ ./sbin/start-dfs.sh
