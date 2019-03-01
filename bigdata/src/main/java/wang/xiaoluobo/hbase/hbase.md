@@ -10,21 +10,37 @@
     export PATH=$PATH:$HBASE_HOME/bin
     $ source .bash_profile
     ```
-2. 启动hbase
-    ```text
-    $ ./bin/start-hbase.sh
-    SLF4J: Class path contains multiple SLF4J bindings.
-    SLF4J: Found binding in [jar:file:/Users/wyd/soft/hadoop-2.8.4/share/hadoop/common/lib/slf4j-log4j12-1.7.10.jar!/org/slf4j/impl/StaticLoggerBinder.class]
-    SLF4J: Found binding in [jar:file:/Users/wyd/soft/hbase-2.1.1/lib/client-facing-thirdparty/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
-    SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
-    SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
-    running master, logging to /Users/wyd/soft/hbase-2.1.1/logs/hbase-wyd-master-wangyandong.local.out
-    SLF4J: Class path contains multiple SLF4J bindings.
-    SLF4J: Found binding in [jar:file:/Users/wyd/soft/hadoop-2.8.4/share/hadoop/common/lib/slf4j-log4j12-1.7.10.jar!/org/slf4j/impl/StaticLoggerBinder.class]
-    SLF4J: Found binding in [jar:file:/Users/wyd/soft/hbase-2.1.1/lib/client-facing-thirdparty/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
-    SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
-    SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
-    ```
+2. 启动/关闭 hbase
+    1. 启动 hbase
+        ```text
+        $ ./bin/start-hbase.sh
+        SLF4J: Class path contains multiple SLF4J bindings.
+        SLF4J: Found binding in [jar:file:/Users/wyd/soft/hadoop-2.8.4/share/hadoop/common/lib/slf4j-log4j12-1.7.10.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+        SLF4J: Found binding in [jar:file:/Users/wyd/soft/hbase-2.1.1/lib/client-facing-thirdparty/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+        SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+        SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+        running master, logging to /Users/wyd/soft/hbase-2.1.1/logs/hbase-wyd-master-wangyandong.local.out
+        SLF4J: Class path contains multiple SLF4J bindings.
+        SLF4J: Found binding in [jar:file:/Users/wyd/soft/hadoop-2.8.4/share/hadoop/common/lib/slf4j-log4j12-1.7.10.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+        SLF4J: Found binding in [jar:file:/Users/wyd/soft/hbase-2.1.1/lib/client-facing-thirdparty/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+        SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+        SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+        ```
+     2. 关闭 hbase
+        ```bash
+        [hadoop@hadoop01 hbase-2.1.2]$ ./bin/stop-hbase.sh
+        stopping hbase............
+        SLF4J: Class path contains multiple SLF4J bindings.
+        SLF4J: Found binding in [jar:file:/mnt/opt/hadoop-2.8.4/share/hadoop/common/lib/slf4j-log4j12-1.7.10.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+        SLF4J: Found binding in [jar:file:/mnt/opt/hbase-2.1.2/lib/client-facing-thirdparty/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+        SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+        SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+        [hadoop@hadoop01 hbase-2.1.2]$ jps
+        26054 NameNode
+        887 Jps
+        26263 SecondaryNameNode
+        26427 ResourceManager
+        ```   
 3. [web ui](http://127.0.0.1:16010)
 
 
