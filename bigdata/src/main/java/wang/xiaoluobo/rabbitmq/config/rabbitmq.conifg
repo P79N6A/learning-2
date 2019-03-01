@@ -1,0 +1,3 @@
+[
+  {rabbit, [{tcp_listeners, [5672]},{vm_memory_high_watermark,0.5},{disk_free_limit, "32GB"},{cluster_partition_handling, autoheal},{cluster_keepalive_interval, 10000},{hipe_compile, true}]}
+].
