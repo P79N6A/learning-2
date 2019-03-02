@@ -91,6 +91,7 @@ final class Bootstrap {
         // 非守护进程
         keepAliveThread.setDaemon(false);
         // keep this thread alive (non daemon thread) until we shutdown
+        // 钩子回调
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
@@ -101,6 +102,8 @@ final class Bootstrap {
 
     /**
      * initialize native resources
+     *
+     * 初始化本机资源
      */
     public static void initializeNatives(Path tmpFile, boolean mlockAll, boolean systemCallFilter, boolean ctrlHandler) {
         final Logger logger = LogManager.getLogger(Bootstrap.class);
@@ -174,6 +177,7 @@ final class Bootstrap {
             throw new BootstrapException(e);
         }
 
+        // 初始化本机资源
         initializeNatives(
                 environment.tmpFile(),
                 BootstrapSettings.MEMORY_LOCK_SETTING.get(settings),
@@ -183,6 +187,7 @@ final class Bootstrap {
         // initialize probes before the security manager is installed
         initializeProbes();
 
+        // 钩子
         if (addShutdownHook) {
             Runtime.getRuntime().addShutdownHook(new Thread() {
                 @Override
@@ -216,6 +221,7 @@ final class Bootstrap {
             throw new BootstrapException(e);
         }
 
+        // 创建 node 节点
         node = new Node(environment) {
             @Override
             protected void validateNodeBeforeAcceptingRequests(
@@ -303,21 +309,26 @@ final class Bootstrap {
         // 初始化系统启动信息
         BootstrapInfo.init();
 
+        // 创建 keepAliveThread 线程，并添加到钩子中
         INSTANCE = new Bootstrap();
 
         final SecureSettings keystore = loadSecureSettings(initialEnv);
+        // 创建 Environment
         final Environment environment = createEnvironment(foreground, pidFile, keystore, initialEnv.settings(), initialEnv.configFile());
 
+        // node.name
         if (Node.NODE_NAME_SETTING.exists(environment.settings())) {
             LogConfigurator.setNodeName(Node.NODE_NAME_SETTING.get(environment.settings()));
         }
         try {
+            // log4j2
             LogConfigurator.configure(environment);
         } catch (IOException e) {
             throw new BootstrapException(e);
         }
         if (environment.pidFile() != null) {
             try {
+                // process id file
                 PidFile.create(environment.pidFile(), true);
             } catch (IOException e) {
                 throw new BootstrapException(e);
@@ -341,8 +352,10 @@ final class Bootstrap {
             // install the default uncaught exception handler; must be done before security is
             // initialized as we do not want to grant the runtime permission
             // setDefaultUncaughtExceptionHandler
+            // 异常处理 handler
             Thread.setDefaultUncaughtExceptionHandler(new ElasticsearchUncaughtExceptionHandler());
 
+            // 配置 node 节点
             INSTANCE.setup(true, environment);
 
             try {
@@ -352,7 +365,7 @@ final class Bootstrap {
                 throw new BootstrapException(e);
             }
 
-            // 启动es
+            // 启动 es
             INSTANCE.start();
 
             if (closeStandardStreams) {

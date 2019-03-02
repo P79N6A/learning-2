@@ -97,6 +97,7 @@ public class InternalSettingsPreparer {
         }
 
         output = Settings.builder(); // start with a fresh output
+        // 加载配置文件
         Path path = environment.configFile().resolve("elasticsearch.yml");
         if (Files.exists(path)) {
             try {

@@ -122,6 +122,9 @@ public final class BootstrapInfo {
         return SYSTEM_PROPERTIES;
     }
 
+    /**
+     * static 代码块
+     */
     public static void init() {
     }
 

@@ -35,24 +35,29 @@ import java.util.Arrays;
  */
 public abstract class Command implements Closeable {
 
-    /** A description of the command, used in the help output. */
+    /**
+     * A description of the command, used in the help output.
+     */
     protected final String description;
 
     private final Runnable beforeMain;
 
-    /** The option parser for this command. */
+    /**
+     * The option parser for this command.
+     * 初始化 parser 对象，并设置需要解析的参数列表
+     */
     protected final OptionParser parser = new OptionParser();
 
     private final OptionSpec<Void> helpOption = parser.acceptsAll(Arrays.asList("h", "help"), "show help").forHelp();
     private final OptionSpec<Void> silentOption = parser.acceptsAll(Arrays.asList("s", "silent"), "show minimal output");
     private final OptionSpec<Void> verboseOption =
-        parser.acceptsAll(Arrays.asList("v", "verbose"), "show verbose output").availableUnless(silentOption);
+            parser.acceptsAll(Arrays.asList("v", "verbose"), "show verbose output").availableUnless(silentOption);
 
     /**
      * Construct the command with the specified command description and runnable to execute before main is invoked.
      *
      * @param description the command description
-     * @param beforeMain the before-main runnable
+     * @param beforeMain  the before-main runnable
      */
     public Command(final String description, final Runnable beforeMain) {
         this.description = description;
@@ -61,7 +66,11 @@ public abstract class Command implements Closeable {
 
     private Thread shutdownHookThread;
 
-    /** Parses options for this command from args and executes it. */
+    /**
+     * Parses options for this command from args and executes it.
+     * <p>
+     * 从args解析此命令的选项并执行它
+     */
     public final int main(String[] args, Terminal terminal) throws Exception {
         // 钩子，用于释放资源
         if (addShutdownHook()) {
@@ -71,8 +80,8 @@ public abstract class Command implements Closeable {
                     this.close();
                 } catch (final IOException e) {
                     try (
-                        StringWriter sw = new StringWriter();
-                        PrintWriter pw = new PrintWriter(sw)) {
+                            StringWriter sw = new StringWriter();
+                            PrintWriter pw = new PrintWriter(sw)) {
                         e.printStackTrace(pw);
                         terminal.println(sw.toString());
                     } catch (final IOException impossible) {
@@ -85,6 +94,7 @@ public abstract class Command implements Closeable {
             Runtime.getRuntime().addShutdownHook(shutdownHookThread);
         }
 
+        // do nothing
         beforeMain.run();
 
         try {
@@ -110,6 +120,7 @@ public abstract class Command implements Closeable {
         // 解析启动参数
         final OptionSet options = parser.parse(args);
 
+        // 打印命令帮助信息
         if (options.has(helpOption)) {
             printHelp(terminal);
             return;
@@ -123,10 +134,15 @@ public abstract class Command implements Closeable {
             terminal.setVerbosity(Terminal.Verbosity.NORMAL);
         }
 
+        /**
+         * {@link EnvironmentAwareCommand#execute(Terminal, OptionSet)}
+         */
         execute(terminal, options);
     }
 
-    /** Prints a help message for the command to the terminal. */
+    /**
+     * Prints a help message for the command to the terminal.
+     */
     private void printHelp(Terminal terminal) throws IOException {
         terminal.println(description);
         terminal.println("");
@@ -134,8 +150,11 @@ public abstract class Command implements Closeable {
         parser.printHelpOn(terminal.getWriter());
     }
 
-    /** Prints additional help information, specific to the command */
-    protected void printAdditionalHelp(Terminal terminal) {}
+    /**
+     * Prints additional help information, specific to the command
+     */
+    protected void printAdditionalHelp(Terminal terminal) {
+    }
 
     @SuppressForbidden(reason = "Allowed to exit explicitly from #main()")
     protected static void exit(int status) {
@@ -144,8 +163,9 @@ public abstract class Command implements Closeable {
 
     /**
      * Executes this command.
-     *
-     * Any runtime user errors (like an input file that does not exist), should throw a {@link UserException}. */
+     * <p>
+     * Any runtime user errors (like an input file that does not exist), should throw a {@link UserException}.
+     */
     protected abstract void execute(Terminal terminal, OptionSet options) throws Exception;
 
     /**
@@ -158,7 +178,9 @@ public abstract class Command implements Closeable {
         return true;
     }
 
-    /** Gets the shutdown hook thread if it exists **/
+    /**
+     * Gets the shutdown hook thread if it exists
+     **/
     Thread getShutdownHookThread() {
         return shutdownHookThread;
     }

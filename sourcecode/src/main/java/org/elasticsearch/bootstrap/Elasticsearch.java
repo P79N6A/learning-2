@@ -53,6 +53,7 @@ class Elasticsearch extends EnvironmentAwareCommand {
 
     // visible for testing
     Elasticsearch() {
+        // 创建名称为 starts elasticsearch 线程，do nothing
         super("starts elasticsearch", () -> {}); // we configure logging later so we override the base class from configuring logging
         versionOption = parser.acceptsAll(Arrays.asList("V", "version"),
             "Prints elasticsearch version information and exits");
@@ -74,6 +75,7 @@ class Elasticsearch extends EnvironmentAwareCommand {
      * Main entry point for starting elasticsearch
      */
     public static void main(final String[] args) throws Exception {
+        // 重写 dns 缓存策略
         overrideDnsCachePolicyProperties();
         /*
          * We want the JVM to think there is a security manager installed so that if internal policy decisions that would be based on the
@@ -91,6 +93,9 @@ class Elasticsearch extends EnvironmentAwareCommand {
 
         // 注册日志
         LogConfigurator.registerErrorListener();
+        /**
+         * {@link Elasticsearch} 顶级父类是 {@link org.elasticsearch.cli.Command}
+         */
         final Elasticsearch elasticsearch = new Elasticsearch();
         int status = main(args, elasticsearch, Terminal.DEFAULT);
         if (status != ExitCodes.OK) {
@@ -123,6 +128,8 @@ class Elasticsearch extends EnvironmentAwareCommand {
         if (options.nonOptionArguments().isEmpty() == false) {
             throw new UserException(ExitCodes.USAGE, "Positional arguments not allowed, found " + options.nonOptionArguments());
         }
+
+        // -V, --version         Prints elasticsearch version information and exits
         if (options.has(versionOption)) {
             final String versionOutput = String.format(
                     Locale.ROOT,
@@ -137,19 +144,22 @@ class Elasticsearch extends EnvironmentAwareCommand {
             return;
         }
 
+        // -d, --daemonize       Starts Elasticsearch in the background
         final boolean daemonize = options.has(daemonizeOption);
         final Path pidFile = pidfileOption.value(options);
+        // -q, --quiet           Turns off standard ouput/error streams logging in console
         final boolean quiet = options.has(quietOption);
 
         // a misconfigured java.io.tmpdir can cause hard-to-diagnose problems later, so reject it immediately
         try {
+            // 检验临时文件
             env.validateTmpFile();
         } catch (IOException e) {
             throw new UserException(ExitCodes.CONFIG, e.getMessage());
         }
 
         try {
-            // 初始化
+            // 初始化 es
             init(daemonize, pidFile, quiet, env);
         } catch (NodeValidationException e) {
             throw new UserException(ExitCodes.CONFIG, e.getMessage());

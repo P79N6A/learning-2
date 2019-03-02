@@ -84,6 +84,9 @@ public abstract class EnvironmentAwareCommand extends Command {
         putSystemPropertyIfSettingIsMissing(settings, "path.home", "es.path.home");
         putSystemPropertyIfSettingIsMissing(settings, "path.logs", "es.path.logs");
 
+        /**
+         * {@link org.elasticsearch.bootstrap.Elasticsearch#execute(Terminal, OptionSet)}
+         */
         execute(terminal, options, createEnv(terminal, settings));
     }
 

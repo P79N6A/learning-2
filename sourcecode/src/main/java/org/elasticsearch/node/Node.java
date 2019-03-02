@@ -230,6 +230,7 @@ public abstract class Node implements Closeable {
     protected Node(
             final Environment environment, Collection<Class<? extends Plugin>> classpathPlugins, boolean forbidPrivateIndexSettings) {
         logger = LogManager.getLogger(Node.class);
+        // 注册在发生错误时，我们需要释放的所有内容
         final List<Closeable> resourcesToClose = new ArrayList<>(); // register everything we need to release in the case of an error
         boolean success = false;
         try {
@@ -246,6 +247,10 @@ public abstract class Node implements Closeable {
             try {
                 Consumer<String> nodeIdConsumer = nodeNameExplicitlyDefined ?
                         nodeId -> {} : nodeId -> registerDerivedNodeNameWithLogger(nodeIdToNodeName(nodeId));
+
+                /**
+                 * {@link NodeEnvironment}
+                 */
                 nodeEnvironment = new NodeEnvironment(tmpSettings, environment, nodeIdConsumer);
                 resourcesToClose.add(nodeEnvironment);
             } catch (IOException ex) {
@@ -263,7 +268,7 @@ public abstract class Node implements Closeable {
                         nodeEnvironment.nodeId(), NODE_NAME_SETTING.getKey());
             }
 
-
+            // 获取 jvm 信息
             final JvmInfo jvmInfo = JvmInfo.jvmInfo();
             logger.info(
                 "version[{}], pid[{}], build[{}/{}/{}/{}], OS[{}/{}/{}], JVM[{}/{}/{}/{}]",
@@ -310,6 +315,8 @@ public abstract class Node implements Closeable {
             for (final ExecutorBuilder<?> builder : threadPool.builders()) {
                 additionalSettings.addAll(builder.getRegisteredSettings());
             }
+
+            // NodeClient 处理客户端在本节点的操作
             client = new NodeClient(settings, threadPool);
             final ResourceWatcherService resourceWatcherService = new ResourceWatcherService(settings, threadPool);
             final ScriptModule scriptModule = new ScriptModule(settings, pluginsService.filterPlugins(ScriptPlugin.class));
@@ -635,7 +642,7 @@ public abstract class Node implements Closeable {
 
     /**
      * Start the node. If the node is already started, this method is no-op.
-     * 启动es节点
+     * 启动 es 节点
      */
     public Node start() throws NodeValidationException {
         if (!lifecycle.moveToStarted()) {
@@ -656,6 +663,7 @@ public abstract class Node implements Closeable {
 
         final ClusterService clusterService = injector.getInstance(ClusterService.class);
 
+        // 用于发现集群节点
         final NodeConnectionsService nodeConnectionsService = injector.getInstance(NodeConnectionsService.class);
         nodeConnectionsService.start();
         clusterService.setNodeConnectionsService(nodeConnectionsService);
@@ -666,6 +674,7 @@ public abstract class Node implements Closeable {
         clusterService.getMasterService().setClusterStatePublisher(discovery::publish);
 
         // Start the transport service now so the publish address will be added to the local disco node in ClusterService
+        // 立即启动传输服务，以便将发布地址添加到 ClusterService 中的本地 disco 节点
         TransportService transportService = injector.getInstance(TransportService.class);
         transportService.getTaskManager().setTaskResultsService(injector.getInstance(TaskResultsService.class));
         transportService.start();
