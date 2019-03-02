@@ -269,6 +269,8 @@ public class HashMap<K, V> extends AbstractMap<K, V>
      * The bin count threshold for untreeifying a (split) bin during a
      * resize operation. Should be less than TREEIFY_THRESHOLD, and at
      * most 6 to mesh with shrinkage detection under removal.
+     *
+     * 红黑树转换为链表的阈值
      */
     static final int UNTREEIFY_THRESHOLD = 6;
 
@@ -278,7 +280,7 @@ public class HashMap<K, V> extends AbstractMap<K, V>
      * Should be at least 4 * TREEIFY_THRESHOLD to avoid conflicts
      * between resizing and treeification thresholds.
      *
-     *
+     * 红黑树结构的最小容量
      */
     static final int MIN_TREEIFY_CAPACITY = 64;
 
@@ -351,6 +353,14 @@ public class HashMap<K, V> extends AbstractMap<K, V>
      * cheapest possible way to reduce systematic lossage, as well as
      * to incorporate impact of the highest bits that would otherwise
      * never be used in index calculations because of table bounds.
+     *
+     * 计算key.hashCode()并将散列(XOR)更高的散列位降低。因为该表使用2次幂掩蔽，
+     * 所以仅在当前掩码之上的位中变化的散列组将始终发生冲突。(在已知的示例中是在小表中保存连续整数的浮点键集)
+     * 因此，我们应用向下扩展较高位的影响的变换。速度，效用和比特扩展质量之间存在权衡。
+     * 合理分布(因此不会受益于传播)，并且因为我们使用树来处理垃圾箱中的大量碰撞，
+     * 我们只是以最便宜的方式对一些移位的位进行异或，以减少系统损耗，以及影响由于表格边界原本不会在索引计算中使用的最高位
+     *
+     * 实际上就是高 16 bit 位与低 16 bit 位进行异或运算，来降低 hash 冲突
      */
     static final int hash(Object key) {
         int h;
@@ -439,6 +449,8 @@ public class HashMap<K, V> extends AbstractMap<K, V>
     /**
      * The next size value at which to resize (capacity * load factor).
      *
+     * HashMap的阈值，用于判断是否需要调整 HashMap 的容量 (threshold = capacity * load factor）
+     *
      * @serial
      */
     // (The javadoc description is true upon serialization.
@@ -449,6 +461,8 @@ public class HashMap<K, V> extends AbstractMap<K, V>
 
     /**
      * The load factor for the hash table.
+     *
+     * 加载因子
      *
      * @serial
      */
@@ -651,10 +665,11 @@ public class HashMap<K, V> extends AbstractMap<K, V>
         Node<K, V>[] tab;
         Node<K, V> p;
         int n, i;
-        // 如果table为空，则创建
+        // 如果table为空，则创建table
         if ((tab = table) == null || (n = tab.length) == 0)
             n = (tab = resize()).length;
         if ((p = tab[i = (n - 1) & hash]) == null)
+            // hash 未冲突，直接赋值
             tab[i] = newNode(hash, key, value, null);
         else {
             Node<K, V> e;
