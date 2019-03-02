@@ -39,6 +39,8 @@ import java.util.StringTokenizer;
  * <p>
  * An application cannot create its own instance of this class.
  *
+ * {@link Runtime} 类可以获取操作系统资源及添加钩子回调，例如可用内存，可用线程数等
+ *
  * @author  unascribed
  * @see     Runtime#getRuntime()
  * @since   JDK1.0
