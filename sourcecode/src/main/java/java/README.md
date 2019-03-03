@@ -1,4 +1,4 @@
-# jdk version 1.8
+# [jdk version 1.8](https://www.oracle.com/technetwork/cn/articles/java/index.html)
 
 ## AbstractQueuedSynchronizer(AQS 框架)
 AQS 框架是 J.U.C 中实现锁及同步机制的基础，其底层是通过调用 LockSupport#unpark()和 LockSupport#park() 实现线程的阻塞和唤醒。

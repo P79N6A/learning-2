@@ -16,6 +16,10 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+/**
+ * @see <a href="https://www.oracle.com/technetwork/articles/java/architect-lambdas-part1-2080972.html">https://www.oracle.com/technetwork/articles/java/architect-lambdas-part1-2080972.html</a>
+ * @see <a href="https://www.oracle.com/technetwork/articles/java/architect-lambdas-part2-2081439.html">https://www.oracle.com/technetwork/articles/java/architect-lambdas-part2-2081439.html</a>
+ */
 public class JDK8 {
 
     public static void main(String[] args) {

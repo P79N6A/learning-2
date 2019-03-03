@@ -29,7 +29,7 @@
 -->
   <property>
     <name>hbase.rootdir</name>
-    <value>hdfs://iss-half-ali-f-app-001-18-13:9000/hbase</value>
+    <value>hdfs://hadoop01:9000/hbase</value>
   </property>
   <property> 
     <name>hbase.cluster.distributed</name> 
