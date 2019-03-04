@@ -30,7 +30,7 @@ tree [-aACdDfFgilnNpqstux][-I <范本样式>][-P <范本样式>][目录...]
 ## command action
 ```text
 [root@hadoop01 src]# yum -y install tree
-[root@iss-half-ali-f-app-001-18-13 cluster]# tree
+[root@hadoop01 cluster]# tree
 .
 ├── 6001
 │   └── redis.conf
