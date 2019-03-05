@@ -24,12 +24,6 @@
 
 
 ## command action
-> curl https://www.google.com.hk
-
-> curl https://www.google.com.hk >> google.html
-
-> curl -o google.html https://www.google.com.hk
-
 ```text
 [root@hadoop01 ~]$ curl http://127.0.0.1:3000
 "Welcome to The Athens Proxy"
