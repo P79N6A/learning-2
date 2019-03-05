@@ -17,7 +17,7 @@ redis> get foo
 "bar"
 ```
 
-## redis 集群部署(3master 3slave)
+## [redis 集群部署(3master 3slave)](https://redis.io/topics/cluster-tutorial)
 ### 1. 集群环境
 ```text
 hadoop01   172.16.18.13    master 6001     slave 6002
@@ -209,13 +209,13 @@ hadoop03   172.16.18.15    master 6001     slave 6002
     ```
 
 
-## 哨兵部署(1master 2slave 3sentinel)
+## [哨兵部署(1master 2slave 3sentinel(sentinel采用的 raft 选举算法))](https://redis.io/topics/sentinel)
 1. redis sentinel 环境(redis 安装参考 redis cluster)
-```text
-hadoop01   172.16.18.13    master 6379     sentinel 26379
-hadoop02   172.16.18.14    slave  6379     sentinel 26379
-hadoop03   172.16.18.15    slave  6379     sentinel 26379
-```
+    ```text
+    hadoop01   172.16.18.13    master 6379     sentinel 26379
+    hadoop02   172.16.18.14    slave  6379     sentinel 26379
+    hadoop03   172.16.18.15    slave  6379     sentinel 26379
+    ```
 
 2. redis 配置
     ```text
