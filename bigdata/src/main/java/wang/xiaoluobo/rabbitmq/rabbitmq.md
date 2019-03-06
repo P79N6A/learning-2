@@ -3,6 +3,10 @@
 
 [erlang](https://github.com/rabbitmq/erlang-rpm/releases)
 
+https://www.cnblogs.com/kevingrace/p/8012792.html
+https://qupzhi.com/rabbitmqadmin/
+http://soft.dog/2016/04/20/RabbitMQ-cli-rabbitmqadmin/
+http://soft.dog/2016/01/13/rabbitmq-monitoring/
 
 ## rabbitmq
 1. 集群环境
@@ -230,7 +234,275 @@ hadoop01,hadoop02,hadoop03
               {'rabbit@hadoop02',[]},
               {'rabbit@hadoop03',[]}]}]
     ```
-    
+
+## rabbitmqadmin
+[root@hadoop01 ~]# wget http://172.16.18.13:15672/cli/rabbitmqadmin
+[root@hadoop01 ~]# chmod +x rabbitmqadmin
+[root@hadoop01 ~]# mv rabbitmqadmin /usr/sbin/
+
+```text
+[root@hadoop01 ~]# rabbitmqadmin -help
+Usage
+=====
+  rabbitmqadmin [options] subcommand
+
+Options
+=======
+--help, -h              show this help message and exit
+--config=CONFIG, -c CONFIG
+                        configuration file [default: ~/.rabbitmqadmin.conf]
+--node=NODE, -N NODE    node described in the configuration file [default:
+                        'default' only if configuration file is specified]
+--host=HOST, -H HOST    connect to host HOST [default: localhost]
+--port=PORT, -P PORT    connect to port PORT [default: 15672]
+--path-prefix=PATH_PREFIX
+                        use specific URI path prefix for the RabbitMQ HTTP
+                        API. /api and operation path will be appended to it.
+                        (default: blank string) [default: ]
+--vhost=VHOST, -V VHOST
+                        connect to vhost VHOST [default: all vhosts for list,
+                        '/' for declare]
+--username=USERNAME, -u USERNAME
+                        connect using username USERNAME [default: guest]
+--password=PASSWORD, -p PASSWORD
+                        connect using password PASSWORD [default: guest]
+--base-uri=URI, -U URI  connect using a base HTTP API URI. /api and operation
+                        path will be appended to it. Path will be ignored.
+                        --vhost has to be provided separately.
+--quiet, -q             suppress status messages [default: True]
+--ssl, -s               connect with ssl [default: False]
+--ssl-key-file=SSL_KEY_FILE
+                        PEM format key file for SSL
+--ssl-cert-file=SSL_CERT_FILE
+                        PEM format certificate file for SSL
+--ssl-ca-cert-file=SSL_CA_CERT_FILE
+                        PEM format CA certificate file for SSL
+--ssl-disable-hostname-verification
+                        Disables peer hostname verification
+--ssl-insecure, -k      Disables all SSL validations like curl's '-k' argument
+--request-timeout=REQUEST_TIMEOUT, -t REQUEST_TIMEOUT
+                        HTTP request timeout in seconds [default: 120]
+--format=FORMAT, -f FORMAT
+                        format for listing commands - one of [raw_json, long,
+                        pretty_json, kvp, tsv, table, bash] [default: table]
+--sort=SORT, -S SORT    sort key for listing queries
+--sort-reverse, -R      reverse the sort order
+--depth=DEPTH, -d DEPTH
+                        maximum depth to recurse for listing tables [default:
+                        1]
+--bash-completion       Print bash completion script [default: False]
+--version               Display version and exit
+
+More Help
+=========
+
+For more help use the help subcommand:
+
+  rabbitmqadmin help subcommands  # For a list of available subcommands
+  rabbitmqadmin help config       # For help with the configuration file
+```
+
+
+[root@hadoop01 ~]# rabbitmqadmin declare queue name=test durable=true
+queue declared
+[root@hadoop01 ~]# rabbitmqadmin declare queue name=test durable=true
+queue declared
+[root@hadoop01 ~]# rabbitmqadmin list queues
++------+----------+
+| name | messages |
++------+----------+
+| test | 0        |
++------+----------+
+[root@hadoop01 ~]# rabbitmqadmin publish routing_key=test payload="hello world"
+Message published
+[root@hadoop01 ~]# rabbitmqadmin list queues
++------+----------+
+| name | messages |
++------+----------+
+| test | 1        |
++------+----------+
+[root@hadoop01 ~]# rabbitmqadmin get queue=test
++-------------+----------+---------------+-------------+---------------+------------------+------------+-------------+
+| routing_key | exchange | message_count |   payload   | payload_bytes | payload_encoding | properties | redelivered |
++-------------+----------+---------------+-------------+---------------+------------------+------------+-------------+
+| test        |          | 0             | hello world | 11            | string           |            | False       |
++-------------+----------+---------------+-------------+---------------+------------------+------------+-------------+
+
+# 消费消息
+[root@hadoop01 ~]# rabbitmqadmin get queue=test ackmode=ack_requeue_true
++-------------+----------+---------------+-------------+---------------+------------------+------------+-------------+
+| routing_key | exchange | message_count |   payload   | payload_bytes | payload_encoding | properties | redelivered |
++-------------+----------+---------------+-------------+---------------+------------------+------------+-------------+
+| test        |          | 0             | hello world | 11            | string           |            | True        |
++-------------+----------+---------------+-------------+---------------+------------------+------------+-------------+
+[root@hadoop01 ~]# rabbitmqadmin list queues
++------+----------+
+| name | messages |
++------+----------+
+| test | 1        |
++------+----------+
+[root@hadoop01 ~]# rabbitmqadmin get queue=test ackmode=ack_requeue_false
++-------------+----------+---------------+-------------+---------------+------------------+------------+-------------+
+| routing_key | exchange | message_count |   payload   | payload_bytes | payload_encoding | properties | redelivered |
++-------------+----------+---------------+-------------+---------------+------------------+------------+-------------+
+| test        |          | 0             | hello world | 11            | string           |            | True        |
++-------------+----------+---------------+-------------+---------------+------------------+------------+-------------+
+[root@hadoop01 ~]# rabbitmqadmin list queues
++------+----------+
+| name | messages |
++------+----------+
+| test | 0        |
++------+----------+
+
+
+[root@hadoop01 ~]# rabbitmqadmin declare user name=test password=test tags=administrator
+user declared
+[root@hadoop01 ~]# rabbitmqctl change_password test 123
+Changing password for user "test" ...
+[root@hadoop01 ~]# rabbitmqctl change_password test test
+Changing password for user "test" ...
+[root@hadoop01 ~]# rabbitmqctl list_users
+Listing users ...
+user	tags
+admin	[administrator]
+guest	[administrator]
+test	[administrator]
+
+
+```text
+[root@hadoop01 ~]# rabbitmqadmin help config
+Usage
+=====
+rabbitmqadmin [options] subcommand
+
+Configuration File
+==================
+
+  It is possible to specify a configuration file from the command line.
+  Hosts can be configured easily in a configuration file and called
+  from the command line.
+
+Example
+=======
+
+  # rabbitmqadmin.conf.example START
+
+  [host_normal]
+  hostname = localhost
+  port = 15672
+  username = guest
+  password = guest
+  declare_vhost = / # Used as default for declare / delete only
+  vhost = /         # Used as default for declare / delete / list
+
+  [host_ssl]
+  hostname = otherhost
+  port = 15672
+  username = guest
+  password = guest
+  ssl = True
+  ssl_key_file = /path/to/key.pem
+  ssl_cert_file = /path/to/cert.pem
+
+  # rabbitmqadmin.conf.example END
+
+Use
+===
+
+  rabbitmqadmin -c rabbitmqadmin.conf.example -N host_normal ...
+[root@hadoop01 ~]# rabbitmqadmin help subcommands
+Usage
+=====
+  rabbitmqadmin [options] subcommand
+
+  where subcommand is one of:
+
+Display
+=======
+
+  list operator_policies [<column>...]
+  list users [<column>...]
+  list vhost_limits [<column>...]
+  list vhosts [<column>...]
+  list connections [<column>...]
+  list exchanges [<column>...]
+  list bindings [<column>...]
+  list permissions [<column>...]
+  list channels [<column>...]
+  list parameters [<column>...]
+  list consumers [<column>...]
+  list queues [<column>...]
+  list policies [<column>...]
+  list nodes [<column>...]
+  show overview [<column>...]
+
+Object Manipulation
+===================
+
+  declare queue name=... [node=... auto_delete=... durable=... arguments=...]
+  declare vhost name=... [tracing=...]
+  declare operator_policy name=... pattern=... definition=... [priority=... apply-to=...]
+  declare vhost_limit name=... value=...
+  declare user name=... password=... OR password_hash=... tags=... [hashing_algorithm=...]
+  declare exchange name=... type=... [auto_delete=... internal=... durable=... arguments=...]
+  declare policy name=... pattern=... definition=... [priority=... apply-to=...]
+  declare parameter component=... name=... value=...
+  declare permission vhost=... user=... configure=... write=... read=...
+  declare binding source=... destination=... [arguments=... routing_key=... destination_type=...]
+  delete queue name=...
+  delete vhost name=...
+  delete operator_policy name=...
+  delete vhost_limit name=...
+  delete user name=...
+  delete exchange name=...
+  delete policy name=...
+  delete parameter component=... name=...
+  delete permission vhost=... user=...
+  delete binding source=... destination_type=... destination=... properties_key=...
+  close connection name=...
+  purge queue name=...
+
+Broker Definitions
+==================
+
+  export <file>
+  import <file>
+
+Publishing and Consuming
+========================
+
+  publish routing_key=... [exchange=... payload=... payload_encoding=... properties=...]
+  get queue=... [count=... payload_file=... ackmode=... encoding=...]
+
+  * If payload is not specified on publish, standard input is used
+
+  * If payload_file is not specified on get, the payload will be shown on
+    standard output along with the message metadata
+
+  * If payload_file is specified on get, count must not be set
+```
+  
+[root@hadoop01 ~]# rabbitmqadmin list policies
+No items
+[root@hadoop01 ~]# rabbitmqadmin list nodes
++-----------------+------+----------+
+|       name      | type | mem_used |
++-----------------+------+----------+
+| rabbit@hadoop01 | disc | 95371264 |
+| rabbit@hadoop02 | disc | 91648000 |
+| rabbit@hadoop03 | disc | 92979200 |
++-----------------+------+----------+
+[root@hadoop01 ~]# rabbitmqadmin show overview
++------------------+-----------------+-----------------------+----------------------+
+| rabbitmq_version |  cluster_name   | queue_totals.messages | object_totals.queues |
++------------------+-----------------+-----------------------+----------------------+
+| 3.7.12           | rabbit@hadoop01 | 0                     | 1                    |
++------------------+-----------------+-----------------------+----------------------+
+
+
+web ui http://127.0.0.1:15672
+
+
 ## 安装遇到的问题
 1. ERROR: node with name "rabbit" already running on "hadoop02"
 > kill 掉 rabbitmq 所有进程，重启 rabbitmq
