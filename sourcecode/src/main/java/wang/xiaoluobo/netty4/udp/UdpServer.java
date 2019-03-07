@@ -2,13 +2,13 @@ package wang.xiaoluobo.netty4.udp;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
+import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 import io.netty.handler.codec.Delimiters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
@@ -27,12 +27,11 @@ public class UdpServer implements ApplicationContextAware {
 
     private ApplicationContext ctx;
 
-    @Autowired
     private EventLoopGroup eventLoopGroup;
 
     private int port;
 
-    public void init(){
+    public void init() {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -46,10 +45,11 @@ public class UdpServer implements ApplicationContextAware {
         t.start();
     }
 
-    public void start(){
+    public void start() {
         try {
             logger.info("Prepare to start UdpServer.");
             ServerBootstrap serverBootstrap = new ServerBootstrap();
+            eventLoopGroup = new NioEventLoopGroup();
             serverBootstrap.group(eventLoopGroup)
                     .channel(NioServerSocketChannel.class)
                     .childHandler(new ChannelInitializer<Channel>() {
@@ -60,7 +60,7 @@ public class UdpServer implements ApplicationContextAware {
                             channelPipeline.addLast("encoder", new MyStringEncoder());
                             channelPipeline.addLast("decoder", new MyStringDecoder());
                             channelPipeline.addLast("handler", ctx.getBean("udpServerHandler", UdpServerHandler.class));
-                        };
+                        }
                     });
 
             serverBootstrap.option(ChannelOption.SO_BACKLOG, 128);
@@ -76,15 +76,15 @@ public class UdpServer implements ApplicationContextAware {
         } catch (Exception e) {
             logger.info("TcpServer[port is {}] start failed.", port);
             e.printStackTrace();
-        }finally {
-            if(eventLoopGroup != null){
+        } finally {
+            if (eventLoopGroup != null) {
                 eventLoopGroup.shutdownGracefully();
             }
         }
     }
 
-    public void destroy(){
-        if(eventLoopGroup != null){
+    public void destroy() {
+        if (eventLoopGroup != null) {
             eventLoopGroup.shutdownGracefully();
         }
     }

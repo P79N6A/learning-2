@@ -2,6 +2,7 @@ package wang.xiaoluobo.netty4.tcp;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
+import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 import io.netty.handler.codec.Delimiters;
@@ -11,7 +12,6 @@ import io.netty.handler.timeout.IdleStateHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
@@ -30,10 +30,8 @@ public final class TcpServer implements ApplicationContextAware {
 
     private ApplicationContext ctx;
 
-    @Autowired
     private EventLoopGroup bossEventLoopGroup;
 
-    @Autowired
     private EventLoopGroup workerEventLoopGroup;
 
     private int port;
@@ -53,6 +51,8 @@ public final class TcpServer implements ApplicationContextAware {
     }
 
     public void start() {
+        bossEventLoopGroup = new NioEventLoopGroup();
+        workerEventLoopGroup = new NioEventLoopGroup();
         try {
             logger.info("Prepare to start TcpServer.");
             ServerBootstrap serverBootstrap = new ServerBootstrap();
@@ -71,8 +71,6 @@ public final class TcpServer implements ApplicationContextAware {
                             // 心跳监测 读超时为20s，写超时为20s 全部空闲时间100s
                             channelPipeline.addLast("ping", new IdleStateHandler(20, 20, 100));
                         }
-
-                        ;
                     });
 
             serverBootstrap.option(ChannelOption.SO_BACKLOG, 128);

@@ -130,6 +130,7 @@ public class ServerBootstrap extends AbstractBootstrap<ServerBootstrap, ServerCh
     void init(Channel channel) throws Exception {
         final Map<ChannelOption<?>, Object> options = options0();
         synchronized (options) {
+            // 设置 Channel 可选参数项(TCP 参数)
             setChannelOptions(channel, options, logger);
         }
 
@@ -142,6 +143,9 @@ public class ServerBootstrap extends AbstractBootstrap<ServerBootstrap, ServerCh
             }
         }
 
+        /**
+         * {@link DefaultChannelPipeline}
+         */
         ChannelPipeline p = channel.pipeline();
 
         final EventLoopGroup currentChildGroup = childGroup;
