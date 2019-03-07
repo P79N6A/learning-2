@@ -23,7 +23,7 @@
     - TestNG
 
 ## spring启动过程
-核心方法：ClassPathXmlApplicationContext中refresh方法
+核心方法：[ApplicationContext](./context/support/AbstractApplicationContext.java#refresh())
 
 # spring boot version 2.1.0.RELEASE
 ## spring boot启动过程

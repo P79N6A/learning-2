@@ -128,7 +128,9 @@ public abstract class AbstractRefreshableApplicationContext extends AbstractAppl
 			closeBeanFactory();
 		}
 		try {
-			// spring默认BeanFactory
+			/**
+			 * spring 默认 BeanFactory {@link DefaultListableBeanFactory}
+			 */
 			DefaultListableBeanFactory beanFactory = createBeanFactory();
 			beanFactory.setSerializationId(getId());
 
