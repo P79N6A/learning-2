@@ -330,7 +330,7 @@ $ git archive
 #### 十一、实战
 ```bash
 # 创建新版本库
-git clone http://gitlab.bingex.com.cn/yandong.wang/shop.git
+git clone https://github.com/Dongzai1005/learning.git
 cd shop
 touch README.md
 git add README.md
@@ -340,14 +340,14 @@ git push -u origin master
 # 已存在的文件夹
 cd existing_folder
 git init
-git remote add origin http://gitlab.bingex.com.cn/yandong.wang/shop.git
+git remote add origin https://github.com/Dongzai1005/learning.git
 git add .
 git commit -m "Initial commit"
 git push -u origin master
 
 # 已存在的 Git 版本库
 cd existing_repo
-git remote add origin http://gitlab.bingex.com.cn/yandong.wang/shop.git
+git remote add origin https://github.com/Dongzai1005/learning.git
 git push -u origin --all
 git push -u origin --tags
 ```

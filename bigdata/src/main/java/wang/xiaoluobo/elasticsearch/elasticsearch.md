@@ -51,14 +51,14 @@ bootstrap.system_call_filter: false
 #### 3. 环境测试
 ```text
 1. postman put 请求，create an index named "customer"
-http://es.benz.bingex.com/customer?pretty
+http://172.16.18.13:9100/customer?pretty
 {
     "acknowledged": true,
     "shards_acknowledged": true
 }
 
 2. postman put 请求，put data into our customer index
-http://es.benz.bingex.com/customer/doc/1?pretty
+http://172.16.18.13:9100/customer/doc/1?pretty
 {
     "_index": "customer",
     "_type": "doc",
@@ -73,7 +73,7 @@ http://es.benz.bingex.com/customer/doc/1?pretty
     "created": true
 }
 
-3. http://es.benz.bingex.com/customer/doc/1?pretty
+3. http://172.16.18.13:9100/customer/doc/1?pretty
 {
   "_index" : "customer",
   "_type" : "doc",

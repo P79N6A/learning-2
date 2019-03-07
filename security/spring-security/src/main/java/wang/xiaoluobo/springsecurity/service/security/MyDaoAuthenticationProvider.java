@@ -1,4 +1,4 @@
-package wang.xiaoluobo.springsecurity.service.security;//package com.ishansong.file.server.service.security;
+package wang.xiaoluobo.springsecurity.service.security;
 //
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
