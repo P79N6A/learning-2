@@ -23,4 +23,10 @@ public class UsersController {
         example.setOrderByClause(" id asc ");
         return JSON.toJSONString(usersService.getList(example));
     }
+
+    @RequestMapping("/delete")
+    public String delete(Long id) {
+        usersService.delete(id);
+        return "success";
+    }
 }
