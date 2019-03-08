@@ -13,3 +13,4 @@ spring boot 项目不能正常启动，日志框架冲突...
 - [hadoop](./src/main/java/org/apache/hadoop/hadoop.md)
 - [hbase](./src/main/java/org/apache/hadoop/hbase/hbase.md)
 - [elasticsearch](./src/main/java/org/elasticsearch/elasticsearch.md)
+- [rocketmq](./src/main/java/org/apache/rocketmq/rocketmq.md)
