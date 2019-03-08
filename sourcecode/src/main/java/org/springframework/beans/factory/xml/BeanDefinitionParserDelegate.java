@@ -18,6 +18,7 @@ package org.springframework.beans.factory.xml;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.aop.config.AopNamespaceHandler;
 import org.springframework.beans.BeanMetadataAttribute;
 import org.springframework.beans.BeanMetadataAttributeAccessor;
 import org.springframework.beans.PropertyValue;
@@ -1321,10 +1322,18 @@ public class BeanDefinitionParserDelegate {
 
 	@Nullable
 	public BeanDefinition parseCustomElement(Element ele, @Nullable BeanDefinition containingBd) {
+		// aop 则是 http://www.springframework.org/schema/aop
 		String namespaceUri = getNamespaceURI(ele);
 		if (namespaceUri == null) {
 			return null;
 		}
+
+		/**
+		 * 通过 SPI 获取 NamespaceHandler 默认实现 {@link AopNamespaceHandler}
+		 * {@link DefaultNamespaceHandlerResolver#DEFAULT_HANDLER_MAPPINGS_LOCATION}
+		 *
+		 * http\://www.springframework.org/schema/aop=org.springframework.aop.config.AopNamespaceHandler
+		 */
 		NamespaceHandler handler = this.readerContext.getNamespaceHandlerResolver().resolve(namespaceUri);
 		if (handler == null) {
 			error("Unable to locate Spring NamespaceHandler for XML schema namespace [" + namespaceUri + "]", ele);
