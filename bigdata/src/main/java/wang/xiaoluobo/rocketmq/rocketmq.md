@@ -37,8 +37,8 @@ JAVA_OPT="${JAVA_OPT} -server -Xms1g -Xmx1g -Xmn512"
 
 #### 启动 mqnamesrv
 ```bash
-[hadoop@hadoop02 rocketmq-4.4.0]$ nohup ./bin/mqnamesrv &
-[hadoop@hadoop03 rocketmq-4.4.0]$ nohup ./bin/mqnamesrv &
+[hadoop@hadoop02 rocketmq-4.4.0]$ nohup ./bin/mqnamesrv > nameserver.out 2>&1 &
+[hadoop@hadoop03 rocketmq-4.4.0]$ nohup ./bin/mqnamesrv > nameserver.out 2>&1 &
 ```
 
 #### 修改 broker 配置
@@ -58,11 +58,11 @@ JAVA_OPT="${JAVA_OPT} -server -Xms1g -Xmx1g -Xmn512"
     
  
     # 先启动双主 master，再启动双 slave
-    [hadoop@hadoop02 rocketmq-4.4.0]$ nohup ./bin/mqbroker -c ./conf/2m-2s-async/broker-a.properties &
-    [hadoop@hadoop03 rocketmq-4.4.0]$ nohup ./bin/mqbroker -c ./conf/2m-2s-async/broker-b.properties &
+    [hadoop@hadoop02 rocketmq-4.4.0]$ nohup ./bin/mqbroker -c ./conf/2m-2s-async/broker-a.properties > broker-a.out 2>&1 &
+    [hadoop@hadoop03 rocketmq-4.4.0]$ nohup ./bin/mqbroker -c ./conf/2m-2s-async/broker-b.properties > broker-b.out 2>&1 &
     
-    [hadoop@hadoop02 rocketmq-4.4.0]$ nohup ./bin/mqbroker -c ./conf/2m-2s-async/broker-b-s.properties &
-    [hadoop@hadoop03 rocketmq-4.4.0]$ nohup ./bin/mqbroker -c ./conf/2m-2s-async/broker-a-s.properties &
+    [hadoop@hadoop02 rocketmq-4.4.0]$ nohup ./bin/mqbroker -c ./conf/2m-2s-async/broker-b-s.properties > broker-b-s.out 2>&1 &
+    [hadoop@hadoop03 rocketmq-4.4.0]$ nohup ./bin/mqbroker -c ./conf/2m-2s-async/broker-a-s.properties > broker-a-s.out 2>&1 &
     
  
     # 查看集群信息
@@ -89,11 +89,11 @@ JAVA_OPT="${JAVA_OPT} -server -Xms1g -Xmx1g -Xmn512"
  
  
     # 先启动双主 master，再启动双 slave
-    [hadoop@hadoop02 rocketmq-4.4.0]$ nohup ./bin/mqbroker -c ./conf/2m-2s-sync/broker-a.properties &
-    [hadoop@hadoop03 rocketmq-4.4.0]$ nohup ./bin/mqbroker -c ./conf/2m-2s-sync/broker-b.properties &
+    [hadoop@hadoop02 rocketmq-4.4.0]$ nohup ./bin/mqbroker -c ./conf/2m-2s-sync/broker-a.properties > broker-a.out 2>&1 &
+    [hadoop@hadoop03 rocketmq-4.4.0]$ nohup ./bin/mqbroker -c ./conf/2m-2s-sync/broker-b.properties > broker-b.out 2>&1 &
     
-    [hadoop@hadoop02 rocketmq-4.4.0]$ nohup ./bin/mqbroker -c ./conf/2m-2s-sync/broker-b-s.properties &
-    [hadoop@hadoop03 rocketmq-4.4.0]$ nohup ./bin/mqbroker -c ./conf/2m-2s-sync/broker-a-s.properties &
+    [hadoop@hadoop02 rocketmq-4.4.0]$ nohup ./bin/mqbroker -c ./conf/2m-2s-sync/broker-b-s.properties > broker-b-s.out 2>&1 &
+    [hadoop@hadoop03 rocketmq-4.4.0]$ nohup ./bin/mqbroker -c ./conf/2m-2s-sync/broker-a-s.properties > broker-a-s.out 2>&1 &
     
  
     # 查看集群信息
@@ -110,8 +110,8 @@ JAVA_OPT="${JAVA_OPT} -server -Xms1g -Xmx1g -Xmn512"
     [hadoop@hadoop03 rocketmq-4.4.0]$ vim conf/2m-noslave/broker-b.properties
     
     # 启动 broker
-    [hadoop@hadoop02 rocketmq-4.4.0]$ nohup ./bin/mqbroker -c ./conf/2m-noslave/broker-a.properties &
-    [hadoop@hadoop03 rocketmq-4.4.0]$ nohup ./bin/mqbroker -c ./conf/2m-noslave/broker-b.properties &
+    [hadoop@hadoop02 rocketmq-4.4.0]$ nohup ./bin/mqbroker -c ./conf/2m-noslave/broker-a.properties > broker-a.out 2>&1 &
+    [hadoop@hadoop03 rocketmq-4.4.0]$ nohup ./bin/mqbroker -c ./conf/2m-noslave/broker-b.properties > broker-b.out 2>&1 &
     
     # 查看进程
     [hadoop@hadoop02 rocketmq-4.4.0]$ jps
@@ -137,7 +137,7 @@ JAVA_OPT="${JAVA_OPT} -server -Xms1g -Xmx1g -Xmn512"
 
 # 停止 broker
 [hadoop@hadoop02 rocketmq-4.4.0]$ ./bin/mqshutdown broker
-[hadoop@hadoop02 rocketmq-4.4.0]$ ./bin/mqshutdown broker
+[hadoop@hadoop03 rocketmq-4.4.0]$ ./bin/mqshutdown broker
 
 [hadoop@hadoop02 rocketmq-4.4.0]$ ./bin/mqadmin clusterlist -n 172.16.18.14:9876
 #Cluster Name     #Broker Name            #BID  #Addr                  #Version                #InTPS(LOAD)       #OutTPS(LOAD) #PCWait(ms) #Hour #SPACE
