@@ -18,4 +18,11 @@
 
     <!-- 配置文件位置 -->
     <context:property-placeholder location="classpath:*.properties"/>
+
+    <bean id="operateLogAdvice" class="wang.xiaoluobo.webwar.log.annotation.OperateLogAdvice"></bean>
+    <aop:config proxy-target-class="true">
+        <aop:pointcut id="operatePoint"
+                      expression="@annotation(wang.xiaoluobo.webwar.log.annotation.OperateLog)"/>
+        <aop:advisor pointcut-ref="operatePoint" id="logAdvice" advice-ref="operateLogAdvice"/>
+    </aop:config>
 </beans>

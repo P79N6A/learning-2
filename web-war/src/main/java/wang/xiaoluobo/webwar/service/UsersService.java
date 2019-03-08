@@ -13,4 +13,5 @@ public interface UsersService {
 
     List<UsersEntity> getList(UsersEntityExample example);
 
+    void delete(Long id);
 }
