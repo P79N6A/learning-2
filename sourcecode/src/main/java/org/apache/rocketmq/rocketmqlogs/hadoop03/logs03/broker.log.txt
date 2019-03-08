@@ -1,0 +1,438 @@
+2019-03-08 18:02:31 INFO main - rocketmqHome=/mnt/opt/rocketmq-4.4.0
+2019-03-08 18:02:31 INFO main - namesrvAddr=172.16.18.14:9876;172.16.18.15:9876
+2019-03-08 18:02:31 INFO main - brokerIP1=172.16.18.15
+2019-03-08 18:02:31 INFO main - brokerIP2=172.16.18.15
+2019-03-08 18:02:31 INFO main - brokerName=broker-b
+2019-03-08 18:02:31 INFO main - brokerClusterName=rocketmq-cluster
+2019-03-08 18:02:31 INFO main - brokerId=0
+2019-03-08 18:02:31 INFO main - brokerPermission=6
+2019-03-08 18:02:31 INFO main - defaultTopicQueueNums=4
+2019-03-08 18:02:31 INFO main - autoCreateTopicEnable=true
+2019-03-08 18:02:31 INFO main - clusterTopicEnable=true
+2019-03-08 18:02:31 INFO main - brokerTopicEnable=true
+2019-03-08 18:02:31 INFO main - autoCreateSubscriptionGroup=true
+2019-03-08 18:02:31 INFO main - messageStorePlugIn=
+2019-03-08 18:02:31 INFO main - msgTraceTopicName=RMQ_SYS_TRACE_TOPIC
+2019-03-08 18:02:31 INFO main - traceTopicEnable=false
+2019-03-08 18:02:31 INFO main - sendMessageThreadPoolNums=1
+2019-03-08 18:02:31 INFO main - pullMessageThreadPoolNums=24
+2019-03-08 18:02:31 INFO main - queryMessageThreadPoolNums=12
+2019-03-08 18:02:31 INFO main - adminBrokerThreadPoolNums=16
+2019-03-08 18:02:31 INFO main - clientManageThreadPoolNums=32
+2019-03-08 18:02:31 INFO main - consumerManageThreadPoolNums=32
+2019-03-08 18:02:31 INFO main - heartbeatThreadPoolNums=4
+2019-03-08 18:02:31 INFO main - endTransactionThreadPoolNums=16
+2019-03-08 18:02:31 INFO main - flushConsumerOffsetInterval=5000
+2019-03-08 18:02:31 INFO main - flushConsumerOffsetHistoryInterval=60000
+2019-03-08 18:02:31 INFO main - rejectTransactionMessage=false
+2019-03-08 18:02:31 INFO main - fetchNamesrvAddrByAddressServer=false
+2019-03-08 18:02:31 INFO main - sendThreadPoolQueueCapacity=10000
+2019-03-08 18:02:31 INFO main - pullThreadPoolQueueCapacity=100000
+2019-03-08 18:02:31 INFO main - queryThreadPoolQueueCapacity=20000
+2019-03-08 18:02:31 INFO main - clientManagerThreadPoolQueueCapacity=1000000
+2019-03-08 18:02:31 INFO main - consumerManagerThreadPoolQueueCapacity=1000000
+2019-03-08 18:02:31 INFO main - heartbeatThreadPoolQueueCapacity=50000
+2019-03-08 18:02:31 INFO main - endTransactionPoolQueueCapacity=100000
+2019-03-08 18:02:31 INFO main - filterServerNums=0
+2019-03-08 18:02:31 INFO main - longPollingEnable=true
+2019-03-08 18:02:31 INFO main - shortPollingTimeMills=1000
+2019-03-08 18:02:31 INFO main - notifyConsumerIdsChangedEnable=true
+2019-03-08 18:02:31 INFO main - highSpeedMode=false
+2019-03-08 18:02:31 INFO main - commercialEnable=true
+2019-03-08 18:02:31 INFO main - commercialTimerCount=1
+2019-03-08 18:02:31 INFO main - commercialTransCount=1
+2019-03-08 18:02:31 INFO main - commercialBigCount=1
+2019-03-08 18:02:31 INFO main - commercialBaseCount=1
+2019-03-08 18:02:31 INFO main - transferMsgByHeap=true
+2019-03-08 18:02:31 INFO main - maxDelayTime=40
+2019-03-08 18:02:31 INFO main - regionId=DefaultRegion
+2019-03-08 18:02:31 INFO main - registerBrokerTimeoutMills=6000
+2019-03-08 18:02:31 INFO main - slaveReadEnable=false
+2019-03-08 18:02:31 INFO main - disableConsumeIfConsumerReadSlowly=false
+2019-03-08 18:02:31 INFO main - consumerFallbehindThreshold=17179869184
+2019-03-08 18:02:31 INFO main - brokerFastFailureEnable=true
+2019-03-08 18:02:31 INFO main - waitTimeMillsInSendQueue=200
+2019-03-08 18:02:31 INFO main - waitTimeMillsInPullQueue=5000
+2019-03-08 18:02:31 INFO main - waitTimeMillsInHeartbeatQueue=31000
+2019-03-08 18:02:31 INFO main - waitTimeMillsInTransactionQueue=3000
+2019-03-08 18:02:31 INFO main - startAcceptSendRequestTimeStamp=0
+2019-03-08 18:02:31 INFO main - traceOn=true
+2019-03-08 18:02:31 INFO main - enableCalcFilterBitMap=false
+2019-03-08 18:02:31 INFO main - expectConsumerNumUseFilter=32
+2019-03-08 18:02:31 INFO main - maxErrorRateOfBloomFilter=20
+2019-03-08 18:02:31 INFO main - filterDataCleanTimeSpan=86400000
+2019-03-08 18:02:31 INFO main - filterSupportRetry=false
+2019-03-08 18:02:31 INFO main - enablePropertyFilter=false
+2019-03-08 18:02:31 INFO main - compressedRegister=false
+2019-03-08 18:02:31 INFO main - forceRegister=true
+2019-03-08 18:02:31 INFO main - registerNameServerPeriod=30000
+2019-03-08 18:02:31 INFO main - transactionTimeOut=6000
+2019-03-08 18:02:31 INFO main - transactionCheckMax=15
+2019-03-08 18:02:31 INFO main - transactionCheckInterval=60000
+2019-03-08 18:02:31 INFO main - aclEnable=false
+2019-03-08 18:02:31 INFO main - listenPort=10911
+2019-03-08 18:02:31 INFO main - serverWorkerThreads=8
+2019-03-08 18:02:31 INFO main - serverCallbackExecutorThreads=0
+2019-03-08 18:02:31 INFO main - serverSelectorThreads=3
+2019-03-08 18:02:31 INFO main - serverOnewaySemaphoreValue=256
+2019-03-08 18:02:31 INFO main - serverAsyncSemaphoreValue=64
+2019-03-08 18:02:31 INFO main - serverChannelMaxIdleTimeSeconds=120
+2019-03-08 18:02:31 INFO main - serverSocketSndBufSize=131072
+2019-03-08 18:02:31 INFO main - serverSocketRcvBufSize=131072
+2019-03-08 18:02:31 INFO main - serverPooledByteBufAllocatorEnable=true
+2019-03-08 18:02:31 INFO main - useEpollNativeSelector=false
+2019-03-08 18:02:31 INFO main - clientWorkerThreads=4
+2019-03-08 18:02:31 INFO main - clientCallbackExecutorThreads=4
+2019-03-08 18:02:31 INFO main - clientOnewaySemaphoreValue=65535
+2019-03-08 18:02:31 INFO main - clientAsyncSemaphoreValue=65535
+2019-03-08 18:02:31 INFO main - connectTimeoutMillis=3000
+2019-03-08 18:02:31 INFO main - channelNotActiveInterval=60000
+2019-03-08 18:02:31 INFO main - clientChannelMaxIdleTimeSeconds=120
+2019-03-08 18:02:31 INFO main - clientSocketSndBufSize=131072
+2019-03-08 18:02:31 INFO main - clientSocketRcvBufSize=131072
+2019-03-08 18:02:31 INFO main - clientPooledByteBufAllocatorEnable=false
+2019-03-08 18:02:31 INFO main - clientCloseSocketIfTimeout=false
+2019-03-08 18:02:31 INFO main - useTLS=false
+2019-03-08 18:02:31 INFO main - storePathRootDir=/mnt/data/rocketmq/store/broker-b
+2019-03-08 18:02:31 INFO main - storePathCommitLog=/mnt/data/rocketmq/store/broker-b/commitlog
+2019-03-08 18:02:31 INFO main - mapedFileSizeCommitLog=1073741824
+2019-03-08 18:02:31 INFO main - mapedFileSizeConsumeQueue=300000
+2019-03-08 18:02:31 INFO main - enableConsumeQueueExt=false
+2019-03-08 18:02:31 INFO main - mappedFileSizeConsumeQueueExt=50331648
+2019-03-08 18:02:31 INFO main - bitMapLengthConsumeQueueExt=64
+2019-03-08 18:02:31 INFO main - flushIntervalCommitLog=500
+2019-03-08 18:02:31 INFO main - commitIntervalCommitLog=200
+2019-03-08 18:02:31 INFO main - useReentrantLockWhenPutMessage=false
+2019-03-08 18:02:31 INFO main - flushCommitLogTimed=false
+2019-03-08 18:02:31 INFO main - flushIntervalConsumeQueue=1000
+2019-03-08 18:02:31 INFO main - cleanResourceInterval=10000
+2019-03-08 18:02:31 INFO main - deleteCommitLogFilesInterval=100
+2019-03-08 18:02:31 INFO main - deleteConsumeQueueFilesInterval=100
+2019-03-08 18:02:31 INFO main - destroyMapedFileIntervalForcibly=120000
+2019-03-08 18:02:31 INFO main - redeleteHangedFileInterval=120000
+2019-03-08 18:02:31 INFO main - deleteWhen=04
+2019-03-08 18:02:31 INFO main - diskMaxUsedSpaceRatio=88
+2019-03-08 18:02:31 INFO main - fileReservedTime=120
+2019-03-08 18:02:31 INFO main - putMsgIndexHightWater=600000
+2019-03-08 18:02:31 INFO main - maxMessageSize=65536
+2019-03-08 18:02:31 INFO main - checkCRCOnRecover=true
+2019-03-08 18:02:31 INFO main - flushCommitLogLeastPages=4
+2019-03-08 18:02:31 INFO main - commitCommitLogLeastPages=4
+2019-03-08 18:02:31 INFO main - flushLeastPagesWhenWarmMapedFile=4096
+2019-03-08 18:02:31 INFO main - flushConsumeQueueLeastPages=2
+2019-03-08 18:02:31 INFO main - flushCommitLogThoroughInterval=10000
+2019-03-08 18:02:31 INFO main - commitCommitLogThoroughInterval=200
+2019-03-08 18:02:31 INFO main - flushConsumeQueueThoroughInterval=60000
+2019-03-08 18:02:31 INFO main - maxTransferBytesOnMessageInMemory=262144
+2019-03-08 18:02:31 INFO main - maxTransferCountOnMessageInMemory=32
+2019-03-08 18:02:31 INFO main - maxTransferBytesOnMessageInDisk=65536
+2019-03-08 18:02:31 INFO main - maxTransferCountOnMessageInDisk=8
+2019-03-08 18:02:31 INFO main - accessMessageInMemoryMaxRatio=40
+2019-03-08 18:02:31 INFO main - messageIndexEnable=true
+2019-03-08 18:02:31 INFO main - maxHashSlotNum=5000000
+2019-03-08 18:02:31 INFO main - maxIndexNum=20000000
+2019-03-08 18:02:31 INFO main - maxMsgsNumBatch=64
+2019-03-08 18:02:31 INFO main - messageIndexSafe=false
+2019-03-08 18:02:31 INFO main - haListenPort=10912
+2019-03-08 18:02:31 INFO main - haSendHeartbeatInterval=5000
+2019-03-08 18:02:31 INFO main - haHousekeepingInterval=20000
+2019-03-08 18:02:31 INFO main - haTransferBatchSize=32768
+2019-03-08 18:02:31 INFO main - haMasterAddress=
+2019-03-08 18:02:31 INFO main - haSlaveFallbehindMax=268435456
+2019-03-08 18:02:31 INFO main - brokerRole=ASYNC_MASTER
+2019-03-08 18:02:31 INFO main - flushDiskType=ASYNC_FLUSH
+2019-03-08 18:02:31 INFO main - syncFlushTimeout=5000
+2019-03-08 18:02:31 INFO main - messageDelayLevel=1s 5s 10s 30s 1m 2m 3m 4m 5m 6m 7m 8m 9m 10m 20m 30m 1h 2h
+2019-03-08 18:02:31 INFO main - flushDelayOffsetInterval=10000
+2019-03-08 18:02:31 INFO main - cleanFileForciblyEnable=true
+2019-03-08 18:02:31 INFO main - warmMapedFileEnable=false
+2019-03-08 18:02:31 INFO main - offsetCheckInSlave=false
+2019-03-08 18:02:31 INFO main - debugLockEnable=false
+2019-03-08 18:02:31 INFO main - duplicationEnable=false
+2019-03-08 18:02:31 INFO main - diskFallRecorded=true
+2019-03-08 18:02:31 INFO main - osPageCacheBusyTimeOutMills=1000
+2019-03-08 18:02:31 INFO main - defaultQueryMaxNum=32
+2019-03-08 18:02:31 INFO main - transientStorePoolEnable=false
+2019-03-08 18:02:31 INFO main - transientStorePoolSize=5
+2019-03-08 18:02:31 INFO main - fastFailIfNoBufferInStorePool=false
+2019-03-08 18:02:31 INFO main - load exist local topic, TopicConfig [topicName=RMQ_SYS_TRANS_HALF_TOPIC, readQueueNums=1, writeQueueNums=1, perm=RW-, topicFilterType=SINGLE_TAG, topicSysFlag=0, order=false]
+2019-03-08 18:02:31 INFO main - load exist local topic, TopicConfig [topicName=rocketmq-cluster, readQueueNums=16, writeQueueNums=16, perm=RWX, topicFilterType=SINGLE_TAG, topicSysFlag=0, order=false]
+2019-03-08 18:02:31 INFO main - load exist local topic, TopicConfig [topicName=broker-b, readQueueNums=1, writeQueueNums=1, perm=RWX, topicFilterType=SINGLE_TAG, topicSysFlag=0, order=false]
+2019-03-08 18:02:31 INFO main - load exist local topic, TopicConfig [topicName=BenchmarkTest, readQueueNums=1024, writeQueueNums=1024, perm=RW-, topicFilterType=SINGLE_TAG, topicSysFlag=0, order=false]
+2019-03-08 18:02:31 INFO main - load exist local topic, TopicConfig [topicName=OFFSET_MOVED_EVENT, readQueueNums=1, writeQueueNums=1, perm=RW-, topicFilterType=SINGLE_TAG, topicSysFlag=0, order=false]
+2019-03-08 18:02:31 INFO main - load exist local topic, TopicConfig [topicName=TBW102, readQueueNums=4, writeQueueNums=4, perm=RWX, topicFilterType=SINGLE_TAG, topicSysFlag=0, order=false]
+2019-03-08 18:02:31 INFO main - load exist local topic, TopicConfig [topicName=SELF_TEST_TOPIC, readQueueNums=1, writeQueueNums=1, perm=RW-, topicFilterType=SINGLE_TAG, topicSysFlag=0, order=false]
+2019-03-08 18:02:31 INFO main - load /mnt/data/rocketmq/store/broker-b/config/topics.json OK
+2019-03-08 18:02:31 INFO main - load /mnt/data/rocketmq/store/broker-b/config/consumerOffset.json OK
+2019-03-08 18:02:31 INFO main - load /mnt/data/rocketmq/store/broker-b/config/consumerFilter.json OK
+2019-03-08 18:02:31 INFO main - load /mnt/data/rocketmq/store/broker-b/config/delayOffset.json OK
+2019-03-08 18:02:32 INFO main - Set user specified name server address: 172.16.18.14:9876;172.16.18.15:9876
+2019-03-08 18:02:32 WARN main - Load default transaction message hook service: TransactionalMessageServiceImpl
+2019-03-08 18:02:32 WARN main - Load default discard message hook service: DefaultTransactionalMessageCheckListener
+2019-03-08 18:02:32 INFO main - The broker dose not enable acl
+2019-03-08 18:02:32 INFO FileWatchService - FileWatchService service started
+2019-03-08 18:02:32 INFO PullRequestHoldService - PullRequestHoldService service started
+2019-03-08 18:02:32 INFO brokerOutApi_thread_2 - register broker to name server 172.16.18.15:9876 OK
+2019-03-08 18:02:32 INFO brokerOutApi_thread_1 - register broker to name server 172.16.18.14:9876 OK
+2019-03-08 18:02:32 INFO main - Start transaction service!
+2019-03-08 18:02:32 INFO main - The broker[broker-b, 172.16.18.15:10911] boot success. serializeType=JSON and name server is 172.16.18.14:9876;172.16.18.15:9876
+2019-03-08 18:02:42 INFO BrokerControllerScheduledThread1 - dispatch behind commit log 0 bytes
+2019-03-08 18:02:42 INFO BrokerControllerScheduledThread1 - Slave fall behind master: 0 bytes
+2019-03-08 18:02:42 INFO brokerOutApi_thread_4 - register broker to name server 172.16.18.15:9876 OK
+2019-03-08 18:02:42 INFO brokerOutApi_thread_3 - register broker to name server 172.16.18.14:9876 OK
+2019-03-08 18:02:46 INFO main - rocketmqHome=/mnt/opt/rocketmq-4.4.0
+2019-03-08 18:02:46 INFO main - namesrvAddr=172.16.18.14:9876;172.16.18.15:9876
+2019-03-08 18:02:46 INFO main - brokerIP1=172.16.18.15
+2019-03-08 18:02:46 INFO main - brokerIP2=172.16.18.15
+2019-03-08 18:02:46 INFO main - brokerName=broker-a
+2019-03-08 18:02:46 INFO main - brokerClusterName=rocketmq-cluster
+2019-03-08 18:02:46 INFO main - brokerId=1
+2019-03-08 18:02:46 INFO main - brokerPermission=6
+2019-03-08 18:02:46 INFO main - defaultTopicQueueNums=4
+2019-03-08 18:02:46 INFO main - autoCreateTopicEnable=true
+2019-03-08 18:02:46 INFO main - clusterTopicEnable=true
+2019-03-08 18:02:46 INFO main - brokerTopicEnable=true
+2019-03-08 18:02:46 INFO main - autoCreateSubscriptionGroup=true
+2019-03-08 18:02:46 INFO main - messageStorePlugIn=
+2019-03-08 18:02:46 INFO main - msgTraceTopicName=RMQ_SYS_TRACE_TOPIC
+2019-03-08 18:02:46 INFO main - traceTopicEnable=false
+2019-03-08 18:02:46 INFO main - sendMessageThreadPoolNums=1
+2019-03-08 18:02:46 INFO main - pullMessageThreadPoolNums=24
+2019-03-08 18:02:46 INFO main - queryMessageThreadPoolNums=12
+2019-03-08 18:02:46 INFO main - adminBrokerThreadPoolNums=16
+2019-03-08 18:02:46 INFO main - clientManageThreadPoolNums=32
+2019-03-08 18:02:46 INFO main - consumerManageThreadPoolNums=32
+2019-03-08 18:02:46 INFO main - heartbeatThreadPoolNums=4
+2019-03-08 18:02:46 INFO main - endTransactionThreadPoolNums=16
+2019-03-08 18:02:46 INFO main - flushConsumerOffsetInterval=5000
+2019-03-08 18:02:46 INFO main - flushConsumerOffsetHistoryInterval=60000
+2019-03-08 18:02:46 INFO main - rejectTransactionMessage=false
+2019-03-08 18:02:46 INFO main - fetchNamesrvAddrByAddressServer=false
+2019-03-08 18:02:46 INFO main - sendThreadPoolQueueCapacity=10000
+2019-03-08 18:02:46 INFO main - pullThreadPoolQueueCapacity=100000
+2019-03-08 18:02:46 INFO main - queryThreadPoolQueueCapacity=20000
+2019-03-08 18:02:46 INFO main - clientManagerThreadPoolQueueCapacity=1000000
+2019-03-08 18:02:46 INFO main - consumerManagerThreadPoolQueueCapacity=1000000
+2019-03-08 18:02:46 INFO main - heartbeatThreadPoolQueueCapacity=50000
+2019-03-08 18:02:46 INFO main - endTransactionPoolQueueCapacity=100000
+2019-03-08 18:02:46 INFO main - filterServerNums=0
+2019-03-08 18:02:46 INFO main - longPollingEnable=true
+2019-03-08 18:02:46 INFO main - shortPollingTimeMills=1000
+2019-03-08 18:02:46 INFO main - notifyConsumerIdsChangedEnable=true
+2019-03-08 18:02:46 INFO main - highSpeedMode=false
+2019-03-08 18:02:46 INFO main - commercialEnable=true
+2019-03-08 18:02:46 INFO main - commercialTimerCount=1
+2019-03-08 18:02:46 INFO main - commercialTransCount=1
+2019-03-08 18:02:46 INFO main - commercialBigCount=1
+2019-03-08 18:02:46 INFO main - commercialBaseCount=1
+2019-03-08 18:02:46 INFO main - transferMsgByHeap=true
+2019-03-08 18:02:46 INFO main - maxDelayTime=40
+2019-03-08 18:02:46 INFO main - regionId=DefaultRegion
+2019-03-08 18:02:46 INFO main - registerBrokerTimeoutMills=6000
+2019-03-08 18:02:46 INFO main - slaveReadEnable=false
+2019-03-08 18:02:46 INFO main - disableConsumeIfConsumerReadSlowly=false
+2019-03-08 18:02:46 INFO main - consumerFallbehindThreshold=17179869184
+2019-03-08 18:02:46 INFO main - brokerFastFailureEnable=true
+2019-03-08 18:02:46 INFO main - waitTimeMillsInSendQueue=200
+2019-03-08 18:02:46 INFO main - waitTimeMillsInPullQueue=5000
+2019-03-08 18:02:46 INFO main - waitTimeMillsInHeartbeatQueue=31000
+2019-03-08 18:02:46 INFO main - waitTimeMillsInTransactionQueue=3000
+2019-03-08 18:02:46 INFO main - startAcceptSendRequestTimeStamp=0
+2019-03-08 18:02:46 INFO main - traceOn=true
+2019-03-08 18:02:46 INFO main - enableCalcFilterBitMap=false
+2019-03-08 18:02:46 INFO main - expectConsumerNumUseFilter=32
+2019-03-08 18:02:46 INFO main - maxErrorRateOfBloomFilter=20
+2019-03-08 18:02:46 INFO main - filterDataCleanTimeSpan=86400000
+2019-03-08 18:02:46 INFO main - filterSupportRetry=false
+2019-03-08 18:02:46 INFO main - enablePropertyFilter=false
+2019-03-08 18:02:46 INFO main - compressedRegister=false
+2019-03-08 18:02:46 INFO main - forceRegister=true
+2019-03-08 18:02:46 INFO main - registerNameServerPeriod=30000
+2019-03-08 18:02:46 INFO main - transactionTimeOut=6000
+2019-03-08 18:02:46 INFO main - transactionCheckMax=15
+2019-03-08 18:02:46 INFO main - transactionCheckInterval=60000
+2019-03-08 18:02:46 INFO main - aclEnable=false
+2019-03-08 18:02:46 INFO main - listenPort=11911
+2019-03-08 18:02:46 INFO main - serverWorkerThreads=8
+2019-03-08 18:02:46 INFO main - serverCallbackExecutorThreads=0
+2019-03-08 18:02:46 INFO main - serverSelectorThreads=3
+2019-03-08 18:02:46 INFO main - serverOnewaySemaphoreValue=256
+2019-03-08 18:02:46 INFO main - serverAsyncSemaphoreValue=64
+2019-03-08 18:02:46 INFO main - serverChannelMaxIdleTimeSeconds=120
+2019-03-08 18:02:46 INFO main - serverSocketSndBufSize=131072
+2019-03-08 18:02:46 INFO main - serverSocketRcvBufSize=131072
+2019-03-08 18:02:46 INFO main - serverPooledByteBufAllocatorEnable=true
+2019-03-08 18:02:46 INFO main - useEpollNativeSelector=false
+2019-03-08 18:02:46 INFO main - clientWorkerThreads=4
+2019-03-08 18:02:46 INFO main - clientCallbackExecutorThreads=4
+2019-03-08 18:02:46 INFO main - clientOnewaySemaphoreValue=65535
+2019-03-08 18:02:46 INFO main - clientAsyncSemaphoreValue=65535
+2019-03-08 18:02:46 INFO main - connectTimeoutMillis=3000
+2019-03-08 18:02:46 INFO main - channelNotActiveInterval=60000
+2019-03-08 18:02:46 INFO main - clientChannelMaxIdleTimeSeconds=120
+2019-03-08 18:02:46 INFO main - clientSocketSndBufSize=131072
+2019-03-08 18:02:46 INFO main - clientSocketRcvBufSize=131072
+2019-03-08 18:02:46 INFO main - clientPooledByteBufAllocatorEnable=false
+2019-03-08 18:02:46 INFO main - clientCloseSocketIfTimeout=false
+2019-03-08 18:02:46 INFO main - useTLS=false
+2019-03-08 18:02:46 INFO main - storePathRootDir=/mnt/data/rocketmq/store/broker-a-s
+2019-03-08 18:02:46 INFO main - storePathCommitLog=/mnt/data/rocketmq/store/broker-a-s/commitlog
+2019-03-08 18:02:46 INFO main - mapedFileSizeCommitLog=1073741824
+2019-03-08 18:02:46 INFO main - mapedFileSizeConsumeQueue=300000
+2019-03-08 18:02:46 INFO main - enableConsumeQueueExt=false
+2019-03-08 18:02:46 INFO main - mappedFileSizeConsumeQueueExt=50331648
+2019-03-08 18:02:46 INFO main - bitMapLengthConsumeQueueExt=64
+2019-03-08 18:02:46 INFO main - flushIntervalCommitLog=500
+2019-03-08 18:02:46 INFO main - commitIntervalCommitLog=200
+2019-03-08 18:02:46 INFO main - useReentrantLockWhenPutMessage=false
+2019-03-08 18:02:46 INFO main - flushCommitLogTimed=false
+2019-03-08 18:02:46 INFO main - flushIntervalConsumeQueue=1000
+2019-03-08 18:02:46 INFO main - cleanResourceInterval=10000
+2019-03-08 18:02:46 INFO main - deleteCommitLogFilesInterval=100
+2019-03-08 18:02:46 INFO main - deleteConsumeQueueFilesInterval=100
+2019-03-08 18:02:46 INFO main - destroyMapedFileIntervalForcibly=120000
+2019-03-08 18:02:46 INFO main - redeleteHangedFileInterval=120000
+2019-03-08 18:02:46 INFO main - deleteWhen=04
+2019-03-08 18:02:46 INFO main - diskMaxUsedSpaceRatio=88
+2019-03-08 18:02:46 INFO main - fileReservedTime=120
+2019-03-08 18:02:46 INFO main - putMsgIndexHightWater=600000
+2019-03-08 18:02:46 INFO main - maxMessageSize=65536
+2019-03-08 18:02:46 INFO main - checkCRCOnRecover=true
+2019-03-08 18:02:46 INFO main - flushCommitLogLeastPages=4
+2019-03-08 18:02:46 INFO main - commitCommitLogLeastPages=4
+2019-03-08 18:02:46 INFO main - flushLeastPagesWhenWarmMapedFile=4096
+2019-03-08 18:02:46 INFO main - flushConsumeQueueLeastPages=2
+2019-03-08 18:02:46 INFO main - flushCommitLogThoroughInterval=10000
+2019-03-08 18:02:46 INFO main - commitCommitLogThoroughInterval=200
+2019-03-08 18:02:46 INFO main - flushConsumeQueueThoroughInterval=60000
+2019-03-08 18:02:46 INFO main - maxTransferBytesOnMessageInMemory=262144
+2019-03-08 18:02:46 INFO main - maxTransferCountOnMessageInMemory=32
+2019-03-08 18:02:46 INFO main - maxTransferBytesOnMessageInDisk=65536
+2019-03-08 18:02:46 INFO main - maxTransferCountOnMessageInDisk=8
+2019-03-08 18:02:46 INFO main - accessMessageInMemoryMaxRatio=40
+2019-03-08 18:02:46 INFO main - messageIndexEnable=true
+2019-03-08 18:02:46 INFO main - maxHashSlotNum=5000000
+2019-03-08 18:02:46 INFO main - maxIndexNum=20000000
+2019-03-08 18:02:46 INFO main - maxMsgsNumBatch=64
+2019-03-08 18:02:46 INFO main - messageIndexSafe=false
+2019-03-08 18:02:46 INFO main - haListenPort=11912
+2019-03-08 18:02:46 INFO main - haSendHeartbeatInterval=5000
+2019-03-08 18:02:46 INFO main - haHousekeepingInterval=20000
+2019-03-08 18:02:46 INFO main - haTransferBatchSize=32768
+2019-03-08 18:02:46 INFO main - haMasterAddress=
+2019-03-08 18:02:46 INFO main - haSlaveFallbehindMax=268435456
+2019-03-08 18:02:46 INFO main - brokerRole=SLAVE
+2019-03-08 18:02:46 INFO main - flushDiskType=ASYNC_FLUSH
+2019-03-08 18:02:46 INFO main - syncFlushTimeout=5000
+2019-03-08 18:02:46 INFO main - messageDelayLevel=1s 5s 10s 30s 1m 2m 3m 4m 5m 6m 7m 8m 9m 10m 20m 30m 1h 2h
+2019-03-08 18:02:46 INFO main - flushDelayOffsetInterval=10000
+2019-03-08 18:02:46 INFO main - cleanFileForciblyEnable=true
+2019-03-08 18:02:46 INFO main - warmMapedFileEnable=false
+2019-03-08 18:02:46 INFO main - offsetCheckInSlave=false
+2019-03-08 18:02:46 INFO main - debugLockEnable=false
+2019-03-08 18:02:46 INFO main - duplicationEnable=false
+2019-03-08 18:02:46 INFO main - diskFallRecorded=true
+2019-03-08 18:02:46 INFO main - osPageCacheBusyTimeOutMills=1000
+2019-03-08 18:02:46 INFO main - defaultQueryMaxNum=32
+2019-03-08 18:02:46 INFO main - transientStorePoolEnable=false
+2019-03-08 18:02:46 INFO main - transientStorePoolSize=5
+2019-03-08 18:02:46 INFO main - fastFailIfNoBufferInStorePool=false
+2019-03-08 18:02:47 INFO main - load exist local topic, TopicConfig [topicName=RMQ_SYS_TRANS_HALF_TOPIC, readQueueNums=1, writeQueueNums=1, perm=RW-, topicFilterType=SINGLE_TAG, topicSysFlag=0, order=false]
+2019-03-08 18:02:47 INFO main - load exist local topic, TopicConfig [topicName=rocketmq-cluster, readQueueNums=16, writeQueueNums=16, perm=RWX, topicFilterType=SINGLE_TAG, topicSysFlag=0, order=false]
+2019-03-08 18:02:47 INFO main - load exist local topic, TopicConfig [topicName=BenchmarkTest, readQueueNums=1024, writeQueueNums=1024, perm=RW-, topicFilterType=SINGLE_TAG, topicSysFlag=0, order=false]
+2019-03-08 18:02:47 INFO main - load exist local topic, TopicConfig [topicName=OFFSET_MOVED_EVENT, readQueueNums=1, writeQueueNums=1, perm=RW-, topicFilterType=SINGLE_TAG, topicSysFlag=0, order=false]
+2019-03-08 18:02:47 INFO main - load exist local topic, TopicConfig [topicName=broker-a, readQueueNums=1, writeQueueNums=1, perm=RWX, topicFilterType=SINGLE_TAG, topicSysFlag=0, order=false]
+2019-03-08 18:02:47 INFO main - load exist local topic, TopicConfig [topicName=TBW102, readQueueNums=4, writeQueueNums=4, perm=RWX, topicFilterType=SINGLE_TAG, topicSysFlag=0, order=false]
+2019-03-08 18:02:47 INFO main - load exist local topic, TopicConfig [topicName=SELF_TEST_TOPIC, readQueueNums=1, writeQueueNums=1, perm=RW-, topicFilterType=SINGLE_TAG, topicSysFlag=0, order=false]
+2019-03-08 18:02:47 INFO main - load /mnt/data/rocketmq/store/broker-a-s/config/topics.json OK
+2019-03-08 18:02:47 INFO main - load /mnt/data/rocketmq/store/broker-a-s/config/consumerOffset.json OK
+2019-03-08 18:02:47 INFO main - load exist subscription group, SubscriptionGroupConfig [groupName=SELF_TEST_C_GROUP, consumeEnable=true, consumeFromMinEnable=true, consumeBroadcastEnable=true, retryQueueNums=1, retryMaxTimes=16, brokerId=0, whichBrokerWhenConsumeSlowly=1, notifyConsumerIdsChangedEnable=true]
+2019-03-08 18:02:47 INFO main - load exist subscription group, SubscriptionGroupConfig [groupName=CID_ONSAPI_OWNER, consumeEnable=true, consumeFromMinEnable=true, consumeBroadcastEnable=true, retryQueueNums=1, retryMaxTimes=16, brokerId=0, whichBrokerWhenConsumeSlowly=1, notifyConsumerIdsChangedEnable=true]
+2019-03-08 18:02:47 INFO main - load exist subscription group, SubscriptionGroupConfig [groupName=CID_ONSAPI_PERMISSION, consumeEnable=true, consumeFromMinEnable=true, consumeBroadcastEnable=true, retryQueueNums=1, retryMaxTimes=16, brokerId=0, whichBrokerWhenConsumeSlowly=1, notifyConsumerIdsChangedEnable=true]
+2019-03-08 18:02:47 INFO main - load exist subscription group, SubscriptionGroupConfig [groupName=TOOLS_CONSUMER, consumeEnable=true, consumeFromMinEnable=true, consumeBroadcastEnable=true, retryQueueNums=1, retryMaxTimes=16, brokerId=0, whichBrokerWhenConsumeSlowly=1, notifyConsumerIdsChangedEnable=true]
+2019-03-08 18:02:47 INFO main - load exist subscription group, SubscriptionGroupConfig [groupName=CID_ONS-HTTP-PROXY, consumeEnable=true, consumeFromMinEnable=true, consumeBroadcastEnable=true, retryQueueNums=1, retryMaxTimes=16, brokerId=0, whichBrokerWhenConsumeSlowly=1, notifyConsumerIdsChangedEnable=true]
+2019-03-08 18:02:47 INFO main - load exist subscription group, SubscriptionGroupConfig [groupName=FILTERSRV_CONSUMER, consumeEnable=true, consumeFromMinEnable=true, consumeBroadcastEnable=true, retryQueueNums=1, retryMaxTimes=16, brokerId=0, whichBrokerWhenConsumeSlowly=1, notifyConsumerIdsChangedEnable=true]
+2019-03-08 18:02:47 INFO main - load exist subscription group, SubscriptionGroupConfig [groupName=CID_ONSAPI_PULL, consumeEnable=true, consumeFromMinEnable=true, consumeBroadcastEnable=true, retryQueueNums=1, retryMaxTimes=16, brokerId=0, whichBrokerWhenConsumeSlowly=1, notifyConsumerIdsChangedEnable=true]
+2019-03-08 18:02:47 INFO main - load /mnt/data/rocketmq/store/broker-a-s/config/subscriptionGroup.json OK
+2019-03-08 18:02:47 INFO main - load /mnt/data/rocketmq/store/broker-a-s/config/consumerFilter.json OK
+2019-03-08 18:02:47 INFO main - load /mnt/data/rocketmq/store/broker-a-s/config/delayOffset.json OK
+2019-03-08 18:02:47 INFO main - Set user specified name server address: 172.16.18.14:9876;172.16.18.15:9876
+2019-03-08 18:02:47 WARN main - Load default transaction message hook service: TransactionalMessageServiceImpl
+2019-03-08 18:02:47 WARN main - Load default discard message hook service: DefaultTransactionalMessageCheckListener
+2019-03-08 18:02:47 INFO main - The broker dose not enable acl
+2019-03-08 18:02:47 INFO FileWatchService - FileWatchService service started
+2019-03-08 18:02:47 INFO PullRequestHoldService - PullRequestHoldService service started
+2019-03-08 18:02:48 INFO brokerOutApi_thread_2 - register broker to name server 172.16.18.14:9876 OK
+2019-03-08 18:02:48 INFO brokerOutApi_thread_1 - register broker to name server 172.16.18.15:9876 OK
+2019-03-08 18:02:48 INFO main - The broker[broker-a, 172.16.18.15:11911] boot success. serializeType=JSON and name server is 172.16.18.14:9876;172.16.18.15:9876
+2019-03-08 18:02:57 INFO BrokerControllerScheduledThread1 - dispatch behind commit log 0 bytes
+2019-03-08 18:02:57 INFO BrokerControllerScheduledThread1 - Update slave consumer offset from master, 172.16.18.14:10911
+2019-03-08 18:02:57 INFO BrokerControllerScheduledThread1 - Update slave delay offset from master, 172.16.18.14:10911
+2019-03-08 18:02:57 INFO BrokerControllerScheduledThread1 - Update slave Subscription Group from master, 172.16.18.14:10911
+2019-03-08 18:02:58 INFO brokerOutApi_thread_4 - register broker to name server 172.16.18.14:9876 OK
+2019-03-08 18:02:58 INFO brokerOutApi_thread_3 - register broker to name server 172.16.18.15:9876 OK
+2019-03-08 18:03:12 INFO brokerOutApi_thread_1 - register broker to name server 172.16.18.15:9876 OK
+2019-03-08 18:03:12 INFO brokerOutApi_thread_2 - register broker to name server 172.16.18.14:9876 OK
+2019-03-08 18:03:28 INFO brokerOutApi_thread_2 - register broker to name server 172.16.18.15:9876 OK
+2019-03-08 18:03:28 INFO brokerOutApi_thread_1 - register broker to name server 172.16.18.14:9876 OK
+2019-03-08 18:03:42 INFO BrokerControllerScheduledThread1 - dispatch behind commit log 0 bytes
+2019-03-08 18:03:42 INFO BrokerControllerScheduledThread1 - Slave fall behind master: 0 bytes
+2019-03-08 18:03:42 INFO brokerOutApi_thread_3 - register broker to name server 172.16.18.15:9876 OK
+2019-03-08 18:03:42 INFO brokerOutApi_thread_4 - register broker to name server 172.16.18.14:9876 OK
+2019-03-08 18:03:57 INFO BrokerControllerScheduledThread1 - dispatch behind commit log 0 bytes
+2019-03-08 18:03:57 INFO BrokerControllerScheduledThread1 - Update slave consumer offset from master, 172.16.18.14:10911
+2019-03-08 18:03:57 INFO BrokerControllerScheduledThread1 - Update slave delay offset from master, 172.16.18.14:10911
+2019-03-08 18:03:58 INFO brokerOutApi_thread_4 - register broker to name server 172.16.18.15:9876 OK
+2019-03-08 18:03:58 INFO brokerOutApi_thread_3 - register broker to name server 172.16.18.14:9876 OK
+2019-03-08 18:04:12 INFO brokerOutApi_thread_2 - register broker to name server 172.16.18.15:9876 OK
+2019-03-08 18:04:12 INFO brokerOutApi_thread_1 - register broker to name server 172.16.18.14:9876 OK
+2019-03-08 18:04:28 INFO brokerOutApi_thread_1 - register broker to name server 172.16.18.14:9876 OK
+2019-03-08 18:04:28 INFO brokerOutApi_thread_2 - register broker to name server 172.16.18.15:9876 OK
+2019-03-08 18:04:42 INFO BrokerControllerScheduledThread1 - dispatch behind commit log 0 bytes
+2019-03-08 18:04:42 INFO BrokerControllerScheduledThread1 - Slave fall behind master: 0 bytes
+2019-03-08 18:04:42 INFO brokerOutApi_thread_4 - register broker to name server 172.16.18.15:9876 OK
+2019-03-08 18:04:42 INFO brokerOutApi_thread_3 - register broker to name server 172.16.18.14:9876 OK
+2019-03-08 18:04:57 INFO BrokerControllerScheduledThread1 - dispatch behind commit log 0 bytes
+2019-03-08 18:04:57 INFO BrokerControllerScheduledThread1 - Update slave consumer offset from master, 172.16.18.14:10911
+2019-03-08 18:04:57 INFO BrokerControllerScheduledThread1 - Update slave delay offset from master, 172.16.18.14:10911
+2019-03-08 18:04:58 INFO brokerOutApi_thread_4 - register broker to name server 172.16.18.15:9876 OK
+2019-03-08 18:04:58 INFO brokerOutApi_thread_3 - register broker to name server 172.16.18.14:9876 OK
+2019-03-08 18:05:12 INFO brokerOutApi_thread_2 - register broker to name server 172.16.18.14:9876 OK
+2019-03-08 18:05:12 INFO brokerOutApi_thread_1 - register broker to name server 172.16.18.15:9876 OK
+2019-03-08 18:05:28 INFO brokerOutApi_thread_1 - register broker to name server 172.16.18.15:9876 OK
+2019-03-08 18:05:28 INFO brokerOutApi_thread_2 - register broker to name server 172.16.18.14:9876 OK
+2019-03-08 18:05:42 INFO BrokerControllerScheduledThread1 - dispatch behind commit log 0 bytes
+2019-03-08 18:05:42 INFO BrokerControllerScheduledThread1 - Slave fall behind master: 0 bytes
+2019-03-08 18:05:42 INFO brokerOutApi_thread_3 - register broker to name server 172.16.18.15:9876 OK
+2019-03-08 18:05:42 INFO brokerOutApi_thread_4 - register broker to name server 172.16.18.14:9876 OK
+2019-03-08 18:05:57 INFO BrokerControllerScheduledThread1 - dispatch behind commit log 0 bytes
+2019-03-08 18:05:57 INFO BrokerControllerScheduledThread1 - Update slave consumer offset from master, 172.16.18.14:10911
+2019-03-08 18:05:57 INFO BrokerControllerScheduledThread1 - Update slave delay offset from master, 172.16.18.14:10911
+2019-03-08 18:05:58 INFO brokerOutApi_thread_4 - register broker to name server 172.16.18.15:9876 OK
+2019-03-08 18:05:58 INFO brokerOutApi_thread_3 - register broker to name server 172.16.18.14:9876 OK
+2019-03-08 18:06:12 INFO brokerOutApi_thread_2 - register broker to name server 172.16.18.15:9876 OK
+2019-03-08 18:06:12 INFO brokerOutApi_thread_1 - register broker to name server 172.16.18.14:9876 OK
+2019-03-08 18:06:28 INFO brokerOutApi_thread_1 - register broker to name server 172.16.18.15:9876 OK
+2019-03-08 18:06:28 INFO brokerOutApi_thread_2 - register broker to name server 172.16.18.14:9876 OK
+2019-03-08 18:06:42 INFO BrokerControllerScheduledThread1 - dispatch behind commit log 0 bytes
+2019-03-08 18:06:42 INFO BrokerControllerScheduledThread1 - Slave fall behind master: 0 bytes
+2019-03-08 18:06:42 INFO brokerOutApi_thread_4 - register broker to name server 172.16.18.15:9876 OK
+2019-03-08 18:06:42 INFO brokerOutApi_thread_3 - register broker to name server 172.16.18.14:9876 OK
+2019-03-08 18:06:57 INFO BrokerControllerScheduledThread1 - dispatch behind commit log 0 bytes
+2019-03-08 18:06:57 INFO BrokerControllerScheduledThread1 - Update slave consumer offset from master, 172.16.18.14:10911
+2019-03-08 18:06:57 INFO BrokerControllerScheduledThread1 - Update slave delay offset from master, 172.16.18.14:10911
+2019-03-08 18:06:58 INFO brokerOutApi_thread_3 - register broker to name server 172.16.18.14:9876 OK
+2019-03-08 18:06:58 INFO brokerOutApi_thread_4 - register broker to name server 172.16.18.15:9876 OK
+2019-03-08 18:07:12 INFO brokerOutApi_thread_2 - register broker to name server 172.16.18.14:9876 OK
+2019-03-08 18:07:12 INFO brokerOutApi_thread_1 - register broker to name server 172.16.18.15:9876 OK
+2019-03-08 18:07:28 INFO brokerOutApi_thread_1 - register broker to name server 172.16.18.15:9876 OK
+2019-03-08 18:07:28 INFO brokerOutApi_thread_2 - register broker to name server 172.16.18.14:9876 OK
+2019-03-08 18:07:42 INFO BrokerControllerScheduledThread1 - dispatch behind commit log 0 bytes
+2019-03-08 18:07:42 INFO BrokerControllerScheduledThread1 - Slave fall behind master: 0 bytes
+2019-03-08 18:07:42 INFO brokerOutApi_thread_4 - register broker to name server 172.16.18.14:9876 OK
+2019-03-08 18:07:42 INFO brokerOutApi_thread_3 - register broker to name server 172.16.18.15:9876 OK
+2019-03-08 18:07:57 INFO BrokerControllerScheduledThread1 - dispatch behind commit log 0 bytes
+2019-03-08 18:07:57 INFO BrokerControllerScheduledThread1 - Update slave consumer offset from master, 172.16.18.14:10911
+2019-03-08 18:07:57 INFO BrokerControllerScheduledThread1 - Update slave delay offset from master, 172.16.18.14:10911
+2019-03-08 18:07:58 INFO brokerOutApi_thread_4 - register broker to name server 172.16.18.14:9876 OK
+2019-03-08 18:07:58 INFO brokerOutApi_thread_3 - register broker to name server 172.16.18.15:9876 OK

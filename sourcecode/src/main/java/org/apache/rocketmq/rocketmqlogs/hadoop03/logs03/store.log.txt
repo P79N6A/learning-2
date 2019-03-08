@@ -1,0 +1,225 @@
+2019-03-08 18:02:31 INFO AllocateMappedFileService - AllocateMappedFileService service started
+2019-03-08 18:02:31 INFO main - last shutdown normally
+2019-03-08 18:02:31 INFO main - load commit log OK
+2019-03-08 18:02:31 INFO main - load logics queue all over, OK
+2019-03-08 18:02:31 INFO main - store checkpoint file exists, /mnt/data/rocketmq/store/broker-b/checkpoint
+2019-03-08 18:02:31 INFO main - store checkpoint file physicMsgTimestamp 0, 19700101080000000
+2019-03-08 18:02:31 INFO main - store checkpoint file logicsMsgTimestamp 0, 19700101080000000
+2019-03-08 18:02:31 INFO main - store checkpoint file indexMsgTimestamp 0, 19700101080000000
+2019-03-08 18:02:31 INFO main - load over, and the max phy offset = 0
+2019-03-08 18:02:32 INFO FlushConsumeQueueService - FlushConsumeQueueService service started
+2019-03-08 18:02:32 INFO FlushRealTimeService - FlushRealTimeService service started
+2019-03-08 18:02:32 INFO StoreStatsService - StoreStatsService service started
+2019-03-08 18:02:32 INFO ReputMessageService - ReputMessageService service started
+2019-03-08 18:02:32 INFO AcceptSocketService - AcceptSocketService service started
+2019-03-08 18:02:32 INFO GroupTransferService - GroupTransferService service started
+2019-03-08 18:02:32 INFO main - /mnt/data/rocketmq/store/broker-b/abort create OK
+2019-03-08 18:02:32 INFO HAClient - HAClient service started
+2019-03-08 18:02:47 INFO AllocateMappedFileService - AllocateMappedFileService service started
+2019-03-08 18:02:47 INFO main - last shutdown normally
+2019-03-08 18:02:47 INFO main - load /mnt/data/rocketmq/store/broker-a-s/commitlog/00000000000000000000 OK
+2019-03-08 18:02:47 INFO main - load commit log OK
+2019-03-08 18:02:47 INFO main - load logics queue all over, OK
+2019-03-08 18:02:47 INFO main - store checkpoint file exists, /mnt/data/rocketmq/store/broker-a-s/checkpoint
+2019-03-08 18:02:47 INFO main - store checkpoint file physicMsgTimestamp 0, 19700101080000000
+2019-03-08 18:02:47 INFO main - store checkpoint file logicsMsgTimestamp 0, 19700101080000000
+2019-03-08 18:02:47 INFO main - store checkpoint file indexMsgTimestamp 0, 19700101080000000
+2019-03-08 18:02:47 WARN main - found a illegal magic code 0x0
+2019-03-08 18:02:47 INFO main - recover physics file end, /mnt/data/rocketmq/store/broker-a-s/commitlog/00000000000000000000
+2019-03-08 18:02:47 INFO main - load over, and the max phy offset = 0
+2019-03-08 18:02:47 INFO FlushConsumeQueueService - FlushConsumeQueueService service started
+2019-03-08 18:02:47 INFO FlushRealTimeService - FlushRealTimeService service started
+2019-03-08 18:02:47 INFO StoreStatsService - StoreStatsService service started
+2019-03-08 18:02:47 INFO ReputMessageService - ReputMessageService service started
+2019-03-08 18:02:47 INFO main - /mnt/data/rocketmq/store/broker-a-s/abort create OK
+2019-03-08 18:02:47 INFO AcceptSocketService - AcceptSocketService service started
+2019-03-08 18:02:47 INFO GroupTransferService - GroupTransferService service started
+2019-03-08 18:02:47 INFO HAClient - HAClient service started
+2019-03-08 18:02:48 INFO main - update master address, OLD: null NEW: 172.16.18.14:10912
+2019-03-08 18:02:57 INFO AcceptSocketService - HAService receive new connection, /172.16.18.14:13277
+2019-03-08 18:02:57 INFO ReadSocketService - ReadSocketService service started
+2019-03-08 18:02:57 INFO WriteSocketService - WriteSocketService service started
+2019-03-08 18:03:02 INFO ReadSocketService - slave[/172.16.18.14:13277] request offset 0
+2019-03-08 18:03:02 INFO WriteSocketService - master transfer data from 0 to slave[/172.16.18.14:13277], and slave request 0
+2019-03-08 18:03:32 INFO StoreStatsService - [STORETPS] put_tps  get_found_tps  get_miss_tps  get_transfered_tps 
+2019-03-08 18:03:32 INFO StoreStatsService - [PAGECACHERT] TotalPut 0, PutMessageDistributeTime [<=0ms]:0 [0~10ms]:0 [10~50ms]:0 [50~100ms]:0 [100~200ms]:0 [200~500ms]:0 [500ms~1s]:0 [1~2s]:0 [2~3s]:0 [3~4s]:0 [4~5s]:0 [5~10s]:0 [10s~]:0 
+2019-03-08 18:03:32 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:03:32 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:03:32 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:03:42 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:03:42 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:03:42 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:03:47 INFO StoreStatsService - [STORETPS] put_tps  get_found_tps  get_miss_tps  get_transfered_tps 
+2019-03-08 18:03:47 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:03:47 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:03:47 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:03:47 INFO StoreStatsService - [PAGECACHERT] TotalPut 0, PutMessageDistributeTime [<=0ms]:0 [0~10ms]:0 [10~50ms]:0 [50~100ms]:0 [100~200ms]:0 [200~500ms]:0 [500ms~1s]:0 [1~2s]:0 [2~3s]:0 [3~4s]:0 [4~5s]:0 [5~10s]:0 [10s~]:0 
+2019-03-08 18:03:52 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:03:52 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:03:52 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:03:57 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:03:57 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:03:57 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:04:02 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:04:02 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:04:02 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:04:07 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:04:07 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:04:07 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:04:12 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:04:12 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:04:12 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:04:17 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:04:17 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:04:17 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:04:22 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:04:22 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:04:22 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:04:27 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:04:27 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:04:27 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:04:32 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:04:32 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:04:32 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:04:32 INFO StoreStatsService - [STORETPS] put_tps 0.0 get_found_tps 0.0 get_miss_tps 0.03332944489809522 get_transfered_tps 0.0
+2019-03-08 18:04:32 INFO StoreStatsService - [PAGECACHERT] TotalPut 0, PutMessageDistributeTime [<=0ms]:0 [0~10ms]:0 [10~50ms]:0 [50~100ms]:0 [100~200ms]:0 [200~500ms]:0 [500ms~1s]:0 [1~2s]:0 [2~3s]:0 [3~4s]:0 [4~5s]:0 [5~10s]:0 [10s~]:0 
+2019-03-08 18:04:37 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:04:37 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:04:37 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:04:42 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:04:42 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:04:42 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:04:47 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:04:47 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:04:47 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:04:47 INFO StoreStatsService - [STORETPS] put_tps 0.0 get_found_tps 0.0 get_miss_tps 0.0 get_transfered_tps 0.0
+2019-03-08 18:04:47 INFO StoreStatsService - [PAGECACHERT] TotalPut 0, PutMessageDistributeTime [<=0ms]:0 [0~10ms]:0 [10~50ms]:0 [50~100ms]:0 [100~200ms]:0 [200~500ms]:0 [500ms~1s]:0 [1~2s]:0 [2~3s]:0 [3~4s]:0 [4~5s]:0 [5~10s]:0 [10s~]:0 
+2019-03-08 18:04:52 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:04:52 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:04:52 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:04:57 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:04:57 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:04:57 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:05:02 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:05:02 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:05:02 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:05:07 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:05:07 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:05:07 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:05:12 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:05:12 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:05:12 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:05:17 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:05:17 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:05:17 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:05:22 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:05:22 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:05:22 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:05:27 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:05:27 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:05:27 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:05:32 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:05:32 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:05:32 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:05:32 INFO StoreStatsService - [STORETPS] put_tps 0.0 get_found_tps 0.0 get_miss_tps 0.03332944489809522 get_transfered_tps 0.0
+2019-03-08 18:05:32 INFO StoreStatsService - [PAGECACHERT] TotalPut 0, PutMessageDistributeTime [<=0ms]:0 [0~10ms]:0 [10~50ms]:0 [50~100ms]:0 [100~200ms]:0 [200~500ms]:0 [500ms~1s]:0 [1~2s]:0 [2~3s]:0 [3~4s]:0 [4~5s]:0 [5~10s]:0 [10s~]:0 
+2019-03-08 18:05:37 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:05:37 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:05:37 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:05:42 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:05:42 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:05:42 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:05:47 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:05:47 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:05:47 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:05:47 INFO StoreStatsService - [STORETPS] put_tps 0.0 get_found_tps 0.0 get_miss_tps 0.0 get_transfered_tps 0.0
+2019-03-08 18:05:47 INFO StoreStatsService - [PAGECACHERT] TotalPut 0, PutMessageDistributeTime [<=0ms]:0 [0~10ms]:0 [10~50ms]:0 [50~100ms]:0 [100~200ms]:0 [200~500ms]:0 [500ms~1s]:0 [1~2s]:0 [2~3s]:0 [3~4s]:0 [4~5s]:0 [5~10s]:0 [10s~]:0 
+2019-03-08 18:05:52 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:05:52 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:05:52 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:05:57 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:05:57 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:05:57 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:06:02 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:06:02 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:06:02 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:06:07 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:06:07 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:06:07 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:06:12 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:06:12 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:06:12 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:06:17 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:06:17 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:06:17 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:06:22 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:06:22 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:06:22 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:06:27 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:06:27 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:06:27 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:06:32 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:06:32 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:06:32 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:06:32 INFO StoreStatsService - [STORETPS] put_tps 0.0 get_found_tps 0.0 get_miss_tps 0.03332944489809522 get_transfered_tps 0.0
+2019-03-08 18:06:32 INFO StoreStatsService - [PAGECACHERT] TotalPut 0, PutMessageDistributeTime [<=0ms]:0 [0~10ms]:0 [10~50ms]:0 [50~100ms]:0 [100~200ms]:0 [200~500ms]:0 [500ms~1s]:0 [1~2s]:0 [2~3s]:0 [3~4s]:0 [4~5s]:0 [5~10s]:0 [10s~]:0 
+2019-03-08 18:06:37 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:06:37 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:06:37 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:06:42 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:06:42 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:06:42 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:06:47 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:06:47 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:06:47 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:06:47 INFO StoreStatsService - [STORETPS] put_tps 0.0 get_found_tps 0.0 get_miss_tps 0.0 get_transfered_tps 0.0
+2019-03-08 18:06:47 INFO StoreStatsService - [PAGECACHERT] TotalPut 0, PutMessageDistributeTime [<=0ms]:0 [0~10ms]:0 [10~50ms]:0 [50~100ms]:0 [100~200ms]:0 [200~500ms]:0 [500ms~1s]:0 [1~2s]:0 [2~3s]:0 [3~4s]:0 [4~5s]:0 [5~10s]:0 [10s~]:0 
+2019-03-08 18:06:52 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:06:52 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:06:52 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:06:57 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:06:57 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:06:57 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:07:02 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:07:02 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:07:02 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:07:07 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:07:07 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:07:07 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:07:12 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:07:12 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:07:12 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:07:17 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:07:17 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:07:17 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:07:22 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:07:22 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:07:22 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:07:27 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:07:27 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:07:27 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:07:32 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:07:32 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:07:32 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:07:32 INFO StoreStatsService - [STORETPS] put_tps 0.0 get_found_tps 0.0 get_miss_tps 0.033330000333300004 get_transfered_tps 0.0
+2019-03-08 18:07:32 INFO StoreStatsService - [PAGECACHERT] TotalPut 0, PutMessageDistributeTime [<=0ms]:0 [0~10ms]:0 [10~50ms]:0 [50~100ms]:0 [100~200ms]:0 [200~500ms]:0 [500ms~1s]:0 [1~2s]:0 [2~3s]:0 [3~4s]:0 [4~5s]:0 [5~10s]:0 [10s~]:0 
+2019-03-08 18:07:37 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:07:37 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:07:37 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:07:42 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:07:42 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:07:42 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:07:47 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:07:47 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:07:47 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:07:47 INFO StoreStatsService - [STORETPS] put_tps 0.0 get_found_tps 0.0 get_miss_tps 0.0 get_transfered_tps 0.0
+2019-03-08 18:07:47 INFO StoreStatsService - [PAGECACHERT] TotalPut 0, PutMessageDistributeTime [<=0ms]:0 [0~10ms]:0 [10~50ms]:0 [50~100ms]:0 [100~200ms]:0 [200~500ms]:0 [500ms~1s]:0 [1~2s]:0 [2~3s]:0 [3~4s]:0 [4~5s]:0 [5~10s]:0 [10s~]:0 
+2019-03-08 18:07:52 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:07:52 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:07:52 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:07:57 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:07:57 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:07:57 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.
+2019-03-08 18:08:02 INFO StoreScheduledThread1 - logics disk maybe full soon, so reclaim space, -1.0
+2019-03-08 18:08:02 INFO StoreScheduledThread1 - begin to delete before 120 hours file. timeup: false spacefull: true manualDeleteFileSeveralTimes: 0 cleanAtOnce: false
+2019-03-08 18:08:02 WARN StoreScheduledThread1 - disk space will be full soon, but delete file failed.

@@ -1,0 +1,96 @@
+2019-03-08 18:01:50 DEBUG main - Using SLF4J as the default logging framework
+2019-03-08 18:01:50 DEBUG main - java.nio.Buffer.address: available
+2019-03-08 18:01:50 DEBUG main - sun.misc.Unsafe.theUnsafe: available
+2019-03-08 18:01:50 DEBUG main - sun.misc.Unsafe.copyMemory: available
+2019-03-08 18:01:50 DEBUG main - direct buffer constructor: available
+2019-03-08 18:01:50 DEBUG main - java.nio.Bits.unaligned: available, true
+2019-03-08 18:01:50 DEBUG main - java.nio.DirectByteBuffer.<init>(long, int): available
+2019-03-08 18:01:50 DEBUG main - java.nio.ByteBuffer.cleaner(): available
+2019-03-08 18:01:50 DEBUG main - Java version: 8
+2019-03-08 18:01:50 DEBUG main - -Dio.netty.noUnsafe: false
+2019-03-08 18:01:50 DEBUG main - sun.misc.Unsafe: available
+2019-03-08 18:01:50 DEBUG main - -Dio.netty.noJavassist: false
+2019-03-08 18:01:50 DEBUG main - Javassist: available
+2019-03-08 18:01:50 DEBUG main - -Dio.netty.tmpdir: /tmp (java.io.tmpdir)
+2019-03-08 18:01:50 DEBUG main - -Dio.netty.bitMode: 64 (sun.arch.data.model)
+2019-03-08 18:01:50 DEBUG main - io.netty.maxDirectMemory: 4080271360 bytes
+2019-03-08 18:01:50 DEBUG main - org.jctools-core.MpscChunkedArrayQueue: available
+2019-03-08 18:01:50 INFO main - instrumented a special java.util.Set into: sun.nio.ch.EPollSelectorImpl@17d0685f
+2019-03-08 18:01:50 INFO main - instrumented a special java.util.Set into: sun.nio.ch.EPollSelectorImpl@7e0e6aa2
+2019-03-08 18:01:50 INFO main - instrumented a special java.util.Set into: sun.nio.ch.EPollSelectorImpl@365185bd
+2019-03-08 18:01:50 INFO main - instrumented a special java.util.Set into: sun.nio.ch.EPollSelectorImpl@18bf3d14
+2019-03-08 18:01:50 DEBUG main - -Dio.netty.tmpdir: /tmp (java.io.tmpdir)
+2019-03-08 18:01:50 DEBUG main - -Dio.netty.native.workdir: /tmp (io.netty.tmpdir)
+2019-03-08 18:01:50 DEBUG main - Successfully loaded the library: netty-tcnative-linux-x86_64
+2019-03-08 18:01:51 DEBUG main - Loaded default ResourceLeakDetector: io.netty.util.ResourceLeakDetector@69a10787
+2019-03-08 18:01:51 DEBUG main - -Dio.netty.allocator.type: unpooled
+2019-03-08 18:01:51 DEBUG main - -Dio.netty.threadLocalDirectBufferSize: 65536
+2019-03-08 18:01:51 DEBUG main - -Dio.netty.maxThreadLocalCharBufferSize: 16384
+2019-03-08 18:01:51 DEBUG main - Loaded default ResourceLeakDetector: io.netty.util.ResourceLeakDetector@dd3b207
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 => ECDHE-ECDSA-AES128-GCM-SHA256
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 => ECDHE-ECDSA-AES128-GCM-SHA256
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 => ECDHE-RSA-AES128-GCM-SHA256
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_ECDHE_RSA_WITH_AES_128_GCM_SHA256 => ECDHE-RSA-AES128-GCM-SHA256
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_DHE_RSA_WITH_AES_128_GCM_SHA256 => DHE-RSA-AES128-GCM-SHA256
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_DHE_RSA_WITH_AES_128_GCM_SHA256 => DHE-RSA-AES128-GCM-SHA256
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 => ECDHE-ECDSA-AES256-GCM-SHA384
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 => ECDHE-ECDSA-AES256-GCM-SHA384
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 => ECDHE-RSA-AES256-GCM-SHA384
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_ECDHE_RSA_WITH_AES_256_GCM_SHA384 => ECDHE-RSA-AES256-GCM-SHA384
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_DHE_RSA_WITH_AES_256_GCM_SHA384 => DHE-RSA-AES256-GCM-SHA384
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_DHE_RSA_WITH_AES_256_GCM_SHA384 => DHE-RSA-AES256-GCM-SHA384
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305 => ECDHE-ECDSA-CHACHA20-POLY1305
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_ECDHE_ECDSA_WITH_CHACHA20_POLY1305 => ECDHE-ECDSA-CHACHA20-POLY1305
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305 => ECDHE-RSA-CHACHA20-POLY1305
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_ECDHE_RSA_WITH_CHACHA20_POLY1305 => ECDHE-RSA-CHACHA20-POLY1305
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_RSA_WITH_ECDHE_PSK_CHACHA20_POLY1305 => ECDHE-PSK-CHACHA20-POLY1305
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_RSA_WITH_ECDHE_PSK_CHACHA20_POLY1305 => ECDHE-PSK-CHACHA20-POLY1305
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA => ECDHE-ECDSA-AES128-SHA
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_ECDHE_ECDSA_WITH_AES_128_CBC_SHA => ECDHE-ECDSA-AES128-SHA
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256 => ECDHE-ECDSA-AES128-SHA256
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256 => ECDHE-ECDSA-AES128-SHA256
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA => ECDHE-RSA-AES128-SHA
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_ECDHE_RSA_WITH_AES_128_CBC_SHA => ECDHE-RSA-AES128-SHA
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256 => ECDHE-RSA-AES128-SHA256
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_ECDHE_RSA_WITH_AES_128_CBC_SHA256 => ECDHE-RSA-AES128-SHA256
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_RSA_WITH_ECDHE_PSK_AES128_CBC_SHA => ECDHE-PSK-AES128-CBC-SHA
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_RSA_WITH_ECDHE_PSK_AES128_CBC_SHA => ECDHE-PSK-AES128-CBC-SHA
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_DHE_RSA_WITH_AES_128_CBC_SHA => DHE-RSA-AES128-SHA
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_DHE_RSA_WITH_AES_128_CBC_SHA => DHE-RSA-AES128-SHA
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_DHE_RSA_WITH_AES_128_CBC_SHA256 => DHE-RSA-AES128-SHA256
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_DHE_RSA_WITH_AES_128_CBC_SHA256 => DHE-RSA-AES128-SHA256
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA => ECDHE-ECDSA-AES256-SHA
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_ECDHE_ECDSA_WITH_AES_256_CBC_SHA => ECDHE-ECDSA-AES256-SHA
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384 => ECDHE-ECDSA-AES256-SHA384
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384 => ECDHE-ECDSA-AES256-SHA384
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA => ECDHE-RSA-AES256-SHA
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_ECDHE_RSA_WITH_AES_256_CBC_SHA => ECDHE-RSA-AES256-SHA
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384 => ECDHE-RSA-AES256-SHA384
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_ECDHE_RSA_WITH_AES_256_CBC_SHA384 => ECDHE-RSA-AES256-SHA384
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_RSA_WITH_ECDHE_PSK_AES256_CBC_SHA => ECDHE-PSK-AES256-CBC-SHA
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_RSA_WITH_ECDHE_PSK_AES256_CBC_SHA => ECDHE-PSK-AES256-CBC-SHA
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_DHE_RSA_WITH_AES_256_CBC_SHA => DHE-RSA-AES256-SHA
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_DHE_RSA_WITH_AES_256_CBC_SHA => DHE-RSA-AES256-SHA
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_DHE_RSA_WITH_AES_256_CBC_SHA256 => DHE-RSA-AES256-SHA256
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_DHE_RSA_WITH_AES_256_CBC_SHA256 => DHE-RSA-AES256-SHA256
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_RSA_WITH_AES_128_GCM_SHA256 => AES128-GCM-SHA256
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_RSA_WITH_AES_128_GCM_SHA256 => AES128-GCM-SHA256
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_RSA_WITH_AES_256_GCM_SHA384 => AES256-GCM-SHA384
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_RSA_WITH_AES_256_GCM_SHA384 => AES256-GCM-SHA384
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_RSA_WITH_AES_128_CBC_SHA => AES128-SHA
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_RSA_WITH_AES_128_CBC_SHA => AES128-SHA
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_RSA_WITH_AES_128_CBC_SHA256 => AES128-SHA256
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_RSA_WITH_AES_128_CBC_SHA256 => AES128-SHA256
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_PSK_WITH_AES_128_CBC_SHA => PSK-AES128-CBC-SHA
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_PSK_WITH_AES_128_CBC_SHA => PSK-AES128-CBC-SHA
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_RSA_WITH_AES_256_CBC_SHA => AES256-SHA
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_RSA_WITH_AES_256_CBC_SHA => AES256-SHA
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_RSA_WITH_AES_256_CBC_SHA256 => AES256-SHA256
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_RSA_WITH_AES_256_CBC_SHA256 => AES256-SHA256
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_PSK_WITH_AES_256_CBC_SHA => PSK-AES256-CBC-SHA
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_PSK_WITH_AES_256_CBC_SHA => PSK-AES256-CBC-SHA
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: TLS_RSA_WITH_3DES_EDE_CBC_SHA => DES-CBC3-SHA
+2019-03-08 18:01:51 DEBUG main - Cipher suite mapping: SSL_RSA_WITH_3DES_EDE_CBC_SHA => DES-CBC3-SHA
+2019-03-08 18:01:51 DEBUG main - Loopback interface: lo (lo, 127.0.0.1)
+2019-03-08 18:02:24 DEBUG NettyServerNIOSelector_3_1 - Generated: io.netty.util.internal.__matchers__.io.netty.buffer.ByteBufMatcher
+2019-03-08 18:02:24 DEBUG NettyServerNIOSelector_3_1 - Generated: io.netty.util.internal.__matchers__.org.apache.rocketmq.remoting.protocol.RemotingCommandMatcher
