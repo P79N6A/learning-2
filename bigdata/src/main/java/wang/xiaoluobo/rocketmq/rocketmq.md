@@ -29,6 +29,12 @@ JAVA_OPT="${JAVA_OPT} -server -Xms1g -Xmx1g -Xmn512"
 ```
 
 ### 二、 rocketmq 集群部署
+#### 集群环境
+```text
+172.16.18.14    hadoop02
+172.16.18.15    hadoop03
+```
+
 #### 启动 mqnamesrv
 ```bash
 [hadoop@hadoop02 rocketmq-4.4.0]$ nohup ./bin/mqnamesrv &
