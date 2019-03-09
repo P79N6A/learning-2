@@ -1,2 +1,0 @@
-nohup: ignoring input
-The broker[broker-b, 172.16.18.15:10911] boot success. serializeType=JSON and name server is 172.16.18.14:9876;172.16.18.15:9876

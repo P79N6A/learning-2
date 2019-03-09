@@ -81,9 +81,16 @@ public class MixAll {
     public static final String RMQ_SYS_TRANS_OP_HALF_TOPIC = "RMQ_SYS_TRANS_OP_HALF_TOPIC";
     public static final String CID_SYS_RMQ_TRANS = "CID_RMQ_SYS_TRANS";
 
+    /**
+     * webservice addr
+     * 端口 8080
+     * http://jmenv.tbsite.net:8080/rocketmq/nsaddr
+     */
     public static String getWSAddr() {
+        // jmenv.tbsite.net
         String wsDomainName = System.getProperty("rocketmq.namesrv.domain", DEFAULT_NAMESRV_ADDR_LOOKUP);
         String wsDomainSubgroup = System.getProperty("rocketmq.namesrv.domain.subgroup", "nsaddr");
+        // http://jmenv.tbsite.net:8080/rocketmq/nsaddr
         String wsAddr = "http://" + wsDomainName + ":8080/rocketmq/" + wsDomainSubgroup;
         if (wsDomainName.indexOf(":") > 0) {
             wsAddr = "http://" + wsDomainName + "/rocketmq/" + wsDomainSubgroup;
